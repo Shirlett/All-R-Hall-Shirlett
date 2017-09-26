@@ -1,6 +1,6 @@
 ## This is the second homework for STATS 545A.
 
-The results of the dplyr exploration along with the ggplots can be found ![here](.
+The results of the dplyr exploration along with the ggplots can be found ![here](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW02/Gapminder_Explore.md).
 
 
 ### Reflection
