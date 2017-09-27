@@ -1,7 +1,7 @@
 Gapminder\_Explore
 ================
 Shirlett
-September 24, 2017
+September 26, 2017
 
 Bring the Data In
 -----------------
@@ -71,13 +71,13 @@ summary(gapminder)
     ##  Argentina  :  12   Oceania : 24   3rd Qu.:1993   3rd Qu.:70.85  
     ##  Australia  :  12                  Max.   :2007   Max.   :82.60  
     ##  (Other)    :1632                                                
-    ##       pop              gdpPercap       
-    ##  Min.   :6.001e+04   Min.   :   241.2  
-    ##  1st Qu.:2.794e+06   1st Qu.:  1202.1  
-    ##  Median :7.024e+06   Median :  3531.8  
-    ##  Mean   :2.960e+07   Mean   :  7215.3  
-    ##  3rd Qu.:1.959e+07   3rd Qu.:  9325.5  
-    ##  Max.   :1.319e+09   Max.   :113523.1  
+    ##       pop               gdpPercap       
+    ##  Min.   :     60011   Min.   :   241.2  
+    ##  1st Qu.:   2793664   1st Qu.:  1202.1  
+    ##  Median :   7023596   Median :  3531.8  
+    ##  Mean   :  29601212   Mean   :  7215.3  
+    ##  3rd Qu.:  19585222   3rd Qu.:  9325.5  
+    ##  Max.   :1318683096   Max.   :113523.1  
     ## 
 
 ``` r
@@ -86,7 +86,7 @@ dim(gapminder)
 
     ## [1] 1704    6
 
-Based on the values returned by R's structure command, the gapminder object is a data frame with class table dataframe. There are six variables and 1704 observations. The structure command provides an abbreviated description of an object in R including the number of observations and variables.The summary function provides the information about extent and size but also provides basic statistical information. It is useful to double check results from other statistical functions. The dim function also shows the number of rows x number of columns. This function provides the least amount of information and is useful for determining whether the entire content of the dataframe can be easily The structure function also provides the data type for each variable. Country and Continent are factors or nominal values; year and population are integers; lifeExp and GDP per Capita are numbers.
+Based on the values returned by R's structure command, the gapminder object is a data frame with class table dataframe. There are six variables and 1704 observations. The structure command provides an abbreviated description of an object in R including the number of observations and variables.The summary function provides the information about extent and size but also provides basic statistical information. It is useful to double check results from other statistical functions. The dim function also shows the number of rows x number of columns. This function provides the least amount of information and is useful for determining whether the entire content of the dataframe can be easily viewed on a screen or downloaded to another framework. The structure function also provides the data type for each variable. Country and Continent are factors or nominal values; year and population are integers; lifeExp and GDP per Capita are numbers.
 
 Explore Individual Variables
 ----------------------------
@@ -103,7 +103,7 @@ with(gapminder, table(continent))
 
 ``` r
 #bar plot showing the relative frequency of the occurrence of each variable
-ggplot(gapminder, aes(x = continent)) + geom_bar()
+ggplot(gapminder, aes(x = continent)) + geom_bar(fill = "#FF6666") + ggtitle("Bar Chart showing the Frequency of Occurrence of each Continent")
 ```
 
 ![](Gapminder_Explore_files/figure-markdown_github/unnamed-chunk-3-1.png)
@@ -111,7 +111,6 @@ ggplot(gapminder, aes(x = continent)) + geom_bar()
 ``` r
 #Exploring Population as a Quantitative variable
 #One line description of the central tendency of Population
-options(scipen=15)
 summary(gapminder$pop)   
 ```
 
@@ -141,28 +140,51 @@ describe(gapminder$pop)
 
 ``` r
 #density plot to illustrate the spread of population
-ggplot(gapminder, aes(x = pop)) + geom_density()
+library(scales)
+```
+
+    ## Warning: package 'scales' was built under R version 3.3.3
+
+    ## 
+    ## Attaching package: 'scales'
+
+    ## The following objects are masked from 'package:psych':
+    ## 
+    ##     alpha, rescale
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     discard
+
+    ## The following objects are masked from 'package:readr':
+    ## 
+    ##     col_factor, col_numeric
+
+``` r
+ggplot(gapminder, aes(x = pop)) + geom_density() + ggtitle("Density Plot showing the Spread of the Population in all Observations") +
+scale_x_continuous(labels = comma)
 ```
 
 ![](Gapminder_Explore_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
-For continent, there are six possible values, with Africa occurring most frequently at 624. Oceania occurs the least frequently with 24 observations. Population has a much wider range, with 60,010 as the lowest number and 1,319,000,000 as the highest observation. The average population is 29,600,000 although the value in the middle is 7,024,000. Overall, the population data is skewed to the right with most values being less than the mean.
+For continent, there are six possible values, with Africa occurring most frequently at 624. Oceania occurs the least frequently with 24 observations. Population has a much wider range, with 60,010 as the lowest number and 1,319,000,000 as the highest observation. The average population is 29,600,000 although the value in the middle is 7,024,000. Overall, based on the density plot, the population data is skewed to the right with most values being less than the mean.
 
 Explore Various Plot Types
 --------------------------
 
-### BoxPlot and Density Plot
+### Barchart and Density Plot
 
 ``` r
-#This is a basic boxplot that that shows the spread of population by continent. It
-#appears that Asia has the highest population 
-ggplot(gapminder, aes(x = continent, y = pop)) + geom_col() 
+#This is a basic barchart that shows the spread of population by continent. 
+#The library scales was used to format te y-axis. It appears that Asia has the highest #population and will be explored further.
+library(scales)
+ggplot(gapminder, aes(x = continent, y = pop, color=continent)) + geom_col() +  ggtitle("Bar Chart of the Population in all Continents") + scale_y_continuous(labels = comma)
 ```
 
 ![](Gapminder_Explore_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 ``` r
-#These commands create a variable that shows the countries in Asia and the average population across the years
+#These commands create a variable that shows the countries in Asia and the average #population across the years
 library(dplyr)
 population <- gapminder %>% 
     filter(continent == "Asia") %>% 
@@ -174,9 +196,9 @@ population <- gapminder %>%
     ## Warning: package 'bindrcpp' was built under R version 3.3.3
 
 ``` r
-#This command creates a density plot to show the average population and reorients
+#This command creates a density plot to show average population and reorients
 #the labels on the x-axis. It shows that China and India have the highest population #levels
-ggplot(population, aes(x = country, y = avgpop)) + geom_density() + theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1)) + ggtitle("Density Plot of the Average Population in Asian Countries")
+ggplot(population, aes(x = country, y = avgpop)) + geom_density() + theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1)) +  scale_y_continuous(labels = comma) + ggtitle("Density Plot of the Avg Population in Asian Countries across all Years") + ylab("Average Population")
 ```
 
 ![](Gapminder_Explore_files/figure-markdown_github/unnamed-chunk-5-1.png)
@@ -184,7 +206,7 @@ ggplot(population, aes(x = country, y = avgpop)) + geom_density() + theme(axis.t
 ### ScatterPlot
 
 ``` r
-#This command modifies the data so that the GDP per Capita in the most population dense countries in Asia can be viewed. A new column is added that rounds the GDP per capita.
+#This command modifies the data so that the GDP per Capita in the most population dense #countries in Asia can be viewed. A new column is added that rounds the GDP per capita.
 pop_growth <- gapminder %>% 
     filter(country == "China"| country == "India") %>% 
     mutate(roundgdp = round(gdpPercap,  digits = 0)) %>% 
@@ -193,11 +215,9 @@ pop_growth <- gapminder %>%
 
 #These commands create a plot that shows population growth in China and India and the 
 #associated gdp per Capita. Although the populations of both countries have steadily
-#increased since 1952, after 1977, China has had a far greater gdp per capita than India.
-g1 <- ggplot(pop_growth, aes(x = year, y = pop, color=country, size = roundgdp)) + ggtitle("Plot of the Population Growth with GDP per Capita in China and India") + geom_point() +
-geom_text(aes(label=roundgdp, hjust=0.5, vjust=1.5)) + scale_x_continuous(breaks=seq(1952, 2007, 5)) 
-
-g1 
+#increased since 1952, after 1977, China has had a far greater gdp per capita than #India.
+ggplot(pop_growth, aes(x = year, y = pop, color=country, size = roundgdp)) + ggtitle("Plot of the Population Growth with GDP per Capita in China and India") + geom_point() +
+geom_text(aes(label=roundgdp, hjust=0.5, vjust=1.5)) + scale_x_continuous(breaks=seq(1952, 2007, 5)) + scale_y_continuous(labels = comma) + ylab("Population")
 ```
 
 ![](Gapminder_Explore_files/figure-markdown_github/unnamed-chunk-6-1.png)
