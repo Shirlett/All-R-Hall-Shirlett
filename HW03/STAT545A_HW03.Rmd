@@ -1,0 +1,116 @@
+---
+title: "STAT545-HW03"
+author: "Shirlett"
+date: "September 30, 2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
+library(tidyverse)
+library(dplyr)
+library(scales) 
+```
+## Get the maximum and minimum of GDP per capita for all continents.
+### Table
+```{r results = 'asis'}
+   
+gdp <- gapminder %>%
+    group_by(continent) %>% 
+    summarize(min_gdpPercap = min(gdpPercap),max_gdpPercap = max(gdpPercap))
+
+#summarize(min_gdpPercap = comma_format()(min(gdpPercap)),max_gdpPercap = #comma_format()(max(gdpPercap)))
+
+
+knitr::kable(gdp)
+```
+
+
+### Figure
+
+```{r}
+
+library(reshape2)
+gdp_melted<-melt(gdp)
+ggplot(gdp_melted,aes(continent,value,fill=variable))+ geom_bar(stat="identity",position="dodge") + ggtitle("Bar Chart showing Minimum and Maximum  GDP per Capita \n by Continent") + scale_y_continuous(labels = comma)
+
+  
+```
+## Look at the spread of GDP per capita within the continents
+
+### Table
+```{r}
+spread_gdp <- gapminder %>%
+    group_by(continent) %>% 
+    summarize(interquartile_gdp=comma_format()(IQR(gdpPercap)), median_gdp=comma_format()(median(gdpPercap)))
+
+knitr::kable(spread_gdp)
+
+```
+```{r}
+ggplot(gapminder, aes(continent, gdpPercap)) + geom_boxplot() + ggtitle("BoxPlot showing the Spread of GDP per Capita /n by Continent") + scale_y_continuous(labels = comma)
+
+```
+## Compute a trimmed mean of life expectancy for different years
+### Table
+```{r}
+Life <- gapminder %>%
+    group_by(year) %>% 
+    summarize(trimmed_mean=mean(lifeExp, trim=0.1))
+knitr::kable(Life)
+
+```
+
+### Figure
+```{r}
+ggplot(Life, aes(year, trimmed_mean)) +  geom_line()  + ggtitle("Line Chart showing the Trimmed Mean of Life Expectancy /n by Year") 
+```
+
+## How is life expectancy changing over time on different continents
+### Table
+```{r}
+Life_Cont <- gapminder %>%
+    select(continent, year, lifeExp) %>%
+    group_by(continent, year) %>%
+    summarize(trimmed_mean=mean(lifeExp, trim=0.1))
+
+knitr::kable(Life_Cont)
+
+
+```
+### Figure
+
+```{r}
+ggplot(Life_Cont, aes(year, trimmed_mean, color=continent)) + geom_line() + ggtitle("Line Chart showing the Trimmed Mean of Life Expectancy /n by Year and Continent") 
+
+```
+
+
+## Report the absolute and/or relative abundance of countries with low life expectancy over time by continent
+### Table
+
+```{r}
+
+      
+Life_Ab <- gapminder %>% 
+    select(continent, country, year, lifeExp) %>%
+    filter(lifeExp < mean(gapminder$lifeExp)) %>%
+    group_by(continent, year) %>%
+    summarize(no_low_lifeExp=n_distinct(country))
+
+
+knitr::kable(Life_Ab)
+
+```
+
+#Figure
+```{r}
+ggplot(Life_Ab, aes(continent, no_low_lifeExp)) +
+    facet_wrap(~ year) +
+    geom_point(colour="red")+ ylab("Number of Countries")+ 
+   ggtitle("Faceted Graph showing the Number of Countries with Low Life Expectancy \n by Continent")+
+    theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
+    
+```
+
