@@ -9,108 +9,193 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(gapminder)
 library(tidyverse)
-library(dplyr)
-library(scales) 
+library(dplyr) # for grouping and filtering
+library(scales) #to format numbers on an axis such as thousand separator
+library(pander) # to format tables
+library(directlabels) # to attach labels within charts
+library(reshape2) #used to arrange a table so all variables flow into one column from separate columns (melt)
+library(gridExtra) #used to layout tables and charts in a grid
+library(grid) #used to layout tables and charts in a grid
 ```
+
+
 ## Get the maximum and minimum of GDP per capita for all continents.
-### Table
-```{r results = 'asis'}
-   
+```{r fig.align='center', message=FALSE }
+  
 gdp <- gapminder %>%
     group_by(continent) %>% 
-    summarize(min_gdpPercap = min(gdpPercap),max_gdpPercap = max(gdpPercap))
+    summarize(Minimum = min(gdpPercap), Maximum = max(gdpPercap))
+    
 
-#summarize(min_gdpPercap = comma_format()(min(gdpPercap)),max_gdpPercap = #comma_format()(max(gdpPercap)))
+#melt table and group variables together by continent and modify y axis
+gdp_melted<-melt(gdp) %>%
+ggplot(aes(continent,value,fill=variable))+ 
+geom_bar(stat="identity",position="dodge") +
+ggtitle("Bar Chart showing Minimum and Maximum GDP per Capita \nby Continent") +
+scale_y_continuous(labels = comma)
 
 
-knitr::kable(gdp)
+#Set the table as a Grob for Grid
+gdp_tbl <- tableGrob(gdp, rows=NULL)
+
+
+#Arrange the figures in a grid
+grid.arrange(gdp_tbl, gdp_melted,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(4,4),
+             widths=c(11, 16),
+             top="Minimum and Maximum GDP per Capita in Each Continent")
 ```
+The results of this query show that Africa has the lowest GDP per capita at 241.17. The highest is found in Asia at a 113,523.13. Asia also appears to have the widest income gap of all the continents.
 
 
-### Figure
 
-```{r}
-
-library(reshape2)
-gdp_melted<-melt(gdp)
-ggplot(gdp_melted,aes(continent,value,fill=variable))+ geom_bar(stat="identity",position="dodge") + ggtitle("Bar Chart showing Minimum and Maximum  GDP per Capita \n by Continent") + scale_y_continuous(labels = comma)
-
-  
-```
 ## Look at the spread of GDP per capita within the continents
-
-### Table
-```{r}
+```{r fig.align='center', message=FALSE}
 spread_gdp <- gapminder %>%
     group_by(continent) %>% 
-    summarize(interquartile_gdp=comma_format()(IQR(gdpPercap)), median_gdp=comma_format()(median(gdpPercap)))
+    summarize(Interquartile=IQR(gdpPercap), Median=median(gdpPercap))
 
-knitr::kable(spread_gdp)
+
+#use library scales to modify the figures in the y-axis
+gdp_spread <- ggplot(gapminder, aes(continent, gdpPercap)) + geom_boxplot() + 
+ggtitle("BoxPlot showing the Spread of GDP per Capita \nby Continent") + scale_y_continuous(labels = comma)
+
+#Set the table as a Grob for Grid
+grob_tbl <- tableGrob(spread_gdp, rows=NULL)
+
+
+#Arrange the figures in a grid
+grid.arrange(grob_tbl, gdp_spread,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(4,4),
+             widths=c(11, 16),
+             top="Spread of GDP per Capita in Each Continent")
 
 ```
-```{r}
-ggplot(gapminder, aes(continent, gdpPercap)) + geom_boxplot() + ggtitle("BoxPlot showing the Spread of GDP per Capita /n by Continent") + scale_y_continuous(labels = comma)
+The charts above provide a more balanced interpretation of the income gap in all the countries. Although the first set of charts indicate that Asia has the widest income gap, the boxplot illustrates the fact that the high values are extreme outliers. Europe and Oceania have higher median incomes or gross domestic products.
 
-```
+
 ## Compute a trimmed mean of life expectancy for different years
-### Table
-```{r}
+```{r fig.align='center', message=FALSE}
+#Trim the 10% of the highest and lowest life expectancies, then find the mean
 Life <- gapminder %>%
     group_by(year) %>% 
-    summarize(trimmed_mean=mean(lifeExp, trim=0.1))
-knitr::kable(Life)
+    summarize(trimmed_mean=round(mean(lifeExp, trim=0.1), digits=2))
+
+
+
+#Create figure
+Trim_time <- ggplot(Life, aes(year, trimmed_mean)) +  geom_line()  + 
+ggtitle("Line Chart showing the Trimmed Mean of Life \nExpectancy by Year") 
+
+#Set the table as a Grob for Grid
+grob_tbl <- tableGrob(Life, rows=NULL)
+
+
+#Arrange the figures in a grid
+grid.arrange(grob_tbl, Trim_time,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(15,4),
+             widths=c(10, 17),
+             top="10% Trimmed Mean by Year")
 
 ```
 
-### Figure
-```{r}
-ggplot(Life, aes(year, trimmed_mean)) +  geom_line()  + ggtitle("Line Chart showing the Trimmed Mean of Life Expectancy /n by Year") 
-```
+The charts above show that there has been a steady increase in life expectancy since 1952. In 1952, the average was less than 49 years, but this figure increased to 68 in four decades.
+
 
 ## How is life expectancy changing over time on different continents
-### Table
-```{r}
+```{r fig.align='center', message=FALSE}
+#Isolate only the relevant columns first
 Life_Cont <- gapminder %>%
     select(continent, year, lifeExp) %>%
     group_by(continent, year) %>%
-    summarize(trimmed_mean=mean(lifeExp, trim=0.1))
+    summarize(trimmed_mean=round(mean(lifeExp, trim=0.1), digits=2))
 
-knitr::kable(Life_Cont)
+
+#Create the table with pander
+panderOptions('big.mark', '')
+pandoc.table(Life_Cont, style = "grid", round=2, caption = "Trend of Average Life Expectancy in Continents from 1952 to 2007 \n (Lowest 10% of highest and Lowest Figures Removed)")
+
+
+#Use the direct labels library to set the labels within the Line Chart
+ggplot(Life_Cont, aes(year, trimmed_mean, color=continent)) + 
+geom_line() + 
+ggtitle("Line Chart showing the Trimmed Mean of Life \nExpectancy by Year and Continent") +
+geom_dl(aes(label = continent), method = list(dl.trans(x = x + 0), "last.points",cex = 0.4)) # adapted from https://stackoverflow.com/questions/29357612/plot-labels-at-ends-of-lines
+
 
 
 ```
-### Figure
 
-```{r}
-ggplot(Life_Cont, aes(year, trimmed_mean, color=continent)) + geom_line() + ggtitle("Line Chart showing the Trimmed Mean of Life Expectancy /n by Year and Continent") 
-
-```
+Based on the table and chart above, Oceania has maintained the highest average life expectancy over the 40 year period, whereas Africa has maintained the lowest. Countries in the Americas have seen a steady increase. Africa saw a steady increase up to 1992 when the continent became ravaged by war, famine, and disease.
 
 
 ## Report the absolute and/or relative abundance of countries with low life expectancy over time by continent
-### Table
-
-```{r}
-
-      
+```{r fig.align='center', message=FALSE}
 Life_Ab <- gapminder %>% 
     select(continent, country, year, lifeExp) %>%
     filter(lifeExp < mean(gapminder$lifeExp)) %>%
     group_by(continent, year) %>%
     summarize(no_low_lifeExp=n_distinct(country))
 
+#Create table
+panderOptions('big.mark', '')
+pandoc.table(Life_Ab, style = "grid", round=2, caption = "Number of Countries with Low Life Expectancies in each Continent")
 
-knitr::kable(Life_Ab)
 
-```
-
-#Figure
-```{r}
+#Create a faceted chart so that each year is represented by its own grid
 ggplot(Life_Ab, aes(continent, no_low_lifeExp)) +
     facet_wrap(~ year) +
     geom_point(colour="red")+ ylab("Number of Countries")+ 
-   ggtitle("Faceted Graph showing the Number of Countries with Low Life Expectancy \n by Continent")+
+    ggtitle("Faceted Graph showing the Number of Countries with Low Life Expectancy \nby Continent")+
     theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
-    
+
+
 ```
+Given the previous set of charts, it is unsurprising that Africa has the most countries with average life expectancies of less than the worldwide average of 59 years. Oceania has no countries with relatively low life expectancy, whereas the count of countries in Europe dropped from five to one over a forty year span.
+
+
+## Extra: Which countries in Africa have the lowest life expectancy
+```{r fig.align='center', message=FALSE}
+#Obtain the average life expectancy for all continents in all years
+all_means = mean(gapminder$lifeExp)
+
+# Get all the relevant columns in Africa, get the life expectancy for each country across all years, then apply another filter to remove countries that have a mean score less than the number for all continents
+
+Af_Life <- gapminder %>% 
+    select(continent, country, year, lifeExp)  %>%  
+    filter(continent == "Africa") %>%
+    group_by(country)  %>%
+    summarize(avg_life=round(mean(lifeExp), digits=2)) %>%
+    filter (avg_life < all_means) %>%
+    arrange(desc(avg_life)) %>%
+    top_n(-10)
+
+
+
+#Create a bar chart that is ordered by life expectancy in descending order
+#and reorients the x-axis labels
+low_life <- ggplot(Af_Life, aes(x=reorder(country, - avg_life), y=avg_life, fill = country)) +  geom_bar(stat="identity")  + ggtitle("Chart showing the Lowest Life Expectancy \nin Africa from 1952 to 2007") + xlab("country") + ylab("Average Life EXpectancy") + theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
+
+
+#Set the table as a Grob for Grid
+grob_tbl <- tableGrob(Af_Life, rows=NULL)
+
+
+#Arrange the figures in a grid
+grid.arrange(grob_tbl, low_life,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(20,8),
+             widths=c(9, 20),
+             top="Lowest Life Expectancy")
+
+```
+
+In order to obtain more detailed results for the specific countries driving the low levels of life expectancy in Africa, the dataset was filtered and arranged to get the bottom ten ranked countries. The life expectancy in Sierra Leone is less than 36.77 years. From 1991 to 2002, the country had a civil war which greatly impacted the life expectancy.
 
