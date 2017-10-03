@@ -368,7 +368,7 @@ ggplot(Life_Ab, aes(continent, no_low_lifeExp)) +
     facet_wrap(~ year) +
     geom_point(colour="red")+ ylab("Number of Countries")+ 
     ggtitle("Faceted Graph showing the Number of Countries with Low Life Expectancy \nby Continent")+
-    theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
 ```
 
 <img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
@@ -382,7 +382,7 @@ Extra: Which countries in Africa have the lowest life expectancy
 #Obtain the average life expectancy for all continents in all years
 all_means = mean(gapminder$lifeExp)
 
-# Get all the relevant columns in Africa, get the life expectancy for each country across all years, then apply another filter to remove countries that have a mean score less than the number for all continents
+# Get all the relevant columns in Africa, get the life expectancy for each country \n #across all years, then apply another filter to remove countries that have a mean \n #score less than the number for all continents
 
 Af_Life <- gapminder %>% 
     select(continent, country, year, lifeExp)  %>%  
@@ -397,7 +397,9 @@ Af_Life <- gapminder %>%
 
 #Create a bar chart that is ordered by life expectancy in descending order
 #and reorients the x-axis labels
-low_life <- ggplot(Af_Life, aes(x=reorder(country, - avg_life), y=avg_life, fill = country)) +  geom_bar(stat="identity")  + ggtitle("Chart showing the Lowest Life Expectancy \nin Africa from 1952 to 2007") + xlab("country") + ylab("Average Life EXpectancy") + theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
+low_life <- ggplot(Af_Life, aes(x=reorder(country, - avg_life), y=avg_life)) +  geom_bar(stat="identity")  + 
+ggtitle("Chart showing the Lowest Life Expectancy \nin Africa from 1952 to 2007") + xlab("country") + ylab("Average Life EXpectancy") + 
+theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
 
 
 #Set the table as a Grob for Grid
