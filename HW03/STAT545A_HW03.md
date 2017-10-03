@@ -33,7 +33,9 @@ grid.arrange(gdp_tbl, gdp_melted,
              top="Minimum and Maximum GDP per Capita in Each Continent")
 ```
 
-<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /> The results of this query show that Africa has the lowest GDP per capita at 241.17. The highest is found in Asia at a 113,523.13. Asia also appears to have the widest income gap of all the continents.
+<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+
+The results of this query show that Africa has the lowest GDP per capita at 241.17. The highest is found in Asia at a 113,523.13. Asia also appears to have the widest income gap of all the continents.
 
 Look at the spread of GDP per capita within the continents
 ----------------------------------------------------------
@@ -64,7 +66,9 @@ grid.arrange(grob_tbl, gdp_spread,
              top="Spread of GDP per Capita in Each Continent")
 ```
 
-<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /> The charts above provide a more balanced interpretation of the income gap in all the countries. Although the first set of charts indicate that Asia has the widest income gap, the boxplot illustrates the fact that the high values are extreme outliers. Europe and Oceania have higher median incomes or gross domestic products.
+<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+
+The charts above provide a more balanced interpretation of the income gap in all the countries. Although the first set of charts indicate that Asia has the widest income gap, the boxplot illustrates the fact that the high values are extreme outliers. Europe and Oceania have higher median incomes or gross domestic products.
 
 Compute a trimmed mean of life expectancy for different years
 -------------------------------------------------------------
@@ -367,7 +371,9 @@ ggplot(Life_Ab, aes(continent, no_low_lifeExp)) +
     theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1))
 ```
 
-<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /> Given the previous set of charts, it is unsurprising that Africa has the most countries with average life expectancies of less than the worldwide average of 59 years. Oceania has no countries with relatively low life expectancy, whereas the count of countries in Europe dropped from five to one over a forty year span.
+<img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+
+Given the previous set of charts, it is unsurprising that Africa has the most countries with average life expectancies of less than the worldwide average of 59 years. Oceania has no countries with relatively low life expectancy, whereas the count of countries in Europe dropped from five to one over a forty year span.
 
 Extra: Which countries in Africa have the lowest life expectancy
 ----------------------------------------------------------------
