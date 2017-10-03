@@ -417,4 +417,4 @@ grid.arrange(grob_tbl, low_life,
 
 <img src="STAT545A_HW03_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-In order to obtain more detailed results for the specific countries driving the low levels of life expectancy in Africa, the dataset was filtered and arranged to get the bottom ten ranked countries. The life expectancy in Sierra Leone is less than 36.77 years. From 1991 to 2002, the country had a civil war which greatly impacted the life expectancy.
+In order to obtain more detailed results for the specific countries driving the low levels of life expectancy in Africa, the dataset was filtered and arranged to get the bottom ten ranked countries. The life expectancy in Sierra Leone is only about 36.77 years. From 1991 to 2002, the country had a civil war which greatly impacted the life expectancy.
