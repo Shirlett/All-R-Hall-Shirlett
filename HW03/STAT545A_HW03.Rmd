@@ -47,7 +47,7 @@ grid.arrange(gdp_tbl, gdp_melted,
              widths=c(11, 16),
              top="Minimum and Maximum GDP per Capita in Each Continent")
 ```
-The results of this query show that Africa has the lowest GDP per capita at 241.17. The highest is found in Asia at a 113,523.13. Asia also appears to have the widest income gap of all the continents.
+\nThe results of this query show that Africa has the lowest GDP per capita at 241.17. The highest is found in Asia at a 113,523.13. Asia also appears to have the widest income gap of all the continents.
 
 
 
@@ -75,7 +75,7 @@ grid.arrange(grob_tbl, gdp_spread,
              top="Spread of GDP per Capita in Each Continent")
 
 ```
-The charts above provide a more balanced interpretation of the income gap in all the countries. Although the first set of charts indicate that Asia has the widest income gap, the boxplot illustrates the fact that the high values are extreme outliers. Europe and Oceania have higher median incomes or gross domestic products.
+\nThe charts above provide a more balanced interpretation of the income gap in all the countries. Although the first set of charts indicate that Asia has the widest income gap, the boxplot illustrates the fact that the high values are extreme outliers. Europe and Oceania have higher median incomes or gross domestic products.
 
 
 ## Compute a trimmed mean of life expectancy for different years
