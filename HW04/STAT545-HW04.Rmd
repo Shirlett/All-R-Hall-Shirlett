@@ -31,7 +31,7 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
-knitr::kable(gaptble, 'html',  caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
+knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
   
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
@@ -59,7 +59,7 @@ final_spread <- firstspread %>%
   summarize(MinLifeCountry=last(Minimum_Life_Country), MinLifeExpectancy=last(Minimum_Life), MaxLifeCountry=first(Maximum_Life_Country),  MaxLifeExpectancy=first(Maximum_Life))  
 
 
-knitr::kable(final_spread, 'html', digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
+knitr::kable(final_spread, digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
 
 ```
 
