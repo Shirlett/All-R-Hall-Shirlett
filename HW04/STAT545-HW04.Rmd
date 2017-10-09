@@ -16,7 +16,6 @@ library(dplyr) # for grouping and filtering
 library(tidyr) #reorganize the values in a data set
 library(knitr) #for formatting the output of tables
 
-
 ```
 
 ## Reshaping
@@ -32,7 +31,7 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
-knitr::kable(gaptble, format.args = list(decimal.mark = '.'), digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format")
+knitr::kable(gaptble, 'html',  caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
   
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
@@ -60,7 +59,7 @@ final_spread <- firstspread %>%
   summarize(MinLifeCountry=last(Minimum_Life_Country), MinLifeExpectancy=last(Minimum_Life), MaxLifeCountry=first(Maximum_Life_Country),  MaxLifeExpectancy=first(Maximum_Life))  
 
 
-knitr::kable(final_spread, digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
+knitr::kable(final_spread, 'html', digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
 
 ```
 
@@ -125,7 +124,7 @@ f_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Full Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption= "Full Join Result Summary")
 
 # Semi-Join
 # This results in only the rows in which continent matches in both the gapminder and 
@@ -137,7 +136,7 @@ s_join %>%
   arrange(continent) %>%
   group_by(continent) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Semi Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption= "Semi Join Result Summary")
 
 # Anti-Join with gapminder as the first dataset
 # This results in no rows being returned since all of the continents in gapminder have # a match in gapcont
