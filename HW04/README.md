@@ -1,4 +1,4 @@
-The output of HW04 can be found ![here] (https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW04/STAT545-HW04.md).
+The output of HW04 can be found ![here](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW04/STAT545-HW04.md).
 
 
 # Reflection
