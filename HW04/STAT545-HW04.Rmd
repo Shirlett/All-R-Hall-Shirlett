@@ -75,7 +75,7 @@ hemisphere <- c('Eastern','Western', 'Western','Eastern', 'Eastern', 'Eastern')
 
 gapcont <- data.frame(continent, areasqkm, hemisphere)
 
-knitr::kable(gapcont, format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="GapCont Table showing Area and Hemisphere for all Continents")
+knitr::kable(gapcont, format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="GapCont Table showing Area and Hemisphere for all Continents")
 
 # Left Join
 # This results in every single available row in gapminder being returned since all 
@@ -88,7 +88,7 @@ l_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Left Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Left Join Result Summary")
 
 # Right Join
 # This results in every single available row in gapminder in addition to the one row 
@@ -101,7 +101,7 @@ r_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html',  digits=2, caption="Right Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Right Join Result Summary")
 
 # Inner Join
 # This results in every single available row in gapminder being returned since all 
@@ -114,7 +114,7 @@ i_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Inner Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Inner Join Result Summary")
 
 # Full Join
 # This results in all rows in both the gapminder and the gapcont being returned
@@ -125,7 +125,7 @@ f_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html',  digits=2, caption="Full Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Full Join Result Summary")
 
 # Semi-Join
 # This results in only the rows in which continent matches in both the gapminder and 
@@ -137,20 +137,20 @@ s_join %>%
   arrange(continent) %>%
   group_by(continent) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Semi Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Semi Join Result Summary")
 
 # Anti-Join with gapminder as the first dataset
 # This results in no rows being returned since all of the continents in gapminder have # a match in gapcont
 a_join <- anti_join(gapminder, gapcont, by='continent')
 a_join %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
 
 # Anti-join with gapminder as the second dataset
 # This results in only one row being returned since one of the continents in gapcont  
 # do not have a match in gapminder
 a_join_sec <- anti_join(gapcont, gapminder,  by='continent')
 
-knitr::kable(a_join_sec, format.args = list(decimal.mark = '.', big.mark = ","),  format='html', digits=2, caption="Anti Join Result Summary - Gapminder as Second Dataframe")
+knitr::kable(a_join_sec, format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Anti Join Result Summary - Gapminder as Second Dataframe")
 
 
 ```

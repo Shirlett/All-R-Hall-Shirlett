@@ -107,95 +107,18 @@ hemisphere <- c('Eastern','Western', 'Western','Eastern', 'Eastern', 'Eastern')
 
 gapcont <- data.frame(continent, areasqkm, hemisphere)
 
-knitr::kable(gapcont, format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="GapCont Table showing Area and Hemisphere for all Continents")
+knitr::kable(gapcont, format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="GapCont Table showing Area and Hemisphere for all Continents")
 ```
 
-<table>
-<caption>
-GapCont Table showing Area and Hemisphere for all Continents
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-30,244,049
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-42,068,068
-</td>
-<td style="text-align:left;">
-Western
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Antarctica
-</td>
-<td style="text-align:right;">
-14,000,000
-</td>
-<td style="text-align:left;">
-Western
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-44,391,162
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-10,354,636
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-7,686,884
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-</tr>
-</tbody>
-</table>
+| continent  |    areasqkm| hemisphere |
+|:-----------|-----------:|:-----------|
+| Africa     |  30,244,049| Eastern    |
+| Americas   |  42,068,068| Western    |
+| Antarctica |  14,000,000| Western    |
+| Asia       |  44,391,162| Eastern    |
+| Europe     |  10,354,636| Eastern    |
+| Oceania    |   7,686,884| Eastern    |
+
 ``` r
 # Left Join
 # This results in every single available row in gapminder being returned since all 
@@ -208,102 +131,17 @@ l_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Left Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Left Join Result Summary")
 ```
 
-<table>
-<caption>
-Left Join Result Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-<th style="text-align:right;">
-totalpop
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-30,244,049
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-929,539,692
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-42,068,068
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-898,871,184
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-44,391,162
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-3,811,953,827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-10,354,636
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-586,098,529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-7,686,884
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-24,549,947
-</td>
-</tr>
-</tbody>
-</table>
+| continent |    areasqkm| hemisphere |       totalpop|
+|:----------|-----------:|:-----------|--------------:|
+| Africa    |  30,244,049| Eastern    |    929,539,692|
+| Americas  |  42,068,068| Western    |    898,871,184|
+| Asia      |  44,391,162| Eastern    |  3,811,953,827|
+| Europe    |  10,354,636| Eastern    |    586,098,529|
+| Oceania   |   7,686,884| Eastern    |     24,549,947|
+
 ``` r
 # Right Join
 # This results in every single available row in gapminder in addition to the one row 
@@ -316,116 +154,18 @@ r_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html',  digits=2, caption="Right Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Right Join Result Summary")
 ```
 
-<table>
-<caption>
-Right Join Result Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-<th style="text-align:right;">
-totalpop
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-30,244,049
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-929,539,692
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-42,068,068
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-898,871,184
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Antarctica
-</td>
-<td style="text-align:right;">
-14,000,000
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-44,391,162
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-3,811,953,827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-10,354,636
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-586,098,529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-7,686,884
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-24,549,947
-</td>
-</tr>
-</tbody>
-</table>
+| continent  |    areasqkm| hemisphere |       totalpop|
+|:-----------|-----------:|:-----------|--------------:|
+| Africa     |  30,244,049| Eastern    |    929,539,692|
+| Americas   |  42,068,068| Western    |    898,871,184|
+| Antarctica |  14,000,000| Western    |             NA|
+| Asia       |  44,391,162| Eastern    |  3,811,953,827|
+| Europe     |  10,354,636| Eastern    |    586,098,529|
+| Oceania    |   7,686,884| Eastern    |     24,549,947|
+
 ``` r
 # Inner Join
 # This results in every single available row in gapminder being returned since all 
@@ -438,102 +178,17 @@ i_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Inner Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Inner Join Result Summary")
 ```
 
-<table>
-<caption>
-Inner Join Result Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-<th style="text-align:right;">
-totalpop
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-30,244,049
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-929,539,692
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-42,068,068
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-898,871,184
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-44,391,162
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-3,811,953,827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-10,354,636
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-586,098,529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-7,686,884
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-24,549,947
-</td>
-</tr>
-</tbody>
-</table>
+| continent |    areasqkm| hemisphere |       totalpop|
+|:----------|-----------:|:-----------|--------------:|
+| Africa    |  30,244,049| Eastern    |    929,539,692|
+| Americas  |  42,068,068| Western    |    898,871,184|
+| Asia      |  44,391,162| Eastern    |  3,811,953,827|
+| Europe    |  10,354,636| Eastern    |    586,098,529|
+| Oceania   |   7,686,884| Eastern    |     24,549,947|
+
 ``` r
 # Full Join
 # This results in all rows in both the gapminder and the gapcont being returned
@@ -544,116 +199,18 @@ f_join %>%
   arrange(continent) %>%
   group_by(continent, areasqkm, hemisphere) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html',  digits=2, caption="Full Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Full Join Result Summary")
 ```
 
-<table>
-<caption>
-Full Join Result Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-<th style="text-align:right;">
-totalpop
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-30,244,049
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-929,539,692
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-42,068,068
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-898,871,184
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Antarctica
-</td>
-<td style="text-align:right;">
-14,000,000
-</td>
-<td style="text-align:left;">
-Western
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-44,391,162
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-3,811,953,827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-10,354,636
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-586,098,529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-7,686,884
-</td>
-<td style="text-align:left;">
-Eastern
-</td>
-<td style="text-align:right;">
-24,549,947
-</td>
-</tr>
-</tbody>
-</table>
+| continent  |    areasqkm| hemisphere |       totalpop|
+|:-----------|-----------:|:-----------|--------------:|
+| Africa     |  30,244,049| Eastern    |    929,539,692|
+| Americas   |  42,068,068| Western    |    898,871,184|
+| Antarctica |  14,000,000| Western    |             NA|
+| Asia       |  44,391,162| Eastern    |  3,811,953,827|
+| Europe     |  10,354,636| Eastern    |    586,098,529|
+| Oceania    |   7,686,884| Eastern    |     24,549,947|
+
 ``` r
 # Semi-Join
 # This results in only the rows in which continent matches in both the gapminder and 
@@ -665,145 +222,42 @@ s_join %>%
   arrange(continent) %>%
   group_by(continent) %>%
   summarise(totalpop=sum(as.numeric(pop))) %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Semi Join Result Summary")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Semi Join Result Summary")
 ```
 
-<table>
-<caption>
-Semi Join Result Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-totalpop
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Africa
-</td>
-<td style="text-align:right;">
-929,539,692
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Americas
-</td>
-<td style="text-align:right;">
-898,871,184
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Asia
-</td>
-<td style="text-align:right;">
-3,811,953,827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Europe
-</td>
-<td style="text-align:right;">
-586,098,529
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oceania
-</td>
-<td style="text-align:right;">
-24,549,947
-</td>
-</tr>
-</tbody>
-</table>
+| continent |       totalpop|
+|:----------|--------------:|
+| Africa    |    929,539,692|
+| Americas  |    898,871,184|
+| Asia      |  3,811,953,827|
+| Europe    |    586,098,529|
+| Oceania   |     24,549,947|
+
 ``` r
 # Anti-Join with gapminder as the first dataset
 # This results in no rows being returned since all of the continents in gapminder have # a match in gapcont
 a_join <- anti_join(gapminder, gapcont, by='continent')
 a_join %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","), format='html', digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
+  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
 ```
 
-<table>
-<caption>
-Anti Join Result Summary - Gapminder as First Dataframe
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-country
-</th>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-year
-</th>
-<th style="text-align:right;">
-lifeExp
-</th>
-<th style="text-align:right;">
-pop
-</th>
-<th style="text-align:right;">
-gdpPercap
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+Table: Anti Join Result Summary - Gapminder as First Dataframe
+
+country continent year lifeExp pop gdpPercap -------- ---------- ----- -------- ---- ----------
+
 ``` r
 # Anti-join with gapminder as the second dataset
 # This results in only one row being returned since one of the continents in gapcont  
 # do not have a match in gapminder
 a_join_sec <- anti_join(gapcont, gapminder,  by='continent')
 
-knitr::kable(a_join_sec, format.args = list(decimal.mark = '.', big.mark = ","),  format='html', digits=2, caption="Anti Join Result Summary - Gapminder as Second Dataframe")
+knitr::kable(a_join_sec, format.args = list(decimal.mark = '.', big.mark = ","),   digits=2, caption="Anti Join Result Summary - Gapminder as Second Dataframe")
 ```
 
-<table>
-<caption>
-Anti Join Result Summary - Gapminder as Second Dataframe
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-continent
-</th>
-<th style="text-align:right;">
-areasqkm
-</th>
-<th style="text-align:left;">
-hemisphere
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Antarctica
-</td>
-<td style="text-align:right;">
-1.4e+07
-</td>
-<td style="text-align:left;">
-Western
-</td>
-</tr>
-</tbody>
-</table>
+| continent  |  areasqkm| hemisphere |
+|:-----------|---------:|:-----------|
+| Antarctica |   1.4e+07| Western    |
+
 ### Activity 3 - Merging and Matching
 
 ``` r
