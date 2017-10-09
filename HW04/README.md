@@ -1,7 +1,7 @@
-The output of HW04 can be found here.
+The output of HW04 can be found ![here] (https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW04/STAT545-HW04.md).
 
 
-Reflection
+# Reflection
 
 Overall, this homework assignment was fairly challenging. This was mainly as a result of my desire to express the new shape of the life expectancy ranking table in a meaningful way. Although the requirements were only to reshape the three columns- year, country and lifeExp, I did not think the result was adequate. If I did not know what the intent of the original code was, I would not be able to look at the final table and fully understand the figures.
 
