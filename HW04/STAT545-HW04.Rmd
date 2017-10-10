@@ -21,7 +21,7 @@ library(kableExtra) #to create enhanced format for tables
 
 ## Reshaping
 ### Activity #4 - One row per year for each life expectancy min and max rank
-```{r results='asis' , message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 
 # This is taken from the HW windows function example giving the country with both the
 # lowest and highest life expectancy (in Asia)
