@@ -15,6 +15,7 @@ library(tidyverse)
 library(dplyr) # for grouping and filtering
 library(tidyr) #reorganize the values in a data set
 library(knitr) #for formatting the output of tables
+library(kableExtra) #to create enhanced format for tables
 
 ```
 
@@ -31,7 +32,11 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
-knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
+kable(gaptble, "html") %>%
+  kable_styling("striped") %>%
+  add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format"))
+
+#knitr::kable(gaptble, add_footnote(c("Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")), notation="alphabet", format.args = #list(decimal.mark = '.'), digits=2)
   
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
