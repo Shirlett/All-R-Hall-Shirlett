@@ -18,302 +18,41 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
-kable(gaptble, "html") %>%
-  kable_styling("striped") %>%
-  add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format"))
+#kable(gaptble, "html") %>%
+ # kable_styling("striped") %>%
+  #add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year #- Long Format"))
+
+knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", notation="alphabet", format.args = list(decimal.mark = '.'), digits=2)
 ```
 
-<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-year
-</th>
-<th style="text-align:left;">
-country
-</th>
-<th style="text-align:right;">
-lifeExp
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1952
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-28.801
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1952
-</td>
-<td style="text-align:left;">
-Israel
-</td>
-<td style="text-align:right;">
-65.390
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1957
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-30.332
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1957
-</td>
-<td style="text-align:left;">
-Israel
-</td>
-<td style="text-align:right;">
-67.840
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1962
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-31.997
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1962
-</td>
-<td style="text-align:left;">
-Israel
-</td>
-<td style="text-align:right;">
-69.390
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1967
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-34.020
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1967
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-71.430
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1972
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-36.088
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1972
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-73.420
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1977
-</td>
-<td style="text-align:left;">
-Cambodia
-</td>
-<td style="text-align:right;">
-31.220
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1977
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-75.380
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1982
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-39.854
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1982
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-77.110
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1987
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-40.822
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1987
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-78.670
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1992
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-41.674
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1992
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-79.360
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1997
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-41.763
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1997
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-80.690
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2002
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-42.129
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2002
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-82.000
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2007
-</td>
-<td style="text-align:left;">
-Afghanistan
-</td>
-<td style="text-align:right;">
-43.828
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2007
-</td>
-<td style="text-align:left;">
-Japan
-</td>
-<td style="text-align:right;">
-82.603
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; border:0;" colspan="100%">
-<sup>a</sup> Countries in Asia with Minimum and Maximum Life Expectancy by Year - Long Format
-</td>
-</tr>
-</tfoot>
-</table>
+|  year| country     |  lifeExp|
+|-----:|:------------|--------:|
+|  1952| Afghanistan |    28.80|
+|  1952| Israel      |    65.39|
+|  1957| Afghanistan |    30.33|
+|  1957| Israel      |    67.84|
+|  1962| Afghanistan |    32.00|
+|  1962| Israel      |    69.39|
+|  1967| Afghanistan |    34.02|
+|  1967| Japan       |    71.43|
+|  1972| Afghanistan |    36.09|
+|  1972| Japan       |    73.42|
+|  1977| Cambodia    |    31.22|
+|  1977| Japan       |    75.38|
+|  1982| Afghanistan |    39.85|
+|  1982| Japan       |    77.11|
+|  1987| Afghanistan |    40.82|
+|  1987| Japan       |    78.67|
+|  1992| Afghanistan |    41.67|
+|  1992| Japan       |    79.36|
+|  1997| Afghanistan |    41.76|
+|  1997| Japan       |    80.69|
+|  2002| Afghanistan |    42.13|
+|  2002| Japan       |    82.00|
+|  2007| Afghanistan |    43.83|
+|  2007| Japan       |    82.60|
+
 ``` r
-#knitr::kable(gaptble, add_footnote(c("Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")), notation="alphabet", format.args = #list(decimal.mark = '.'), digits=2)
-  
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
