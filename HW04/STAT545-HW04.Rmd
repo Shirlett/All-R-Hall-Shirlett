@@ -22,7 +22,7 @@ library(xtable)
 
 ## Reshaping
 ### Activity #4 - One row per year for each life expectancy min and max rank
-```{r results='asis', fig.cap="Something", message=FALSE, warning=FALSE}
+```{r results='asis', message=FALSE, warning=FALSE}
 
 # This is taken from the HW windows function example giving the country with both the
 # lowest and highest life expectancy (in Asia)
@@ -37,7 +37,9 @@ gaptble <- gapminder %>%
  # kable_styling("striped") %>%
   #add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year #- Long Format"))
 
-knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", notation="alphabet", format.args = list(decimal.mark = '.'), digits=2)
+knitr::kable(gaptble, format="markdown", caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
+
+#xtable(gaptble, type = "html", caption="Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")
   
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%

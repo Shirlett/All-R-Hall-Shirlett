@@ -22,7 +22,7 @@ gaptble <- gapminder %>%
  # kable_styling("striped") %>%
   #add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year #- Long Format"))
 
-knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", notation="alphabet", format.args = list(decimal.mark = '.'), digits=2)
+knitr::kable(gaptble, format="markdown", caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
 ```
 
 |  year| country     |  lifeExp|
@@ -53,6 +53,8 @@ knitr::kable(gaptble, caption="Countries in Asia with Minimum and Maximum Life E
 |  2007| Japan       |    82.60|
 
 ``` r
+#xtable(gaptble, type = "html", caption="Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")
+  
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
