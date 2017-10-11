@@ -34,20 +34,17 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
-#knitr::kable(gaptble, format="markdown", caption="Countries in Asia with Minimum and #Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = #'.'), digits=2)
 
-
-kable(gaptble, format='html', caption="Countries in Asia with Minimum and Maximum Life Expectancy #\nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2, escape=TRUE)
-
-
-#kable(gaptble, "html") %>%
- # kable_styling("striped") %>%
-  #add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year #- Long Format"))
+kable(gaptble, format='html', caption="Countries in Asia with Minimum and Maximum Life Expectancy by Year - Long Format", format.args = list(decimal.mark = '.'), digits=2, escape=TRUE)
 
 
 
-#xtable(gaptble, type = "html", caption="Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")
-  
+
+
+
+
+```
+```{r}
 #Get only the countries with the minimum life expectancies and add new columns
 firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
@@ -72,11 +69,15 @@ final_spread <- firstspread %>%
   spread(LifeType,lifeExp,  fill=0, drop=TRUE) %>%
   group_by(year) %>%
   summarize(MinLifeCountry=last(Minimum_Life_Country), MinLifeExpectancy=last(Minimum_Life), MaxLifeCountry=first(Maximum_Life_Country),  MaxLifeExpectancy=first(Maximum_Life))  
-
-
-knitr::kable(final_spread, digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
-
 ```
+
+
+```{r}
+kable(final_spread, format='html', digits=2, caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Wide Format")
+```
+
+
+
 
 ## JOINING
 ### Activity #1 - Explore different types of join between gapminder and new dataframe
