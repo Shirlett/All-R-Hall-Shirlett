@@ -307,7 +307,7 @@ Japan
 </tbody>
 </table>
 ``` r
-#Get only the countries with the minimum life expectancies and add new columns
+#Get only the countries with the minimum life expectancies and add two new columns
 firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
   mutate(LifeType='Minimum_Life', LifeCountry='Minimum_Life_Country') 
