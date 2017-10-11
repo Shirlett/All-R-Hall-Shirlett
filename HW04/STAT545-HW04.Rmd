@@ -42,7 +42,9 @@ kable(gaptble, "html", caption="Countries in Asia with Minimum and Maximum Life 
 
 
 
-```{r results='asis'}
+### The Process
+
+```{r}
 #Get only the countries with the minimum life expectancies and add two new columns
 firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
@@ -67,7 +69,10 @@ final_spread <- firstspread %>%
   spread(LifeType,lifeExp,  fill=0, drop=TRUE) %>%
   group_by(year) %>%
   summarize(MinLifeCountry=last(Minimum_Life_Country), MinLifeExpectancy=last(Minimum_Life), MaxLifeCountry=first(Maximum_Life_Country),  MaxLifeExpectancy=first(Maximum_Life))  
+
+
 ```
+
 
 
 ```{r}

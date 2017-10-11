@@ -306,6 +306,8 @@ Japan
 </tr>
 </tbody>
 </table>
+### The Process
+
 ``` r
 #Get only the countries with the minimum life expectancies and add two new columns
 firsttble <- gaptble %>%
