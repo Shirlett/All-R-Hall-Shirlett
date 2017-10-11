@@ -312,7 +312,7 @@ firsttble <- gaptble %>%
   do(head(., n = 1)) %>%
   mutate(LifeType='Minimum_Life', LifeCountry='Minimum_Life_Country') 
   
-#Get only the countries with the maximum life expectancies and add new columns
+#Get only the countries with the maximum life expectancies and add two new columns
 secondtble <- gaptble %>%
   do(tail(., n = 1)) %>%
   mutate(LifeType='Maximum_Life', LifeCountry='Maximum_Life_Country')
