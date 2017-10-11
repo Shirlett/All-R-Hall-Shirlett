@@ -10,6 +10,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(message = FALSE)
 library(devtools)
+library(DT) #provides a nice interface for dataframes
 library(gapminder)
 library(tidyverse)
 library(dplyr) # for grouping and filtering
@@ -33,11 +34,17 @@ gaptble <- gapminder %>%
   filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
   arrange(year)
 
+#knitr::kable(gaptble, format="markdown", caption="Countries in Asia with Minimum and #Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = #'.'), digits=2)
+
+
+kable(gaptble, format='html', caption="Countries in Asia with Minimum and Maximum Life Expectancy #\nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2, escape=TRUE)
+
+
 #kable(gaptble, "html") %>%
  # kable_styling("striped") %>%
   #add_footnote(c("Countries in Asia with Minimum and Maximum Life Expectancy \nby Year #- Long Format"))
 
-knitr::kable(gaptble, format="markdown", caption="Countries in Asia with Minimum and Maximum Life Expectancy \nby Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
+
 
 #xtable(gaptble, type = "html", caption="Countries in Asia with Minimum and Maximum Life #Expectancy \nby Year - Long Format")
   
