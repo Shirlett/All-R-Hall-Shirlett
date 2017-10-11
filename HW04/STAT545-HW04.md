@@ -19,7 +19,7 @@ gaptble <- gapminder %>%
   arrange(year)
 
 
-kable(gaptble, format='html', caption="Countries in Asia with Minimum and Maximum Life Expectancy by Year - Long Format", format.args = list(decimal.mark = '.'), digits=2, escape=TRUE)
+kable(gaptble, "html", caption="Countries in Asia with Minimum and Maximum Life Expectancy by Year - Long Format", format.args = list(decimal.mark = '.'), digits=2)
 ```
 
 <table>
