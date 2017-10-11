@@ -112,8 +112,8 @@ r_join %>%
 
 # Inner Join
 # This results in every single available row in gapminder being returned since all 
-# continents match in both dataframes. All variables from both tables are combined
-# in the order of the inner join function.
+# continents in gapminder has a match in gapcont. All combinations of the matches are 
+# returned. All variables from both tables are combined in the order of the inner join # function.
 i_join <- inner_join(gapminder, gapcont, by='continent')
 i_join %>%
   filter(year==2007 | is.na(year)) %>%
@@ -124,7 +124,7 @@ i_join %>%
   knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Inner Join Result Summary")
 
 # Full Join
-# This results in all rows in both the gapminder and the gapcont being returned
+# This results in all rows in both the gapminder and the gapcont being returned even if # some columns are null
 f_join <- full_join(gapminder, gapcont, by='continent')
 f_join %>%
   filter(year==2007 | is.na(year)) %>%
@@ -149,8 +149,7 @@ s_join %>%
 # Anti-Join with gapminder as the first dataset
 # This results in no rows being returned since all of the continents in gapminder have # a match in gapcont
 a_join <- anti_join(gapminder, gapcont, by='continent')
-a_join %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
+knitr::kable(a_join, format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
 
 # Anti-join with gapminder as the second dataset
 # This results in only one row being returned since one of the continents in gapcont  

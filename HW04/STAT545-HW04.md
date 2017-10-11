@@ -243,8 +243,7 @@ s_join %>%
 # Anti-Join with gapminder as the first dataset
 # This results in no rows being returned since all of the continents in gapminder have # a match in gapcont
 a_join <- anti_join(gapminder, gapcont, by='continent')
-a_join %>%
-  knitr::kable(format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
+knitr::kable(a_join, format.args = list(decimal.mark = '.', big.mark = ","),  digits=2, caption="Anti Join Result Summary - Gapminder as First Dataframe")
 ```
 
 Table: Anti Join Result Summary - Gapminder as First Dataframe
