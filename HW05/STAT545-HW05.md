@@ -427,9 +427,7 @@ Asia
 #Write dataframe to CSV
 write_csv(long_live, "./STAT545-HW05_files/long_live_file.csv")
 
-#Read.csv function brings the original dataframe back into the workspace in the same
-
-#order as exported
+#Read.csv function 
 long_live_ext <- read.csv("./STAT545-HW05_files/long_live_file.csv") 
 
 kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - Reimported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
@@ -682,6 +680,10 @@ Asia
 </tr>
 </tbody>
 </table>
+``` r
+#The table is brought back into the workspace in the same order as exported
+```
+
 Visualization
 =============
 
