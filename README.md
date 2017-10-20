@@ -6,6 +6,7 @@ This is the main Readme file for this repository. This repository contains markd
 ---
 # Table of Contents
 1. ![HW01 - About Me](https://github.com/Shirlett/STAT545-hw01-Hall-Shirlett)
+
 2. ![HW02 - Initial Exploration](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW02)
   + ![Smell Test the Data](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW02/Gapminder_Explore.md#smell-test-the-data)
   + ![Explore the Variables](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW02/Gapminder_Explore.md#explore-individual-variables)
