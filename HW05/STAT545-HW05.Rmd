@@ -160,8 +160,8 @@ kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Gre
 
 
 ```
-
-#Visualization with Stacked Chart
+#Visualization 
+##with Stacked Chart
 ```{r warning=FALSE, message=FALSE}
 #The effectiveness principle in visualization was applied to this chart where the
 
@@ -189,7 +189,7 @@ histo1
 
 ```
 
-#Visualization with Flipped Bar Charts
+##with Flipped Bar Charts
 ```{r warning=FALSE, message=FALSE}
 #This aspect of the visualization is based on a task abstraction for an economist who
 
@@ -258,7 +258,7 @@ long_live_plot <- grid.arrange(plot1,plot2,
 
 
 
-#Visualization with ScatterPlot
+##with ScatterPlot
 ```{r}
 #The visualization design options related to color were a bit limited because the
 

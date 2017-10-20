@@ -9,9 +9,10 @@ October 16, 2017
     -   [Effect of Arranging Variables vs Reordering Factors on Graphs](#effect-of-arranging-variables-vs-reordering-factors-on-graphs)
 -   [File Input and Output](#file-input-and-output)
     -   [CSV](#csv)
--   [Visualization with Stacked Chart](#visualization-with-stacked-chart)
--   [Visualization with Flipped Bar Charts](#visualization-with-flipped-bar-charts)
--   [Visualization with ScatterPlot](#visualization-with-scatterplot)
+-   [Visualization](#visualization)
+    -   [with Stacked Chart](#with-stacked-chart)
+    -   [with Flipped Bar Charts](#with-flipped-bar-charts)
+    -   [with ScatterPlot](#with-scatterplot)
 -   [Graphic Devices](#graphic-devices)
     -   [Raster with ggsave- No Explicit Provision](#raster-with-ggsave--no-explicit-provision)
     -   [Raster with ggsave - With Explicit Provision](#raster-with-ggsave---with-explicit-provision)
@@ -424,12 +425,12 @@ Asia
 </table>
 ``` r
 #Write dataframe to CSV
-write_csv(long_live, "long_live_file.csv")
+write_csv(long_live, "./STAT545-HW05_files/long_live_file.csv")
 
 #Read.csv function brings the original dataframe back into the workspace in the same
 
 #order as exported
-long_live_ext <- read.csv("long_live_file.csv") 
+long_live_ext <- read.csv("./STAT545-HW05_files/long_live_file.csv") 
 
 kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - Reimported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
 ```
@@ -681,8 +682,11 @@ Asia
 </tr>
 </tbody>
 </table>
-Visualization with Stacked Chart
-================================
+Visualization
+=============
+
+with Stacked Chart
+------------------
 
 ``` r
 #The effectiveness principle in visualization was applied to this chart where the
@@ -714,8 +718,8 @@ histo1
 # with Europe having the highest concentration.
 ```
 
-Visualization with Flipped Bar Charts
-=====================================
+with Flipped Bar Charts
+-----------------------
 
 ``` r
 #This aspect of the visualization is based on a task abstraction for an economist who
@@ -786,8 +790,8 @@ long_live_plot <- grid.arrange(plot1,plot2,
 #as efficient as Norway.
 ```
 
-Visualization with ScatterPlot
-==============================
+with ScatterPlot
+----------------
 
 ``` r
 #The visualization design options related to color were a bit limited because the
@@ -798,7 +802,9 @@ Visualization with ScatterPlot
 
 #was utilized instead of the palette from ColorBrewer. A darker background was used for
 
-#more contrast.
+#more contrast. This chart is more visually appealing in comparison to the earlier
+
+#charts related to factoring with a basic grey background with black dots.
 
 ggplot(long_live_ext, aes(x=pop/10^6, y=gdpPercap/1000)) + 
   geom_point(aes(color=country)) + 
@@ -915,6 +921,7 @@ Extra Work: Factor Collapse with Recode
 =======================================
 
 ``` r
+#Groups the factors or countries into categories by its average life expectancy
 collapsed_livers <- long_live_ext %>%
   mutate(country_aging = fct_collapse(country,
         old = c("Norway", "New Zealand"),
