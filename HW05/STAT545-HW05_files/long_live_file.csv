@@ -1,0 +1,14 @@
+country,continent,lifeExp,pop,gdpPercap
+Norway,Europe,80.0,4627926,49357.19017
+New Zealand,Oceania,80.0,4115771,25185.00911
+Italy,Europe,81.0,58147733,28569.7197
+Canada,Americas,81.0,33390141,36319.23501
+France,Europe,81.0,61083916,30470.0167
+Israel,Asia,81.0,6426679,25523.2771
+Sweden,Europe,81.0,9031088,33859.74835
+Spain,Europe,81.0,40448191,28821.0637
+Australia,Oceania,81.0,20434176,34435.36744
+Switzerland,Europe,82.0,7554661,37506.41907
+Iceland,Europe,82.0,301931,36180.78919
+"Hong Kong, China",Asia,82.0,6980412,39724.97867
+Japan,Asia,83.0,127467972,31656.06806

@@ -1,0 +1,390 @@
+---
+title: "STAT545-HW05"
+author: "Shirlett"
+date: "October 16, 2017"
+output: 
+  github_document:
+      toc: true
+      
+      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
+library(tidyverse)
+library(knitr) #for formatting the output of tables
+library(dplyr) # for grouping and filtering
+library(forcats) #used to manipulate factors for ordering, lumping etc
+library(gridExtra) #used to layout tables and charts in a grid
+library(grid) #used to layout tables and charts in a grid
+library(readxl) #used to read excel file formats
+library(RColorBrewer) #has a set of colors for print and graphics
+library(scales) # to modify the appearance of axis values
+library(ggthemes) #additional color themes
+library(devtools)
+library(plotrix) # creates exploded pie charts
+library(ggplot2)
+
+
+
+```
+
+#Factor Management
+##Drop Factor Levels
+
+```{r warning=FALSE, message=FALSE}
+#First attempt to filter out Oceania from gapminder still retains all five of the
+
+#original continents but produces only 1680 rows of observations which omits the 24
+
+#associated with Oceania
+
+no_ocean <- gapminder %>%
+  filter(continent != "Oceania")
+         
+nlevels(no_ocean$continent) 
+nrow(no_ocean)   
+
+
+#We also need to verify the data type of each of the variables to ensure that continent
+
+#and/or country are factors
+str(no_ocean)
+
+#Second attempt to only remove unused factor levels, ie unused continents results in
+
+#only four continents to go with the 1680 observations
+
+dropped_ocean <- no_ocean  %>%
+    droplevels()
+
+nlevels(dropped_ocean$continent) 
+nrow(dropped_ocean) 
+
+  
+```
+
+##Reorder Factors
+```{r warning=FALSE, message=FALSE}
+#Order the countries by the standard deviation of the gdpPercap
+f_order <- fct_reorder(dropped_ocean$continent, dropped_ocean$gdpPercap, sd)
+levels(f_order)
+
+#The results are arranged in ascending order with Africa with the lowest standard
+
+#deviation of gdpPercap and Asia with the highest
+
+```
+
+
+##Effect of Arranging Variables vs Reordering Factors on Graphs
+```{r warning=FALSE, message=FALSE}
+#Arrange only orients the values on the y-axis by the increase along gdpPercap
+arr_ocean <- dropped_ocean %>%
+               group_by(continent) %>%
+               summarize(std_gdp=round(sd(gdpPercap), digits=2)) %>%
+               arrange(std_gdp) %>%
+               ggplot(aes(std_gdp, continent)) + 
+               geom_point() + 
+               labs(y= "Continent", x="Standard Deviation of GdpPerCap")
+
+
+#Factoring only orients the values on the y-axis by the country's appearance in the
+
+#list of factors
+
+f_factor <- dropped_ocean %>%
+                  group_by(continent) %>%
+                  summarize(std_gdp=round(sd(gdpPercap), digits=2)) %>%
+                  ggplot(aes(std_gdp, fct_reorder(continent,std_gdp)))+
+                  geom_point() + 
+                  labs(y= "Continent", x="Standard Deviation of GdpPerCap")
+
+
+#Arrange the figures in a grid
+grid.arrange(arr_ocean, f_factor,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(4,4),
+             widths=c(14, 14),
+             top="Comparison of Arrange vs Factoring")
+
+
+#Combining Arrange and factoring produces the same result as factoring alone, so that
+
+#arrange becomes redundant
+
+arr_and_fac <- dropped_ocean %>%
+               group_by(continent) %>%
+               summarize(std_gdp=round(sd(gdpPercap), digits=2)) %>%
+               arrange(std_gdp) %>%
+               ggplot(aes(std_gdp, fct_reorder(continent,std_gdp))) +                                 geom_point() + 
+               labs(y= "Continent", x="Standard Deviation of GdpPerCap")
+  
+
+grid.arrange(f_factor,arr_and_fac,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(4,4),
+             widths=c(14, 14),
+             top="Comparison of Factoring vs Combination with Arrange")
+
+
+```
+
+
+#File Input and Output
+##CSV
+```{r warning=FALSE, message=FALSE}
+#Countries with the highest life expectancy greater than 80 years
+long_live <- gapminder %>%
+          filter (year == 2007, lifeExp>80)  %>%
+          mutate (country = fct_reorder(country, lifeExp), lifeExp=round(lifeExp)) %>%
+          arrange(country)  %>%
+          select(country, continent, lifeExp, pop, gdpPercap)
+
+
+kable(long_live, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - to be Exported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
+
+#Write dataframe to CSV
+write_csv(long_live, "./STAT545-HW05_files/long_live_file.csv")
+
+#Read.csv function brings the original dataframe back into the workspace in the same
+
+#order as exported
+long_live_ext <- read.csv("./STAT545-HW05_files/long_live_file.csv") 
+
+kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - Reimported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
+
+
+
+```
+
+#Visualization with Stacked Chart
+```{r warning=FALSE, message=FALSE}
+#The effectiveness principle in visualization was applied to this chart where the
+
+#length of the bar and saturation of color was fully utilized to show the relative
+
+#density of a particular age.
+
+histo1 <- ggplot(long_live_ext, aes(lifeExp))+
+  #geom_histogram(aes(y=..density.., fill=continent))+
+  geom_bar(aes(fill = continent), position = 'fill') +
+  scale_x_continuous(breaks = c(80:83)) +
+  scale_y_continuous("",labels = scales::percent) +
+  scale_fill_brewer(palette="Dark2") +
+  ggtitle("Stacked Chart showing the Relative Concentration of a Specific Average Age \nin Each Continent") +
+  labs(x="Age")
+  
+
+histo1
+
+#This chart shows that all countries with an average of 83 can be found in Asia. In
+
+#contrast, all the continents have countries where the average life span is 81 years,
+
+# with Europe having the highest concentration.
+
+```
+
+#Visualization with Flipped Bar Charts
+```{r warning=FALSE, message=FALSE}
+#This aspect of the visualization is based on a task abstraction for an economist who
+
+#wants to see the similarities between countries that have a high gdp per capita and
+
+#have long life expectancies. The suspicion is that the length of the bars may be
+
+#roughly the same for a given country. According to the Fundamental Theory of Accuracy
+
+#in visualization, humans can perceive lengths with high levels of accuracy so an
+
+#economist can quickly ascertain similarities when the charts are compared side by
+
+#side. The chart is also effective because the countries are positioned by the highest
+
+#ranked for population in the channel.
+
+
+plot1 <- ggplot(long_live_ext, aes(x = fct_reorder(country,pop), y = pop/10^6, width = 0.5)) +
+  geom_bar(stat = "identity", fill = "grey70", colour = "black") + 
+  labs(y = "Population (millions)", x= NULL) +
+  coord_flip() +
+  ggtitle("Population Count") + 
+  theme_economist() +
+  scale_color_economist() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(colour = "grey60"),
+        plot.title = element_text(face = "bold", size = 12),
+        axis.title.y = element_text())
+
+
+plot2 <- ggplot(long_live_ext, aes(x = fct_reorder(country,pop), y = gdpPercap/1000, width = 0.5)) +
+  geom_bar(stat = "identity", fill = "grey70", colour = "black") + 
+  labs(x = NULL) +
+  ggtitle("GDP per Capita") + 
+  labs(y = "GdpPercap (thousands)", x= NULL) +
+  coord_flip() +
+  theme_economist() + #based on actual graphs in the economist magazine
+  scale_color_economist() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(colour = "grey60"),
+        plot.title = element_text(face = "bold", size = 12),
+        axis.title.y = element_text())
+        
+
+long_live_plot <- grid.arrange(plot1,plot2,
+             ncol=2,
+             as.table=TRUE,
+             heights=c(20,20),
+             widths=c(14, 14),
+             top="Comparison of Population and GDP per Capita for \nHigh Life Expectancy Countries, 2007")
+
+#The resulting plot shows that the similarities between relative population and GDP per
+
+#Capita are not strong as the graphs do not exhibit similar patterns. The productivity 
+
+#of the people in Norway is extremely high since the population is less than half a
+
+# million but the GDP per Capita is one of the highest. They live long and are
+
+#prosperous. Economies of scale are not being fully realized in Japan and they are not
+
+#as efficient as Norway.
+
+```
+
+
+
+#Visualization with ScatterPlot
+```{r}
+#The visualization design options related to color were a bit limited because the
+
+#maximum number of bins recommended is 12 to allow for ease of discrimination. The
+
+#number of bins only slightly exceeded this at 13. The built-in colors with gapminder
+
+#was utilized instead of the palette from ColorBrewer. A darker background was used for
+
+#more contrast. This chart is more visually appealing in comparison to the earlier
+
+#charts related to factoring with a basic grey background with black dots.
+
+ggplot(long_live_ext, aes(x=pop/10^6, y=gdpPercap/1000)) + 
+  geom_point(aes(color=country)) + 
+  geom_smooth(method="loess", se=FALSE) + 
+  theme_dark() +
+  labs(subtitle="GdpPercap Vs Population in the Highest Life Expectancy Countries", 
+       y="GDPperCap (Thousands)", 
+       x="Population (Millions)", 
+       title="Scatterplot", 
+       caption = "Source: gapminder") +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(colour = "grey60"),
+        plot.title = element_text(face = "bold", size = 12),
+        axis.title = element_text(), legend.text=element_text(size=9))
+        
+#This plot with Loess smoothing of weighted averages shows there is no clear
+
+#relationship between GDP per Capita and Population. This supports the findings in the
+
+#long_live_plot.
+```
+
+#Graphic Devices
+##Raster with ggsave- No Explicit Provision
+
+```{r warning=FALSE, message=FALSE}
+
+#This is the default for the ggsave function which defaults to the last plot if none is
+
+#specified
+plot2
+ggsave("./img/long_live_plot_gg_noexp.png", width = 28, height=30, units="cm", scale=1)
+
+#In this case, the last plot was the chart for gdp per capita, however, the real intent
+
+#was to print the combined charts
+```
+![See Resulting Plot in PNG Format](./img/long_live_plot_gg_noexp.png)
+
+##Raster with ggsave - With Explicit Provision
+```{r warning=FALSE, message=FALSE}
+#This is an explicit provision for the plot that ggsave will save to a file. The
+
+#function includes the name of the plot that should be produced so there will be no
+
+#possibility that the wrong plot will be produced.
+
+ggsave("./img/long_live_plot_gg.png", long_live_plot, width = 28, height=30, units="cm", scale=1)
+```
+
+![See Resulting Plot in PNG Format](./img/long_live_plot_gg.png)
+
+##Raster with jpeg
+.
+```{r warning=FALSE, message=FALSE}
+#These types of images do not scale well. They are likely best for only printing
+
+#photographs but shows blurry lines around lines and letters for graphs.
+
+{
+jpeg("./img/histogram_jpg.jpeg", width = 480, height = 480, units = "px", pointsize = 12,quality = 75)
+histo1
+}
+dev.off()
+
+```
+
+![see Resulting Plot in Jpeg format](./img/histogram_jpg.jpeg)
+
+
+##Vector
+
+```{r warning=FALSE, message=FALSE}
+
+#This creates a pdf document that can only be viewed in a browser. This is preferred
+
+#for print because the ouput can be scaled to any size to view details without
+
+#pixelated text.
+options(width=100)
+
+{
+pdf("./img/histogram_pdf.pdf")
+cache.lazy = FALSE
+histo1
+}
+dev.off()
+
+
+```
+
+
+![see Resulting Plot in Pdf Format](./img/histogram_pdf.pdf)
+
+
+#Extra Work: Factor Collapse with Recode
+```{r warning=FALSE, message=FALSE}
+#Groups the factors or countries into categories by its average life expectancy
+collapsed_livers <- long_live_ext %>%
+  mutate(country_aging = fct_collapse(country,
+        old = c("Norway", "New Zealand"),
+        really_old = c("Italy", "Canada", "France", "Israel", "Sweden", "Spain", "Australia"),
+        ancient = c("Switzerland", "Iceland", "Hong Kong, China"),
+        prehistoric = c("Japan")
+)) %>%
+  count(country_aging) 
+  
+#define the variables for pie chart
+pct <- round(collapsed_livers$n/sum(collapsed_livers$n)*100)
+pie_lbl <- paste(collapsed_livers$country_aging, pct)
+
+#create the pie chart
+pie3D(collapsed_livers$n,labels=paste(pie_lbl,"%", sep=""),explode=0.2,
+main="Pie Chart showing Distribution of Age Classifications ")
+
+```
+
