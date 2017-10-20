@@ -144,7 +144,8 @@ arr_and_fac <- dropped_ocean %>%
                group_by(continent) %>%
                summarize(std_gdp=round(sd(gdpPercap), digits=2)) %>%
                arrange(std_gdp) %>%
-               ggplot(aes(std_gdp, fct_reorder(continent,std_gdp))) +                                 geom_point() + 
+               ggplot(aes(std_gdp, fct_reorder(continent,std_gdp))) +
+               geom_point() + 
                labs(y= "Continent", x="Standard Deviation of GdpPerCap")
   
 
@@ -157,6 +158,8 @@ grid.arrange(f_factor,arr_and_fac,
 ```
 
 ![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-2.png)
+
+<a href="#top">Back to top</a>
 
 File Input and Output
 =====================
@@ -220,6 +223,8 @@ kable(long_live_ext, "markdown", caption="Countries with Average Life Expectancy
 
 The table is brought back into the workspace in the same order as exported
 
+<a href="#top">Back to top</a>
+
 Visualization
 =============
 
@@ -229,7 +234,7 @@ with Stacked Chart
 ``` r
 #The effectiveness principle in visualization was applied to this chart where the
 
-#length of the bar and saturation of color was fully utilized to show the relative
+#length of the bar and saturation of hue was fully utilized to show the relative
 
 #density of a particular age.
 
@@ -332,11 +337,11 @@ with ScatterPlot
 ----------------
 
 ``` r
-#The visualization design options related to color were a bit limited because the
+#The visualization design options related to hue were a bit limited because the
 
 #maximum number of bins recommended is 12 to allow for ease of discrimination. The
 
-#number of bins only slightly exceeded this at 13. The built-in colors with gapminder
+#number of bins only slightly exceeded this at 13. The built-in hues with gapminder
 
 #was utilized instead of the palette from ColorBrewer. A darker background was used for
 
@@ -368,6 +373,8 @@ ggplot(long_live_ext, aes(x=pop/10^6, y=gdpPercap/1000)) +
 
 #long_live_plot.
 ```
+
+<a href="#top">Back to top</a>
 
 Graphic Devices
 ===============
@@ -455,6 +462,8 @@ dev.off()
 
 ![see Resulting Plot in Pdf Format](./img/histogram_pdf.pdf)
 
+<a href="#top">Back to top</a>
+
 Extra Work: Factor Collapse with Recode
 =======================================
 
@@ -479,3 +488,5 @@ main="Pie Chart showing Distribution of Age Classifications ")
 ```
 
 ![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
+
+<a href="#top">Back to top</a>
