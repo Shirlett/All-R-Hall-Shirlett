@@ -160,6 +160,8 @@ kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Gre
 
 
 ```
+
+
 #Visualization 
 ##with Stacked Chart
 ```{r warning=FALSE, message=FALSE}
