@@ -145,7 +145,7 @@ long_live <- gapminder %>%
           select(country, continent, lifeExp, pop, gdpPercap)
 
 
-kable(long_live, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - to be Exported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
+kable(long_live, "markdown", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - to be Exported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
 
 #Write dataframe to CSV
 write_csv(long_live, "./STAT545-HW05_files/long_live_file.csv")
