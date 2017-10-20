@@ -18,7 +18,7 @@ This is the main Readme file for this repository. This repository contains markd
   +  ![Merging and Matching Tables](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW04/STAT545-HW04.md#activity-3---merging-and-matching)
 4.  ![HW05 - Factoring and Visualization](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW05)
   + ![Factor Management](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW05/STAT545-HW05.md#factor-management) -- This refers to dropping factors, reordering, recoding and collapsing factors
-  + ![Visualization Techniques](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW05/STAT545-HW05.md#visualization-with-stacked-chart)
+  + ![Visualization Techniques](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW05/STAT545-HW05.md#visualization)
   -- This incorporates popular visualization techniques like the use of marks and channels within bar charts and scatterplots
   + ![Graphic Devices](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW05/STAT545-HW05.md#graphic-devices)
   --This also includes reading and writing to external files
