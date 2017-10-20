@@ -680,9 +680,7 @@ Asia
 </tr>
 </tbody>
 </table>
-``` r
-#The table is brought back into the workspace in the same order as exported
-```
+The table is brought back into the workspace in the same order as exported
 
 Visualization
 =============
@@ -710,7 +708,7 @@ histo1 <- ggplot(long_live_ext, aes(lifeExp))+
 histo1
 ```
 
-![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png)
+![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
 
 ``` r
 #This chart shows that all countries with an average of 83 can be found in Asia. In
@@ -776,7 +774,7 @@ long_live_plot <- grid.arrange(plot1,plot2,
              top="Comparison of Population and GDP per Capita for \nHigh Life Expectancy Countries, 2007")
 ```
 
-![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png)
 
 ``` r
 #The resulting plot shows that the similarities between relative population and GDP per
@@ -823,7 +821,7 @@ ggplot(long_live_ext, aes(x=pop/10^6, y=gdpPercap/1000)) +
         axis.title = element_text(), legend.text=element_text(size=9))
 ```
 
-![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
 ``` r
 #This plot with Loess smoothing of weighted averages shows there is no clear
@@ -846,7 +844,7 @@ Raster with ggsave- No Explicit Provision
 plot2
 ```
 
-![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
+![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
 
 ``` r
 ggsave("./img/long_live_plot_gg_noexp.png", width = 28, height=30, units="cm", scale=1)
@@ -942,4 +940,4 @@ pie3D(collapsed_livers$n,labels=paste(pie_lbl,"%", sep=""),explode=0.2,
 main="Pie Chart showing Distribution of Age Classifications ")
 ```
 
-![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
+![](STAT545-HW05_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)

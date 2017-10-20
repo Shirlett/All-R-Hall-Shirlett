@@ -155,13 +155,11 @@ long_live_ext <- read.csv("./STAT545-HW05_files/long_live_file.csv")
 
 kable(long_live_ext, "html", caption="Countries with Average Life Expectancy Greater than 80 Years in 2007 - Reimported", format.args = list(decimal.mark = '.', big.mark=","), digits=2)
 
-#The table is brought back into the workspace in the same order as exported
 
 ```
 
-```{r}
 
-```
+The table is brought back into the workspace in the same order as exported
 
 #Visualization
 ##with Stacked Chart
