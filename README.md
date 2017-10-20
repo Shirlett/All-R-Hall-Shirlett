@@ -4,7 +4,7 @@ This is the main Readme file for this repository. This repository contains markd
 ---
 # Table of Contents
 1. ![HW02](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW02)
-  + ![Smell Test the Data](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW02/Gapminder_Explore.md#markdown-header-header-number-three)
+  + ![Smell Test the Data](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW02/Gapminder_Explore.md#smell-test-the-data)
 1. [Example](#example)
 2. [Example2](#example2)
 3. [Third Example](#third-example)
