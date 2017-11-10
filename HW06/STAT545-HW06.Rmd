@@ -1,0 +1,712 @@
+---
+title: "STAT545-HW06"
+author: "Shirlett"
+date: "November 5, 2017"
+always_allow_html: yes
+output: 
+  github_document:
+      toc: true
+      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/myrepositories/STAT545-hw-Hall-Shirlett/HW06")
+knitr::include_graphics("./img/singer_map.png")
+library(ggmap) #For interaction and extraction with Google API maps
+library(repurrrsive) #View nested frames
+library(listviewer) 
+library(jsonlite)
+library(tibble)
+library(singer) #Source of the Singer dataset
+library(tidyverse)
+library(stringr)
+library(tidyr)
+library(dplyr)
+library(purrr)
+library(broom)
+library(leaflet) #to draw maps using variables from dataset
+library(ggplot2) #For graphing
+library(gridExtra)
+library(readr) #to bring in candy survey dataset
+library(ggthemes) #to create additional features to ggplot
+library(forcats) #for factor analysis
+library(knitr) # for knitting tables in a more aligned way
+library(stringdist) #to get the approximate match among differnt strings
+library(kableExtra) #for enhanced formatting of tables
+library(RColorBrewer) #has a set of colors for print and graphics
+library(png) #to create png files
+library(devtools) #used to create graphic devices
+library(raster) #convert map image to raster format
+library(data.table)
+library(grid)
+library(pander)
+library(htmltools) # to display widgets for maps etc
+library(scales) # required for html widgets like leaflet
+
+```
+
+#1. String Instruments from http://r4ds.had.co.nz/strings.html
+##14.2.5 - String Basics
+```{r warning=FALSE, message=FALSE}
+#1.
+#Paste prints strings and leaves a space separator by default
+(pst<-paste("Tom", "Dick", "Harry", NA)) 
+
+#Paste0 prints strings and omits the space between the strings
+(pst0<-paste0("Tom", "Dick", "Harry", NA)) 
+
+#Both paste and paste0 are roughly equivalent to the str_c but paste0 more closely replicates 
+
+#the  str_c function
+(strc <- str_c("Tom", "Dick", "Harry", NA)) 
+
+#Paste functions treat NA as they would any other string and prints NA, whereas str_c sees it as
+
+#missing data that has to be replaced
+
+
+#2.The sep arguement is an indication of the string to insert between vectors whereas collapse
+
+#is an indication of the string that should be used to combine vectors into a single string.
+str_c("a","b", c("c","d"), sep = " ", collapse = ",")
+str_c("a","b", c("c","d"), sep = " ")
+
+
+#3.Using str_length and str_sub to extract a middle character(s) whether the length of the
+
+#string is odd or even
+
+#Function to test the length of a given string
+my_string <- function(x) {
+if((str_length(x) %% 2) == 0) {
+    str_sub(x, (str_length(x)/2), ((str_length(x)/2)+1))
+} else {
+    str_sub(x, ((str_length(x)+1)/2), ((str_length(x)+1)/2))
+}
+}
+
+my_string("middle")
+my_string("tower")
+
+
+#4.
+str_wrap("str_wrap can be used to format paragraphs by controlling the width and indentation. This is useful for printing long paragraphs", width=60)
+
+#5.str_trim removes whitespace to the left or right of strings. Its counterpart 
+
+#is str_pad() which adds whitespace.
+
+#6.Convert a vector of strings into a single string and consider less than optimal vector
+
+#lengths, such as two, one or zero
+
+x = c("a", "b", "c")
+y = c("a", "b")
+z = c("a")
+alpha = c("")
+
+#Function to test the length of vector and modify format of the output accordingly
+my_conversion <- function(vec) {
+  converted <- ""
+  if (length(vec) < 2)
+  {
+    converted <- str_c(vec)
+  }
+  else if (length(vec) == 2)
+  {
+    converted <- str_c(converted, vec[1], " and ", vec[2])
+  }
+  else
+  {
+    for (i in 1:(length(vec)-2))
+    {
+      converted <- str_c(converted, vec[i], ", ")
+    }
+    converted <- str_c(converted, vec[length(vec)-1], ", and ", vec[length(vec)])
+  }
+  return(converted)
+}
+
+my_conversion(x)
+my_conversion(y)
+my_conversion(z)
+my_conversion(alpha)
+
+```
+
+##14.3.1.1 - Basic Matches
+```{r warning=FALSE, message=FALSE}
+
+#1. Explanation of why each of these strings don’t match a \: "\", "\\", "\\\".
+
+#"\" indicates an escape from prior text
+
+#"\\" indicates the creation of a regular expression and be recognized as \
+
+#"\\\" indicates that the backslash character needs to be matched
+
+
+#2. Matching the sequence "'\
+
+test<- "\"'\\"
+str_view(test, "\\\"'\\\\")
+
+#3. Patterns matched by the regular expression \..\..\.
+
+test2 <- "covers.x.y.z"
+str_view(test2, "\\..\\..\\..")
+#Patterns that are a dot followed by any character, three consecutive times
+
+```
+
+
+##14.3.2.1 - Anchors
+```{r warning=FALSE, message=FALSE}
+#1. Match the literal string "$^$"
+test3<- "goodness$^$gracious"
+str_view(test3, "\\$\\^\\$")
+
+#2. Regular Expressions to match common words in stringr::words:
+#that start with y
+str_view(words, "^y", match = TRUE)
+#that end with x
+str_view(words, "x$", match = TRUE)
+#are exactly three letters long
+str_view(words, "^...$", match = TRUE)
+#have seven letters or more
+str_view(words, ".......", match = TRUE)
+
+```
+
+
+##14.3.3.1 - Character Classes and Alternatives
+```{r warning=FALSE, message=FALSE}
+
+#1. Regular expressions to find words that:
+#Start with a vowel
+str_view(words, "^[aeouiy]", match = TRUE)
+
+#Only contain consonants
+str_view(words, "^[^aeouiy]*$", match = TRUE)
+
+#End with ed but not with eed
+str_view(words, "[^e]ed$", match = TRUE)
+
+#End with ing or ise
+str_view(words, "i(ng|se)$", match = TRUE)
+
+
+#2.Verify the rule “i before e except after c”
+#Well e comes before i in weigh
+str_view(words, "([^c])ei", match = TRUE)
+
+
+#3. Verify that q is always followed by a u
+#C'est vrai
+str_view(words, "q[^u]", match = TRUE)
+
+
+#4. An expression that finds a word from British vs American English
+str_view(words, "[a-z][a-z]our$", match = TRUE)
+
+#5. An expression that finds a string that will match phone numbers as written in Jamaica
+phone <- (c("1876-928-4712", "186-748-422"))
+str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
+
+```
+
+
+##14.3.4.1 - Repetition
+```{r warning=FALSE, message=FALSE}
+#1. Equivalents in {m,n} form of the following:
+#? - zero or one instance is equivalent to:
+#{,n}: match one at most
+
+#+ - one or more repeats is equivalent to:
+#{n,}: n or more 
+
+
+#* - zero or more repeats is only roughly equivalent to:
+#{,m}: at most m
+
+
+#2. Description of matches to the following regular expressions:
+#^.*$ - This would match any length or any character
+#"\\{.+\\}" - This would match at least one character
+#\d{4}-\d{2}-\d{2} - This would match 4 repeated digits- 2 repeated digits - two repeated digits
+# "\\\\{4}" - This would match \\\\
+
+
+#3. Regular expressions to find words that:
+#Start with three consonants.
+str_view(words, "^[^aeouiy]{3}", match = TRUE)
+#Have three or more vowels in a row.
+str_view(words, "[aeouiy]{3,}", match = TRUE)
+#Have two or more vowel-consonant pairs in a row.
+str_view(words, "([aeouiy][^aeouiy]){2,}", match = TRUE)
+
+
+
+```
+
+##14.3.5.1 - Grouping and Backreferences
+```{r warning=FALSE, message=FALSE}
+#1. Description of the matches to the following:
+#(.)\1\1 - Matches any single characters that repeat three times
+test4 = "ssstreat"
+str_view(test4, "(.)\\1\\1", match = TRUE)
+
+#"(.)(.)\\2\\1" - matches any single non repeating character then a character that repeats 
+
+#twice then the same first character
+test5 = "abbacadabra"
+str_view(test5, "(.)(.)\\2\\1", match = TRUE)
+
+#(..)\1 - Find repeated pair of letters
+test6 = "cucumber" 
+str_view(test6, "(..)\\1", match = TRUE)
+
+#"(.).\\1.\\1" - Match one character then any single character, then the same first character,
+#then any single character, then another repeat of the first character
+test7 = "tatet"
+str_view(test7, "(.).\\1.\\1", match = TRUE)
+
+#"(.)(.)(.).*\\3\\2\\1" - Match 2-3 single characters, 0 or more random characters, then the 
+#same first 2-3 characters in reverse
+test8 = "abctatetcba"
+str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
+
+
+#2. Regular expressions to match words that:
+
+#Start and end with the same character.
+str_view(words, "^(.).*\\1$", match = T)
+
+#Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)
+str_view(words, "(..).*\\1", match = T)
+
+#Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)
+str_view(words, "(.).*\\1.*\\1", match = T)
+
+```
+
+##14.4.2 - Detect Matches
+```{r warning=FALSE, message=FALSE}
+#1. Using Regular expressions and str_detect:
+#Words that start or end with x
+str_view(words, "^x|x$", match = TRUE)
+start_with_x = str_detect(words, "^x")
+end_with_x = str_detect(words, "x$")
+words[start_with_x | end_with_x]
+
+#Words that start with a vowel and end with a consonant
+str_view(words, "^[aeuioy].*[^aeuioy]$", match = TRUE)
+start_with_vowel = str_detect(words, "^[aeuioy]")
+end_with_consonant = str_detect(words, "[^aeuioy]$")
+words[start_with_vowel & end_with_consonant]
+
+
+#Words that contain at least one of each different vowel yields no results
+a = str_detect(words, "a+")
+e = str_detect(words, "e+")
+i = str_detect(words, "i+")
+o = str_detect(words, "o+")
+u = str_detect(words, "u+")
+y = str_detect(words, "y+")
+words[a & e & i & o & u & y]
+
+
+
+#Words that have the highest proportion of vowels
+count_of_vowels = str_count(words, "[aeouiy]")
+word_length = str_length(words)
+prop_table <- tibble(words = words, counts = count_of_vowels, length = word_length)
+
+
+prop_table %>%
+  mutate(proportion = counts / length) %>%
+  arrange(desc(proportion)) %>%
+	head(20)
+
+
+
+```
+
+##14.4.3.1 - Extract Matches
+```{r warning=FALSE, message=FALSE}
+#1. Correct the match to flickered
+
+colors <- c("red", "orange", "yellow", "green", "blue", "purple")
+color_match <- str_c(colors, collapse = "|")
+truecolors <- str_c("\\b(", str_c(colors, collapse = "|"), ")\\b")## add boundaries 
+more <- sentences[str_count(sentences, color_match) > 1]
+str_view_all(more, truecolors, match = TRUE)
+
+
+#Using Harvard sentences data, extract:
+#The first word from each sentence
+str_extract(sentences, "[a-zA-X]+") %>% head(20)
+
+#All words ending in ing
+ending <- str_subset(sentences, "\\b[A-Za-z]+ing\\b")
+str_extract(ending, "\\b[A-Za-z]+ing\\b") %>% str_sub(1, -1) %>% head(10)
+
+
+
+#All plurals
+#Plurals that end in es are not captured by regex that I can fathom
+#The following retrieves words that end in s and excludes 2 and 3 letter words, like has & is
+unique(unlist(str_extract_all(sentences, "\\b[A-Za-z]{3,}s\\b"))) %>%
+  head(20)
+
+
+```
+
+##14.4.4.1 - Grouped Matches
+```{r warning=FALSE, message=FALSE}
+#1. Find words that come after a number
+#Pulls out both number name and word
+nw <- "(one|two|three|four|five|six|seven|eight|nine|ten) +(\\S+)"
+sentences[str_detect(sentences, nw)] %>%
+  str_extract(nw)
+
+#2. To find contractions
+contracted_words <- "([A-Za-z]+)'([A-Za-z]+)"
+sentences %>%
+  `[`(str_detect(sentences, contracted_words)) %>%
+  str_extract(contracted_words)
+
+```
+
+##14.4.5.1- Replacing Matches
+```{r warning=FALSE, message=FALSE}
+#1. Replace forward slash with backward slash
+replace_for <- str_replace("How to replace a / with a backslash", "/", "\\\\")  
+  								
+replace_for
+
+#2. Implement a simple version of str_to_lower() using replace_all().
+
+phrase="aLL over tHe pLaCe"
+new_phrase <- str_replace_all(phrase, c("L" = "l", "C" = "c", "H" = "h"))
+new_phrase
+
+#3. Switch the first and last letters in words and count the number of legitimate words
+
+switch<- str_replace(words,"(^.)(.*)(.$)", "\\3\\2\\1")
+still_words <- intersect(words, switch)
+length(still_words)
+
+```
+##14.4.6.1 - Splitting
+```{r warning=FALSE, message=FALSE}
+#1. split apples, pears, and bananas into individual components
+fruits <- c("apples, pears, and bananas")
+str_split(fruits, ", +(and +)?")[[1]]
+
+
+#2. It is better to split by boundary on words because it considers punctuation instead of just whitespace
+
+#3. Result of splitting with an empty string causes words to split apart
+str_split("so_very ver y tired!", "")[[1]]
+
+```
+##14.5.1 - Other Patterns
+```{r warning=FALSE, message=FALSE}
+#1.One could find all strings containing \ with regex() vs. with fixed() by adding the fixed
+#argument to the string function
+str_subset(c("stop\\", "please"), "\\\\")
+
+str_subset(c("stop\\", "please"), fixed("\\"))
+
+#2. Five most common words in sentences
+str_extract_all(sentences, boundary("word")) %>%
+  unlist() %>%
+  str_to_lower() %>%
+  tibble() %>%
+  set_names("word") %>%
+  group_by(word) %>%
+  count() %>%
+	arrange(desc(n)) %>%
+  head(5)
+
+```
+
+##14.7.1 - Stringi
+```{r warning=FALSE, message=FALSE}
+#1.
+#stringi function that counts the number of words is stri_count words
+#Stringi function that finds duplicated strings is stri_duplicated
+#Stringi function to generate random text is stri_rand_
+
+#2. To control the language that stri_sort() uses for sorting, one has to change the 
+#value within the function related to opts_collator from NULL or ""
+
+```
+<a href="#top">Back to top</a>
+
+#3. Candy Survey Results
+##Data Cleansing
+```{r warning=FALSE, message=FALSE}
+library(readr)
+candy <- read_csv("~/myrepositories/STAT545-hw-Hall-Shirlett/HW06/CANDY-HIERARCHY-2015 SURVEY-Responses.csv")
+
+
+#Remove columns from "Please leave any comments"" onwards
+candy <- candy[,-(97:124),drop=FALSE]
+#Remove Timestamp
+candy <- candy[,-(1),drop=FALSE] 
+#Remove square brackets and other non-alpha characters from column names
+find.list <- list("\\[", "\\]", "'\'’", '["’]', '\'', "’", "\\?", "\\(", "\\)")
+find.string <- paste(unlist(find.list), collapse = "|")
+names(candy) <- gsub(find.string, replacement = "", names(candy))
+
+#Replace spaces, slashes and comma with underscore
+find.list <- list("\\,", "\\/", "\\ ")
+find.string <- paste(unlist(find.list), collapse = "|")
+names(candy) <- gsub(find.string, replacement = "_", names(candy))
+
+#Replaces the stubborn apostrophe from Box'of'Raisins etc
+names(candy) <- str_replace_all(names(candy), "\\p{quotation mark}", "")
+
+#Change long name "How Old are you" to Age
+colnames(candy)[colnames(candy)=="How_old_are_you"] <- "Age"
+
+#Remove list of columns mixed in with candy names
+dropcols <- c("Cash__or_other_forms_of_legal_tender",
+"Dental_paraphenalia",
+"Generic_Brand_Acetaminophen",
+"Glow_sticks",
+"Broken_glow_stick",
+"Healthy_Fruit",
+"Creepy_Religious_comics_Chick_Tracts",
+"Hugs_actual_physical_hugs",
+"Kale_smoothie",
+"Kinder_Happy_Hippo",
+"Lapel_Pins",
+"Mary_Janes",
+"Minibags_of_chips",
+"Pencils",
+"Mint_Leaves",
+"Vicodin",
+"White_Bread",
+"Whole_Wheat_anything")
+candy2 <- candy[, !colnames(candy) %in% dropcols]
+
+#create an ID for each respondent padded with 4 digits 
+#sprintf() is used to return a vector of strings 
+#recast age as integer and remove the nonsensical figures
+candy_with_id <- candy2 %>%                        
+  mutate(id = sprintf("ID%04d", row_number(), 0)) %>% 
+  rename(Trick_or_Treat= Are_you_going_actually_going_trick_or_treating_yourself) %>%
+  mutate(Trick_or_Treat = str_to_lower(Trick_or_Treat)) %>%
+  mutate(Age = as.integer(Age)) %>%
+	dplyr::select(id, Age, Trick_or_Treat, everything()) %>%
+  filter(!is.na(Age) & between(Age, 1, 120)) 
+  
+candy_with_id
+
+```
+
+
+##Profile of Trick or Treaters
+```{r warning=FALSE, message=FALSE}
+
+#People who actually go trick or treating by age
+Tricky<- candy_with_id %>%
+  dplyr::select(Trick_or_Treat, Age) %>%
+         filter(Trick_or_Treat=="yes") 
+
+   
+ggplot(Tricky, aes(x = Age)) +
+  geom_histogram(binwidth=10) + 
+  ggtitle("Who goes Trick or Treating - by Age Group?") + 
+  labs(y = "Number who go Trick or Treating", x= "Age Group")+
+  theme_hc() + 
+  scale_color_hc() 
+
+
+#Factorising Age to find exact count
+fac_Tricky <- Tricky %>%
+              mutate(Age=factor(Age)) %>%
+              dplyr::select(Age)
+
+Tricky_collapse <- fct_collapse(fac_Tricky$Age,
+one_to_10 = c("1","2","3","4","5","6","7","8","9","10"),
+eleven_to_20 = c(11:20),
+twenty_one_to_30 = c(21:30),
+thirty_one_to_40 = c(31:40),
+forty_one_to_50 = c(41:50),
+fifty_one_to_60 = c(51:60),
+seniors = c(61:120)
+)
+
+
+kable(fct_count(Tricky_collapse), format='markdown')
+
+```
+
+##Bags of Joy or Bags of Despair to Trick or Treaters
+```{r warning=FALSE, message=FALSE}
+#Reshape the Candy_with_id table from a wide format to a long one
+gather_candy <- candy_with_id %>%
+                gather(key=candy , value=emotion, c(Butterfinger:York_Peppermint_Patties) )
+
+
+#The 31 to 50 year old groups tend to go trick or treating the most in this survey.
+#What candies would make them have the happiest halloween or worst halloween?
+
+i_love_candy <- gather_candy %>%
+                filter(!is.na(emotion), Trick_or_Treat=="yes", between(Age, 31, 50)) %>%
+                dplyr::select(candy, emotion)  %>%
+                group_by(candy, emotion) %>% 
+    						mutate(Count = n()) %>%
+    						group_by(candy, emotion, Count) %>%
+    						summarize_at(vars(), funs(count)) %>%
+	              arrange(desc(Count)) %>%
+                head(10) 
+
+#Shorten the name of candy descriptions for graphing	
+i_love_candy$candy <- gsub("_that_come_in_black_and_orange_wrappers","", i_love_candy$candy, ignore.case = TRUE)
+
+i_love_candy$candy <- gsub("Candy_that_is_clearly_just_the_stuff_given_out_for_free_at_restaurants","Free_Restaurant_Candy", i_love_candy$candy, ignore.case = TRUE)
+								
+
+kable(i_love_candy)
+
+#Change the labels on the Facetted Grids
+labels <- c(JOY = "Bag of Joy", DESPAIR = "Bag of Despair")
+
+#Create the Facetted graph
+  i_love_candy %>%
+ 		ggplot(aes(x = candy, y = Count)) +
+    geom_point(aes(color=candy)) +
+  	facet_wrap(~emotion, scales="free_x", labeller=labeller(emotion = labels)) +
+  	labs(y = "Number of Votes", x= "Candy")+
+  	ggtitle("Faceted Graph showing the bags of Candy that would bring 30 to 50 year olds\nthe most Joy or Despair when they Trick or Treat")+
+  theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1, size=10))+
+  scale_colour_brewer(palette = "Paired")
+
+#It appears that any full size candy bar in their loot bag would bring joy to this age group as
+#long as it is not the type one would get free from a restaurant or the gum from baseball
+#cards.
+  
+```
+
+##What About the General Attitude of Specific Age Groups toward Mint Flavored Candy?
+```{r warning=FALSE, message=FALSE}
+
+i_love_mint <- gather_candy %>%
+                filter(!is.na(emotion), str_detect(candy, regex("mint", ignore_case=TRUE)), between(Age, 31, 50)) %>%
+                dplyr::select(candy, emotion)  %>%
+                group_by(candy, emotion) %>% 
+	              mutate(Count = n()) %>%
+    						group_by(candy, emotion, Count) %>%
+    						summarize_at(vars(), funs(count)) %>%
+	              arrange(desc(Count)) 
+								 
+kable(i_love_mint)
+
+
+
+i_love_mint %>%
+ 		ggplot(aes(x = candy, y = Count)) +
+    geom_bar(aes(fill=emotion), stat="identity") +
+  	labs(y = "Number of Votes", x= "Candy")+
+  	ggtitle("Bar Graph showing the Relative Attitudes of 30 to 50 year olds toward\nMint Flavored Candy")+
+  theme(axis.text.x = element_text(angle = 90, vjust= 0, hjust = 1, size=10))
+
+#Peppermint Patties are the most popular in the 31 to 50 year old age group and Senior Mints are
+#the least popular. That may change for this group in another ten to thirty years 
+#(tongue in cheek).
+```
+
+<a href="#top">Back to top</a>
+
+#4. Addresses of Singers/Bands using Google Map API
+##Extraction of reverse geographic codes
+
+```{r warning=FALSE, message=FALSE, results='asis'}
+
+#Run to verify the data type for longitude and latitude in the singer dataframe to ensure numeric
+typeof(singer_locations$longitude)
+typeof(singer_locations$latitude)
+
+#Obtain only the relevant columns from Singer dataset
+clean_singer <- singer_locations %>%
+                filter(!(is.na(latitude))) %>%
+                dplyr::select(name, longitude, latitude, city) %>%
+                head(20)
+kable(clean_singer)
+
+#Create a function that will map over each row in the new dataframe
+my_find <- function(x, y) {
+stopifnot(is.numeric(x))
+return(revgeocode(c(x,y),output = c("more"), messaging = FALSE, override_limit=TRUE))
+
+}
+
+#Define the vector pair
+longit <- clean_singer$longitude
+latit <- clean_singer$latitude
+
+#Retrieve and unnest the data from Google
+update_singer <- clean_singer  %>%
+                mutate(addresses = map2(longit,latit, my_find)) %>%
+                unnest(addresses)
+
+#The use of map with possibly() could not be coerced to the same data type as the output from 
+#the Google API as the API generates the address as a dataframe object. Messages were already
+#suppressed to minimize the chance of receiving unknown data types.         
+
+
+pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
+
+```
+
+<a href="#top">Back to top</a>
+
+##Assess the accuracy of the city name in the Singer dataset
+```{r warning=FALSE, message=FALSE}
+#define the variables for the match exercise
+singer_city <- update_singer$city
+google_locality <- update_singer$locality
+
+#Using stringdist to calculate the degree of match between the city name in Singer and the
+#locality from Google
+
+compare_singer <- update_singer %>%
+									dplyr::select(name, longitude, latitude, city, locality) %>%
+	                mutate(matching=(stringdist(singer_city, google_locality, "osa")))
+
+kable(compare_singer)
+
+#The output below shows the number of true matches found - a stringdist value of 0 is an exact
+#match but 5 indicates a relatively close match. Only nine out of twenty were close matches.
+match_count <- data.frame(table(compare_singer$matching<6))
+na_count <- data.frame(Var1="NAs", Freq=(sum(is.na(compare_singer$matching))))
+rbind.data.frame(match_count, na_count)
+
+
+```
+
+##Geographic depiction of the bands that had true matches with Google's Map API
+```{r warning=FALSE, message=FALSE}
+singer_map <- compare_singer %>% 
+	filter(matching<6) %>%
+  leaflet()  %>%   
+  addTiles() %>% 
+	addMarkers(popup = ~name)
+
+singer_map
+
+htmlwidgets::saveWidget(singer_map, file="singer_map.html")
+
+
+```
+
+
+![see Resulting Map in Html Format](./singer_map.html)
+
+<a href="#top">Back to top</a>
