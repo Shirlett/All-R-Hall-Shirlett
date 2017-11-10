@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Shirlett" />
+
+
+<title>STAT545-HW06-Part1</title>
+
+<script src="STAT545-HW06-Part1_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="STAT545-HW06-Part1_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="STAT545-HW06-Part1_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="STAT545-HW06-Part1_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="STAT545-HW06-Part1_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="STAT545-HW06-Part1_files/navigation-1.1/tabsets.js"></script>
+<link href="STAT545-HW06-Part1_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="STAT545-HW06-Part1_files/highlightjs-1.1/highlight.js"></script>
+<script src="STAT545-HW06-Part1_files/htmlwidgets-0.9/htmlwidgets.js"></script>
+<link href="STAT545-HW06-Part1_files/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="STAT545-HW06-Part1_files/str_view-binding-1.2.0/str_view.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">STAT545-HW06-Part1</h1>
+<h4 class="author"><em>Shirlett</em></h4>
+<h4 class="date"><em>November 5, 2017</em></h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#string-instruments-from-httpr4ds.had.co.nzstrings.html">1. String Instruments from <a href="http://r4ds.had.co.nz/strings.html" class="uri">http://r4ds.had.co.nz/strings.html</a></a><ul>
+<li><a href="#string-basics">14.2.5 - String Basics</a></li>
+<li><a href="#basic-matches">14.3.1.1 - Basic Matches</a></li>
+<li><a href="#anchors">14.3.2.1 - Anchors</a></li>
+<li><a href="#character-classes-and-alternatives">14.3.3.1 - Character Classes and Alternatives</a></li>
+<li><a href="#repetition">14.3.4.1 - Repetition</a></li>
+<li><a href="#grouping-and-backreferences">14.3.5.1 - Grouping and Backreferences</a></li>
+<li><a href="#detect-matches">14.4.2 - Detect Matches</a></li>
+<li><a href="#extract-matches">14.4.3.1 - Extract Matches</a></li>
+<li><a href="#grouped-matches">14.4.4.1 - Grouped Matches</a></li>
+<li><a href="#replacing-matches">14.4.5.1- Replacing Matches</a></li>
+<li><a href="#splitting">14.4.6.1 - Splitting</a></li>
+<li><a href="#other-patterns">14.5.1 - Other Patterns</a></li>
+<li><a href="#stringi">14.7.1 - Stringi</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="string-instruments-from-httpr4ds.had.co.nzstrings.html" class="section level1">
+<h1>1. String Instruments from <a href="http://r4ds.had.co.nz/strings.html" class="uri">http://r4ds.had.co.nz/strings.html</a></h1>
+<div id="string-basics" class="section level2">
+<h2>14.2.5 - String Basics</h2>
+<pre class="r"><code>#1.
+#Paste prints strings and leaves a space separator by default
+(pst&lt;-paste(&quot;Tom&quot;, &quot;Dick&quot;, &quot;Harry&quot;, NA)) </code></pre>
+<pre><code>## [1] &quot;Tom Dick Harry NA&quot;</code></pre>
+<pre class="r"><code>#Paste0 prints strings and omits the space between the strings
+(pst0&lt;-paste0(&quot;Tom&quot;, &quot;Dick&quot;, &quot;Harry&quot;, NA)) </code></pre>
+<pre><code>## [1] &quot;TomDickHarryNA&quot;</code></pre>
+<pre class="r"><code>#Both paste and paste0 are roughly equivalent to the str_c but paste0 more closely replicates 
+
+#the  str_c function
+(strc &lt;- str_c(&quot;Tom&quot;, &quot;Dick&quot;, &quot;Harry&quot;, NA)) </code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>#Paste functions treat NA as they would any other string and prints NA, whereas str_c sees it as
+
+#missing data that has to be replaced
+
+
+#2.The sep arguement is an indication of the string to insert between vectors whereas collapse
+
+#is an indication of the string that should be used to combine vectors into a single string.
+str_c(&quot;a&quot;,&quot;b&quot;, c(&quot;c&quot;,&quot;d&quot;), sep = &quot; &quot;, collapse = &quot;,&quot;)</code></pre>
+<pre><code>## [1] &quot;a b c,a b d&quot;</code></pre>
+<pre class="r"><code>str_c(&quot;a&quot;,&quot;b&quot;, c(&quot;c&quot;,&quot;d&quot;), sep = &quot; &quot;)</code></pre>
+<pre><code>## [1] &quot;a b c&quot; &quot;a b d&quot;</code></pre>
+<pre class="r"><code>#3.Using str_length and str_sub to extract a middle character(s) whether the length of the
+
+#string is odd or even
+
+#Function to test the length of a given string
+my_string &lt;- function(x) {
+if((str_length(x) %% 2) == 0) {
+    str_sub(x, (str_length(x)/2), ((str_length(x)/2)+1))
+} else {
+    str_sub(x, ((str_length(x)+1)/2), ((str_length(x)+1)/2))
+}
+}
+
+my_string(&quot;middle&quot;)</code></pre>
+<pre><code>## [1] &quot;dd&quot;</code></pre>
+<pre class="r"><code>my_string(&quot;tower&quot;)</code></pre>
+<pre><code>## [1] &quot;w&quot;</code></pre>
+<pre class="r"><code>#4.
+str_wrap(&quot;str_wrap can be used to format paragraphs by controlling the width and indentation. This is useful for printing long paragraphs&quot;, width=60)</code></pre>
+<pre><code>## [1] &quot;str_wrap can be used to format paragraphs by controlling\nthe width and indentation. This is useful for printing long\nparagraphs&quot;</code></pre>
+<pre class="r"><code>#5.str_trim removes whitespace to the left or right of strings. Its counterpart 
+
+#is str_pad() which adds whitespace.
+
+#6.Convert a vector of strings into a single string and consider less than optimal vector
+
+#lengths, such as two, one or zero
+
+x = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+y = c(&quot;a&quot;, &quot;b&quot;)
+z = c(&quot;a&quot;)
+alpha = c(&quot;&quot;)
+
+#Function to test the length of vector and modify format of the output accordingly
+my_conversion &lt;- function(vec) {
+  converted &lt;- &quot;&quot;
+  if (length(vec) &lt; 2)
+  {
+    converted &lt;- str_c(vec)
+  }
+  else if (length(vec) == 2)
+  {
+    converted &lt;- str_c(converted, vec[1], &quot; and &quot;, vec[2])
+  }
+  else
+  {
+    for (i in 1:(length(vec)-2))
+    {
+      converted &lt;- str_c(converted, vec[i], &quot;, &quot;)
+    }
+    converted &lt;- str_c(converted, vec[length(vec)-1], &quot;, and &quot;, vec[length(vec)])
+  }
+  return(converted)
+}
+
+my_conversion(x)</code></pre>
+<pre><code>## [1] &quot;a, b, and c&quot;</code></pre>
+<pre class="r"><code>my_conversion(y)</code></pre>
+<pre><code>## [1] &quot;a and b&quot;</code></pre>
+<pre class="r"><code>my_conversion(z)</code></pre>
+<pre><code>## [1] &quot;a&quot;</code></pre>
+<pre class="r"><code>my_conversion(alpha)</code></pre>
+<pre><code>## [1] &quot;&quot;</code></pre>
+</div>
+<div id="basic-matches" class="section level2">
+<h2>14.3.1.1 - Basic Matches</h2>
+<pre class="r"><code>#1. Explanation of why each of these strings donât match a \: &quot;\&quot;, &quot;\\&quot;, &quot;\\\&quot;.
+
+#&quot;\&quot; indicates an escape from prior text
+
+#&quot;\\&quot; indicates the creation of a regular expression and be recognized as \
+
+#&quot;\\\&quot; indicates that the backslash character needs to be matched
+
+
+#2. Matching the sequence &quot;&#39;\
+
+test&lt;- &quot;\&quot;&#39;\\&quot;
+str_view(test, &quot;\\\&quot;&#39;\\\\&quot;)</code></pre>
+<div id="htmlwidget-5aebcc76bb7ce261aaeb" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5aebcc76bb7ce261aaeb">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#3. Patterns matched by the regular expression \..\..\.
+
+test2 &lt;- &quot;covers.x.y.z&quot;
+#str_view(test2, &quot;\\..\\..\\..&quot;)
+#Patterns that are a dot followed by any character, three consecutive times</code></pre>
+</div>
+<div id="anchors" class="section level2">
+<h2>14.3.2.1 - Anchors</h2>
+<pre class="r"><code>#1. Match the literal string &quot;$^$&quot;
+test3&lt;- &quot;goodness$^$gracious&quot;
+#str_view(test3, &quot;\\$\\^\\$&quot;)
+
+#2. Regular Expressions to match common words in stringr::words:
+#that start with y
+#str_view(words, &quot;^y&quot;, match = TRUE)
+
+#that end with x
+#str_view(words, &quot;x$&quot;, match = TRUE)
+
+#are exactly three letters long
+#str_view(words, &quot;^...$&quot;, match = TRUE)
+
+#have seven letters or more
+#str_view(words, &quot;.......&quot;, match = TRUE)</code></pre>
+</div>
+<div id="character-classes-and-alternatives" class="section level2">
+<h2>14.3.3.1 - Character Classes and Alternatives</h2>
+<pre class="r"><code>#1. Regular expressions to find words that:
+#Start with a vowel
+#str_view(words, &quot;^[aeouiy]&quot;, match = TRUE)
+
+#Only contain consonants
+#str_view(words, &quot;^[^aeouiy]*$&quot;, match = TRUE)
+
+#End with ed but not with eed
+#str_view(words, &quot;[^e]ed$&quot;, match = TRUE)
+
+#End with ing or ise
+#str_view(words, &quot;i(ng|se)$&quot;, match = TRUE)
+
+
+#2.Verify the rule âi before e except after câ
+#Well e comes before i in weigh
+#str_view(words, &quot;([^c])ei&quot;, match = TRUE)
+
+
+#3. Verify that q is always followed by a u
+#C&#39;est vrai
+#str_view(words, &quot;q[^u]&quot;, match = TRUE)
+
+
+#4. An expression that finds a word from British vs American English
+#str_view(words, &quot;[a-z][a-z]our$&quot;, match = TRUE)
+
+#5. An expression that finds a string that will match phone numbers as written in Jamaica
+phone &lt;- (c(&quot;1876-928-4712&quot;, &quot;186-748-422&quot;))
+#str_view(phone, &quot;1876-\\d\\d\\d-\\d\\d\\d\\d&quot;, match = TRUE)</code></pre>
+</div>
+<div id="repetition" class="section level2">
+<h2>14.3.4.1 - Repetition</h2>
+<pre class="r"><code>#1. Equivalents in {m,n} form of the following:
+#? - zero or one instance is equivalent to:
+#{,n}: match one at most
+
+#+ - one or more repeats is equivalent to:
+#{n,}: n or more 
+
+
+#* - zero or more repeats is only roughly equivalent to:
+#{,m}: at most m
+
+
+#2. Description of matches to the following regular expressions:
+#^.*$ - This would match any length or any character
+#&quot;\\{.+\\}&quot; - This would match at least one character
+#\d{4}-\d{2}-\d{2} - This would match 4 repeated digits- 2 repeated digits - two repeated digits
+# &quot;\\\\{4}&quot; - This would match \\\\
+
+
+#3. Regular expressions to find words that:
+#Start with three consonants.
+#str_view(words, &quot;^[^aeouiy]{3}&quot;, match = TRUE)
+
+#Have three or more vowels in a row.
+#str_view(words, &quot;[aeouiy]{3,}&quot;, match = TRUE)
+
+#Have two or more vowel-consonant pairs in a row.
+#str_view(words, &quot;([aeouiy][^aeouiy]){2,}&quot;, match = TRUE)</code></pre>
+</div>
+<div id="grouping-and-backreferences" class="section level2">
+<h2>14.3.5.1 - Grouping and Backreferences</h2>
+<pre class="r"><code>#1. Description of the matches to the following:
+#(.)\1\1 - Matches any single characters that repeat three times
+test4 = &quot;ssstreat&quot;
+#str_view(test4, &quot;(.)\\1\\1&quot;, match = TRUE)
+
+#&quot;(.)(.)\\2\\1&quot; - matches any single non repeating character then a character that repeats 
+
+#twice then the same first character
+test5 = &quot;abbacadabra&quot;
+#str_view(test5, &quot;(.)(.)\\2\\1&quot;, match = TRUE)
+
+#(..)\1 - Find repeated pair of letters
+test6 = &quot;cucumber&quot; 
+#str_view(test6, &quot;(..)\\1&quot;, match = TRUE)
+
+#&quot;(.).\\1.\\1&quot; - Match one character then any single character, then the same first character,
+#then any single character, then another repeat of the first character
+test7 = &quot;tatet&quot;
+#str_view(test7, &quot;(.).\\1.\\1&quot;, match = TRUE)
+
+#&quot;(.)(.)(.).*\\3\\2\\1&quot; - Match 2-3 single characters, 0 or more random characters, then the 
+#same first 2-3 characters in reverse
+test8 = &quot;abctatetcba&quot;
+#str_view(test8, &quot;(.)(.)(.).*\\3\\2\\1&quot;, match = TRUE)
+
+
+#2. Regular expressions to match words that:
+
+#Start and end with the same character.
+#str_view(words, &quot;^(.).*\\1$&quot;, match = T)
+
+#Contain a repeated pair of letters (e.g. âchurchâ contains âchâ repeated twice.)
+#str_view(words, &quot;(..).*\\1&quot;, match = T)
+
+#Contain one letter repeated in at least three places (e.g. âelevenâ contains three âeâs.)
+#str_view(words, &quot;(.).*\\1.*\\1&quot;, match = T)</code></pre>
+</div>
+<div id="detect-matches" class="section level2">
+<h2>14.4.2 - Detect Matches</h2>
+<pre class="r"><code>#1. Using Regular expressions and str_detect:
+#Words that start or end with x
+str_view(words, &quot;^x|x$&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-66b590831455167acfcf" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-66b590831455167acfcf">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x\u003c/span>\u003c/li>\n  <li>se<span class='match'>x\u003c/span>\u003c/li>\n  <li>si<span class='match'>x\u003c/span>\u003c/li>\n  <li>ta<span class='match'>x\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>start_with_x = str_detect(words, &quot;^x&quot;)
+end_with_x = str_detect(words, &quot;x$&quot;)
+words[start_with_x | end_with_x]</code></pre>
+<pre><code>## [1] &quot;box&quot; &quot;sex&quot; &quot;six&quot; &quot;tax&quot;</code></pre>
+<pre class="r"><code>#Words that start with a vowel and end with a consonant
+str_view(words, &quot;^[aeuioy].*[^aeuioy]$&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-b2e74f6b08fb68c1360d" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b2e74f6b08fb68c1360d">{"x":{"html":"<ul>\n  <li><span class='match'>about\u003c/span>\u003c/li>\n  <li><span class='match'>accept\u003c/span>\u003c/li>\n  <li><span class='match'>account\u003c/span>\u003c/li>\n  <li><span class='match'>across\u003c/span>\u003c/li>\n  <li><span class='match'>act\u003c/span>\u003c/li>\n  <li><span class='match'>actual\u003c/span>\u003c/li>\n  <li><span class='match'>add\u003c/span>\u003c/li>\n  <li><span class='match'>address\u003c/span>\u003c/li>\n  <li><span class='match'>admit\u003c/span>\u003c/li>\n  <li><span class='match'>affect\u003c/span>\u003c/li>\n  <li><span class='match'>afford\u003c/span>\u003c/li>\n  <li><span class='match'>after\u003c/span>\u003c/li>\n  <li><span class='match'>afternoon\u003c/span>\u003c/li>\n  <li><span class='match'>again\u003c/span>\u003c/li>\n  <li><span class='match'>against\u003c/span>\u003c/li>\n  <li><span class='match'>agent\u003c/span>\u003c/li>\n  <li><span class='match'>air\u003c/span>\u003c/li>\n  <li><span class='match'>all\u003c/span>\u003c/li>\n  <li><span class='match'>allow\u003c/span>\u003c/li>\n  <li><span class='match'>almost\u003c/span>\u003c/li>\n  <li><span class='match'>along\u003c/span>\u003c/li>\n  <li><span class='match'>alright\u003c/span>\u003c/li>\n  <li><span class='match'>although\u003c/span>\u003c/li>\n  <li><span class='match'>always\u003c/span>\u003c/li>\n  <li><span class='match'>amount\u003c/span>\u003c/li>\n  <li><span class='match'>and\u003c/span>\u003c/li>\n  <li><span class='match'>another\u003c/span>\u003c/li>\n  <li><span class='match'>answer\u003c/span>\u003c/li>\n  <li><span class='match'>apart\u003c/span>\u003c/li>\n  <li><span class='match'>apparent\u003c/span>\u003c/li>\n  <li><span class='match'>appear\u003c/span>\u003c/li>\n  <li><span class='match'>appoint\u003c/span>\u003c/li>\n  <li><span class='match'>approach\u003c/span>\u003c/li>\n  <li><span class='match'>arm\u003c/span>\u003c/li>\n  <li><span class='match'>around\u003c/span>\u003c/li>\n  <li><span class='match'>art\u003c/span>\u003c/li>\n  <li><span class='match'>as\u003c/span>\u003c/li>\n  <li><span class='match'>ask\u003c/span>\u003c/li>\n  <li><span class='match'>at\u003c/span>\u003c/li>\n  <li><span class='match'>attend\u003c/span>\u003c/li>\n  <li><span class='match'>awful\u003c/span>\u003c/li>\n  <li><span class='match'>each\u003c/span>\u003c/li>\n  <li><span class='match'>east\u003c/span>\u003c/li>\n  <li><span class='match'>eat\u003c/span>\u003c/li>\n  <li><span class='match'>effect\u003c/span>\u003c/li>\n  <li><span class='match'>egg\u003c/span>\u003c/li>\n  <li><span class='match'>eight\u003c/span>\u003c/li>\n  <li><span class='match'>either\u003c/span>\u003c/li>\n  <li><span class='match'>elect\u003c/span>\u003c/li>\n  <li><span class='match'>electric\u003c/span>\u003c/li>\n  <li><span class='match'>eleven\u003c/span>\u003c/li>\n  <li><span class='match'>end\u003c/span>\u003c/li>\n  <li><span class='match'>english\u003c/span>\u003c/li>\n  <li><span class='match'>enough\u003c/span>\u003c/li>\n  <li><span class='match'>enter\u003c/span>\u003c/li>\n  <li><span class='match'>environment\u003c/span>\u003c/li>\n  <li><span class='match'>equal\u003c/span>\u003c/li>\n  <li><span class='match'>especial\u003c/span>\u003c/li>\n  <li><span class='match'>even\u003c/span>\u003c/li>\n  <li><span class='match'>evening\u003c/span>\u003c/li>\n  <li><span class='match'>ever\u003c/span>\u003c/li>\n  <li><span class='match'>exact\u003c/span>\u003c/li>\n  <li><span class='match'>except\u003c/span>\u003c/li>\n  <li><span class='match'>exist\u003c/span>\u003c/li>\n  <li><span class='match'>expect\u003c/span>\u003c/li>\n  <li><span class='match'>explain\u003c/span>\u003c/li>\n  <li><span class='match'>express\u003c/span>\u003c/li>\n  <li><span class='match'>if\u003c/span>\u003c/li>\n  <li><span class='match'>important\u003c/span>\u003c/li>\n  <li><span class='match'>in\u003c/span>\u003c/li>\n  <li><span class='match'>indeed\u003c/span>\u003c/li>\n  <li><span class='match'>individual\u003c/span>\u003c/li>\n  <li><span class='match'>inform\u003c/span>\u003c/li>\n  <li><span class='match'>instead\u003c/span>\u003c/li>\n  <li><span class='match'>interest\u003c/span>\u003c/li>\n  <li><span class='match'>invest\u003c/span>\u003c/li>\n  <li><span class='match'>it\u003c/span>\u003c/li>\n  <li><span class='match'>item\u003c/span>\u003c/li>\n  <li><span class='match'>obvious\u003c/span>\u003c/li>\n  <li><span class='match'>occasion\u003c/span>\u003c/li>\n  <li><span class='match'>odd\u003c/span>\u003c/li>\n  <li><span class='match'>of\u003c/span>\u003c/li>\n  <li><span class='match'>off\u003c/span>\u003c/li>\n  <li><span class='match'>offer\u003c/span>\u003c/li>\n  <li><span class='match'>often\u003c/span>\u003c/li>\n  <li><span class='match'>old\u003c/span>\u003c/li>\n  <li><span class='match'>on\u003c/span>\u003c/li>\n  <li><span class='match'>open\u003c/span>\u003c/li>\n  <li><span class='match'>or\u003c/span>\u003c/li>\n  <li><span class='match'>order\u003c/span>\u003c/li>\n  <li><span class='match'>original\u003c/span>\u003c/li>\n  <li><span class='match'>other\u003c/span>\u003c/li>\n  <li><span class='match'>ought\u003c/span>\u003c/li>\n  <li><span class='match'>out\u003c/span>\u003c/li>\n  <li><span class='match'>over\u003c/span>\u003c/li>\n  <li><span class='match'>own\u003c/span>\u003c/li>\n  <li><span class='match'>under\u003c/span>\u003c/li>\n  <li><span class='match'>understand\u003c/span>\u003c/li>\n  <li><span class='match'>union\u003c/span>\u003c/li>\n  <li><span class='match'>unit\u003c/span>\u003c/li>\n  <li><span class='match'>unless\u003c/span>\u003c/li>\n  <li><span class='match'>until\u003c/span>\u003c/li>\n  <li><span class='match'>up\u003c/span>\u003c/li>\n  <li><span class='match'>upon\u003c/span>\u003c/li>\n  <li><span class='match'>usual\u003c/span>\u003c/li>\n  <li><span class='match'>year\u003c/span>\u003c/li>\n  <li><span class='match'>yes\u003c/span>\u003c/li>\n  <li><span class='match'>yet\u003c/span>\u003c/li>\n  <li><span class='match'>young\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>start_with_vowel = str_detect(words, &quot;^[aeuioy]&quot;)
+end_with_consonant = str_detect(words, &quot;[^aeuioy]$&quot;)
+words[start_with_vowel &amp; end_with_consonant]</code></pre>
+<pre><code>##   [1] &quot;about&quot;       &quot;accept&quot;      &quot;account&quot;     &quot;across&quot;      &quot;act&quot;        
+##   [6] &quot;actual&quot;      &quot;add&quot;         &quot;address&quot;     &quot;admit&quot;       &quot;affect&quot;     
+##  [11] &quot;afford&quot;      &quot;after&quot;       &quot;afternoon&quot;   &quot;again&quot;       &quot;against&quot;    
+##  [16] &quot;agent&quot;       &quot;air&quot;         &quot;all&quot;         &quot;allow&quot;       &quot;almost&quot;     
+##  [21] &quot;along&quot;       &quot;alright&quot;     &quot;although&quot;    &quot;always&quot;      &quot;amount&quot;     
+##  [26] &quot;and&quot;         &quot;another&quot;     &quot;answer&quot;      &quot;apart&quot;       &quot;apparent&quot;   
+##  [31] &quot;appear&quot;      &quot;appoint&quot;     &quot;approach&quot;    &quot;arm&quot;         &quot;around&quot;     
+##  [36] &quot;art&quot;         &quot;as&quot;          &quot;ask&quot;         &quot;at&quot;          &quot;attend&quot;     
+##  [41] &quot;awful&quot;       &quot;each&quot;        &quot;east&quot;        &quot;eat&quot;         &quot;effect&quot;     
+##  [46] &quot;egg&quot;         &quot;eight&quot;       &quot;either&quot;      &quot;elect&quot;       &quot;electric&quot;   
+##  [51] &quot;eleven&quot;      &quot;end&quot;         &quot;english&quot;     &quot;enough&quot;      &quot;enter&quot;      
+##  [56] &quot;environment&quot; &quot;equal&quot;       &quot;especial&quot;    &quot;even&quot;        &quot;evening&quot;    
+##  [61] &quot;ever&quot;        &quot;exact&quot;       &quot;except&quot;      &quot;exist&quot;       &quot;expect&quot;     
+##  [66] &quot;explain&quot;     &quot;express&quot;     &quot;if&quot;          &quot;important&quot;   &quot;in&quot;         
+##  [71] &quot;indeed&quot;      &quot;individual&quot;  &quot;inform&quot;      &quot;instead&quot;     &quot;interest&quot;   
+##  [76] &quot;invest&quot;      &quot;it&quot;          &quot;item&quot;        &quot;obvious&quot;     &quot;occasion&quot;   
+##  [81] &quot;odd&quot;         &quot;of&quot;          &quot;off&quot;         &quot;offer&quot;       &quot;often&quot;      
+##  [86] &quot;old&quot;         &quot;on&quot;          &quot;open&quot;        &quot;or&quot;          &quot;order&quot;      
+##  [91] &quot;original&quot;    &quot;other&quot;       &quot;ought&quot;       &quot;out&quot;         &quot;over&quot;       
+##  [96] &quot;own&quot;         &quot;under&quot;       &quot;understand&quot;  &quot;union&quot;       &quot;unit&quot;       
+## [101] &quot;unless&quot;      &quot;until&quot;       &quot;up&quot;          &quot;upon&quot;        &quot;usual&quot;      
+## [106] &quot;year&quot;        &quot;yes&quot;         &quot;yet&quot;         &quot;young&quot;</code></pre>
+<pre class="r"><code>#Words that contain at least one of each different vowel yields no results
+a = str_detect(words, &quot;a+&quot;)
+e = str_detect(words, &quot;e+&quot;)
+i = str_detect(words, &quot;i+&quot;)
+o = str_detect(words, &quot;o+&quot;)
+u = str_detect(words, &quot;u+&quot;)
+y = str_detect(words, &quot;y+&quot;)
+words[a &amp; e &amp; i &amp; o &amp; u &amp; y]</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>#Words that have the highest proportion of vowels
+count_of_vowels = str_count(words, &quot;[aeouiy]&quot;)
+word_length = str_length(words)
+prop_table &lt;- tibble(words = words, counts = count_of_vowels, length = word_length)
+
+
+prop_table %&gt;%
+  mutate(proportion = counts / length) %&gt;%
+  arrange(desc(proportion)) %&gt;%
+    head(20)</code></pre>
+<pre><code>## # A tibble: 20 x 4
+##     words counts length proportion
+##     &lt;chr&gt;  &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;
+##  1      a      1      1  1.0000000
+##  2    eye      3      3  1.0000000
+##  3    you      3      3  1.0000000
+##  4   area      3      4  0.7500000
+##  5   away      3      4  0.7500000
+##  6   easy      3      4  0.7500000
+##  7   idea      3      4  0.7500000
+##  8   okay      3      4  0.7500000
+##  9   year      3      4  0.7500000
+## 10    age      2      3  0.6666667
+## 11    ago      2      3  0.6666667
+## 12    air      2      3  0.6666667
+## 13    any      2      3  0.6666667
+## 14 beauty      4      6  0.6666667
+## 15    boy      2      3  0.6666667
+## 16    buy      2      3  0.6666667
+## 17    day      2      3  0.6666667
+## 18    die      2      3  0.6666667
+## 19    due      2      3  0.6666667
+## 20    eat      2      3  0.6666667</code></pre>
+</div>
+<div id="extract-matches" class="section level2">
+<h2>14.4.3.1 - Extract Matches</h2>
+<pre class="r"><code>#1. Correct the match to flickered
+
+colors &lt;- c(&quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;)
+color_match &lt;- str_c(colors, collapse = &quot;|&quot;)
+truecolors &lt;- str_c(&quot;\\b(&quot;, str_c(colors, collapse = &quot;|&quot;), &quot;)\\b&quot;)## add boundaries 
+more &lt;- sentences[str_count(sentences, color_match) &gt; 1]
+str_view_all(more, truecolors, match = TRUE)</code></pre>
+<div id="htmlwidget-4ad8d9f372988d109b2e" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ad8d9f372988d109b2e">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue\u003c/span> or <span class='match'>red\u003c/span> ink.\u003c/li>\n  <li>The <span class='match'>green\u003c/span> light in the brown box flickered.\u003c/li>\n  <li>The sky in the west is tinged with <span class='match'>orange\u003c/span> <span class='match'>red\u003c/span>.\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#Using Harvard sentences data, extract:
+#The first word from each sentence
+str_extract(sentences, &quot;[a-zA-X]+&quot;) %&gt;% head(20)</code></pre>
+<pre><code>##  [1] &quot;The&quot;   &quot;Glue&quot;  &quot;It&quot;    &quot;These&quot; &quot;Rice&quot;  &quot;The&quot;   &quot;The&quot;   &quot;The&quot;  
+##  [9] &quot;Four&quot;  &quot;Large&quot; &quot;The&quot;   &quot;A&quot;     &quot;The&quot;   &quot;Kick&quot;  &quot;Help&quot;  &quot;A&quot;    
+## [17] &quot;Smoky&quot; &quot;The&quot;   &quot;The&quot;   &quot;The&quot;</code></pre>
+<pre class="r"><code>#All words ending in ing
+ending &lt;- str_subset(sentences, &quot;\\b[A-Za-z]+ing\\b&quot;)
+str_extract(ending, &quot;\\b[A-Za-z]+ing\\b&quot;) %&gt;% str_sub(1, -1) %&gt;% head(10)</code></pre>
+<pre><code>##  [1] &quot;spring&quot;  &quot;evening&quot; &quot;morning&quot; &quot;winding&quot; &quot;living&quot;  &quot;king&quot;    &quot;Adding&quot; 
+##  [8] &quot;making&quot;  &quot;raging&quot;  &quot;playing&quot;</code></pre>
+<pre class="r"><code>#All plurals
+#Plurals that end in es are not captured by regex that I can fathom
+#The following retrieves words that end in s and excludes 2 and 3 letter words, like has &amp; is
+unique(unlist(str_extract_all(sentences, &quot;\\b[A-Za-z]{3,}s\\b&quot;))) %&gt;%
+  head(20)</code></pre>
+<pre><code>##  [1] &quot;planks&quot;    &quot;days&quot;      &quot;bowls&quot;     &quot;lemons&quot;    &quot;makes&quot;    
+##  [6] &quot;hogs&quot;      &quot;hours&quot;     &quot;stockings&quot; &quot;helps&quot;     &quot;pass&quot;     
+## [11] &quot;fires&quot;     &quot;across&quot;    &quot;bonds&quot;     &quot;Press&quot;     &quot;pants&quot;    
+## [16] &quot;useless&quot;   &quot;kittens&quot;   &quot;Sickness&quot;  &quot;grass&quot;     &quot;books&quot;</code></pre>
+</div>
+<div id="grouped-matches" class="section level2">
+<h2>14.4.4.1 - Grouped Matches</h2>
+<pre class="r"><code>#1. Find words that come after a number
+#Pulls out both number name and word
+nw &lt;- &quot;(one|two|three|four|five|six|seven|eight|nine|ten) +(\\S+)&quot;
+sentences[str_detect(sentences, nw)] %&gt;%
+  str_extract(nw)</code></pre>
+<pre><code>##  [1] &quot;ten served&quot;    &quot;one over&quot;      &quot;seven books&quot;   &quot;two met&quot;      
+##  [5] &quot;two factors&quot;   &quot;one and&quot;       &quot;three lists&quot;   &quot;seven is&quot;     
+##  [9] &quot;two when&quot;      &quot;one floor.&quot;    &quot;ten inches.&quot;   &quot;one with&quot;     
+## [13] &quot;one war&quot;       &quot;one button&quot;    &quot;six minutes.&quot;  &quot;ten years&quot;    
+## [17] &quot;one in&quot;        &quot;ten chased&quot;    &quot;one like&quot;      &quot;two shares&quot;   
+## [21] &quot;two distinct&quot;  &quot;one costs&quot;     &quot;ten two&quot;       &quot;five robins.&quot; 
+## [25] &quot;four kinds&quot;    &quot;one rang&quot;      &quot;ten him.&quot;      &quot;three story&quot;  
+## [29] &quot;ten by&quot;        &quot;one wall.&quot;     &quot;three inches&quot;  &quot;ten your&quot;     
+## [33] &quot;six comes&quot;     &quot;one before&quot;    &quot;three batches&quot; &quot;two leaves.&quot;</code></pre>
+<pre class="r"><code>#2. To find contractions
+contracted_words &lt;- &quot;([A-Za-z]+)&#39;([A-Za-z]+)&quot;
+sentences %&gt;%
+  `[`(str_detect(sentences, contracted_words)) %&gt;%
+  str_extract(contracted_words)</code></pre>
+<pre><code>##  [1] &quot;It&#39;s&quot;       &quot;man&#39;s&quot;      &quot;don&#39;t&quot;      &quot;store&#39;s&quot;    &quot;workmen&#39;s&quot; 
+##  [6] &quot;Let&#39;s&quot;      &quot;sun&#39;s&quot;      &quot;child&#39;s&quot;    &quot;king&#39;s&quot;     &quot;It&#39;s&quot;      
+## [11] &quot;don&#39;t&quot;      &quot;queen&#39;s&quot;    &quot;don&#39;t&quot;      &quot;pirate&#39;s&quot;   &quot;neighbor&#39;s&quot;</code></pre>
+</div>
+<div id="replacing-matches" class="section level2">
+<h2>14.4.5.1- Replacing Matches</h2>
+<pre class="r"><code>#1. Replace forward slash with backward slash
+replace_for &lt;- str_replace(&quot;How to replace a / with a backslash&quot;, &quot;/&quot;, &quot;\\\\&quot;)  
+                                
+replace_for</code></pre>
+<pre><code>## [1] &quot;How to replace a \\ with a backslash&quot;</code></pre>
+<pre class="r"><code>#2. Implement a simple version of str_to_lower() using replace_all().
+
+phrase=&quot;aLL over tHe pLaCe&quot;
+new_phrase &lt;- str_replace_all(phrase, c(&quot;L&quot; = &quot;l&quot;, &quot;C&quot; = &quot;c&quot;, &quot;H&quot; = &quot;h&quot;))
+new_phrase</code></pre>
+<pre><code>## [1] &quot;all over the place&quot;</code></pre>
+<pre class="r"><code>#3. Switch the first and last letters in words and count the number of legitimate words
+
+switch&lt;- str_replace(words,&quot;(^.)(.*)(.$)&quot;, &quot;\\3\\2\\1&quot;)
+still_words &lt;- intersect(words, switch)
+length(still_words)</code></pre>
+<pre><code>## [1] 45</code></pre>
+</div>
+<div id="splitting" class="section level2">
+<h2>14.4.6.1 - Splitting</h2>
+<pre class="r"><code>#1. split apples, pears, and bananas into individual components
+fruits &lt;- c(&quot;apples, pears, and bananas&quot;)
+str_split(fruits, &quot;, +(and +)?&quot;)[[1]]</code></pre>
+<pre><code>## [1] &quot;apples&quot;  &quot;pears&quot;   &quot;bananas&quot;</code></pre>
+<pre class="r"><code>#2. It is better to split by boundary on words because it considers punctuation instead of just whitespace
+
+#3. Result of splitting with an empty string causes words to split apart
+str_split(&quot;so_very ver y tired!&quot;, &quot;&quot;)[[1]]</code></pre>
+<pre><code>##  [1] &quot;s&quot; &quot;o&quot; &quot;_&quot; &quot;v&quot; &quot;e&quot; &quot;r&quot; &quot;y&quot; &quot; &quot; &quot;v&quot; &quot;e&quot; &quot;r&quot; &quot; &quot; &quot;y&quot; &quot; &quot; &quot;t&quot; &quot;i&quot; &quot;r&quot;
+## [18] &quot;e&quot; &quot;d&quot; &quot;!&quot;</code></pre>
+</div>
+<div id="other-patterns" class="section level2">
+<h2>14.5.1 - Other Patterns</h2>
+<pre class="r"><code>#1.One could find all strings containing \ with regex() vs. with fixed() by adding the fixed
+#argument to the string function
+str_subset(c(&quot;stop\\&quot;, &quot;please&quot;), &quot;\\\\&quot;)</code></pre>
+<pre><code>## [1] &quot;stop\\&quot;</code></pre>
+<pre class="r"><code>str_subset(c(&quot;stop\\&quot;, &quot;please&quot;), fixed(&quot;\\&quot;))</code></pre>
+<pre><code>## [1] &quot;stop\\&quot;</code></pre>
+<pre class="r"><code>#2. Five most common words in sentences
+str_extract_all(sentences, boundary(&quot;word&quot;)) %&gt;%
+  unlist() %&gt;%
+  str_to_lower() %&gt;%
+  tibble() %&gt;%
+  set_names(&quot;word&quot;) %&gt;%
+  group_by(word) %&gt;%
+  count() %&gt;%
+    arrange(desc(n)) %&gt;%
+  head(5)</code></pre>
+<pre><code>## # A tibble: 5 x 2
+## # Groups:   word [5]
+##    word     n
+##   &lt;chr&gt; &lt;int&gt;
+## 1   the   751
+## 2     a   202
+## 3    of   132
+## 4    to   123
+## 5   and   118</code></pre>
+</div>
+<div id="stringi" class="section level2">
+<h2>14.7.1 - Stringi</h2>
+<pre class="r"><code>#1.
+#stringi function that counts the number of words is stri_count words
+#Stringi function that finds duplicated strings is stri_duplicated
+#Stringi function to generate random text is stri_rand_
+
+#2. To control the language that stri_sort() uses for sorting, one has to change the 
+#value within the function related to opts_collator from NULL or &quot;&quot;</code></pre>
+<p><a href="#top">Back to top</a></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

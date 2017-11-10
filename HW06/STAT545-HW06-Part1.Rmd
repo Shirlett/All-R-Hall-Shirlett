@@ -5,7 +5,9 @@ date: "November 5, 2017"
 always_allow_html: yes
 allow_html_dependencies: true
 output: 
-  github_document:
+   html_document:
+      self_contained: false
+      keep_md: true
       toc: true
       
 ---
