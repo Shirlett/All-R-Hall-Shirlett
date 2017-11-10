@@ -26,3 +26,10 @@ This is the main Readme file for this repository. This repository contains markd
   -- This incorporates popular visualization techniques like the use of marks and channels within bar charts and scatterplots
   + ![Graphic Devices](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW05/STAT545-HW05.md#graphic-devices)
   --This also includes reading and writing to external files
+6.  ![HW06 - Strings, Regular Expressions, Data Cleaning, and Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW06)
+  + ![Strings and Regular Expressions](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part1.md#string-basics) 
+  -- This section explores the use of regular expressions against strings to find and detect matches
+  + ![Data Cleaning](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#data-cleansing) 
+  -- This illustrates the use of data massaging to eliminate unnecessary characters, columns and phrases to support graphing and analysis
+  + ![Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#addresses-of-singersbands-using-google-map-api)
+  --This shows creation of a function that incorporates vectors within a map function for nested frames

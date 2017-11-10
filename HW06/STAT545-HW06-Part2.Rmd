@@ -49,7 +49,7 @@ library(htmlwidgets)
 ```
 
 
-#3. Candy Survey Results
+#3.Candy Survey Results
 ##Data Cleansing
 ```{r warning=FALSE, message=FALSE}
 library(readr)

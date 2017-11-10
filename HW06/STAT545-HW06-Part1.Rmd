@@ -47,7 +47,8 @@ library(scales) # required for html widgets like leaflet
 
 ```
 
-#1. String Instruments from http://r4ds.had.co.nz/strings.html
+
+#1.String Instruments from http://r4ds.had.co.nz/strings.html
 ##14.2.5 - String Basics
 ```{r warning=FALSE, message=FALSE}
 #1.

@@ -1,4 +1,5 @@
 The output of HW06 can be found in two sections: 
+
 ![Part 1](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part1.md)
 
 ![Part 2](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md).
