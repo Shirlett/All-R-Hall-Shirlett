@@ -227,7 +227,7 @@ i_love_mint %>%
 
 <a href="#top">Back to top</a>
 
-#4. Addresses of Singers/Bands using Google Map API
+#4.Addresses of Singers/Bands using Google Map API
 ##Extraction of reverse geographic codes
 
 ```{r warning=FALSE, message=FALSE, results='asis'}

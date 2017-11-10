@@ -31,5 +31,5 @@ This is the main Readme file for this repository. This repository contains markd
   -- This section explores the use of regular expressions against strings to find and detect matches
   + ![Data Cleaning](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#data-cleansing) 
   -- This illustrates the use of data massaging to eliminate unnecessary characters, columns and phrases to support graphing and analysis
-  + ![Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#addresses-of-singersbands-using-google-map-api)
+  + ![Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#extraction-of-reverse-geographic-codes)
   --This shows creation of a function that incorporates vectors within a map function for nested frames

@@ -8,7 +8,7 @@ November 5, 2017
     -   [Profile of Trick or Treaters](#profile-of-trick-or-treaters)
     -   [Bags of Joy or Bags of Despair to Trick or Treaters](#bags-of-joy-or-bags-of-despair-to-trick-or-treaters)
     -   [What About the General Attitude of Specific Age Groups toward Mint Flavored Candy?](#what-about-the-general-attitude-of-specific-age-groups-toward-mint-flavored-candy)
--   [4. Addresses of Singers/Bands using Google Map API](#addresses-of-singersbands-using-google-map-api)
+-   [4.Addresses of Singers/Bands using Google Map API](#addresses-of-singersbands-using-google-map-api)
     -   [Extraction of reverse geographic codes](#extraction-of-reverse-geographic-codes)
     -   [Assess the accuracy of the city name in the Singer dataset](#assess-the-accuracy-of-the-city-name-in-the-singer-dataset)
     -   [Geographic depiction of the bands that had true matches with Google's Map API](#geographic-depiction-of-the-bands-that-had-true-matches-with-googles-map-api)
@@ -292,8 +292,8 @@ i_love_mint %>%
 
 <a href="#top">Back to top</a>
 
-4. Addresses of Singers/Bands using Google Map API
-==================================================
+4.Addresses of Singers/Bands using Google Map API
+=================================================
 
 Extraction of reverse geographic codes
 --------------------------------------
@@ -524,9 +524,9 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>123-135 North LaSalle Street, Chicago, IL 60602, USA</p></td>
+<td><p>123-135</p></td>
+<td><p>North LaSalle Street</p></td>
 </tr>
 <tr class="even">
 <td><p>80 Chambers St, New York, NY 10007, USA</p></td>
@@ -626,55 +626,47 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 </tbody>
 </table>
 
-<table>
+<table style="width:94%;">
 <caption>Table continues below</caption>
 <colgroup>
-<col width="25%" />
-<col width="19%" />
-<col width="20%" />
-<col width="35%" />
+<col width="29%" />
+<col width="23%" />
+<col width="41%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>neighborhood</th>
-<th>political</th>
 <th>locality</th>
 <th>administrative_area_level_2</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Chicago Loop</p></td>
+<td><p>Chicago</p></td>
+<td><p>Cook County</p></td>
 </tr>
 <tr class="even">
 <td><p>Lower Manhattan</p></td>
-<td><p>Manhattan</p></td>
 <td><p>New York</p></td>
 <td><p>New York County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Downtown</p></td>
-<td><p>NA</p></td>
 <td><p>Detroit</p></td>
 <td><p>Wayne County</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>Howard</p></td>
 <td><p>Centre County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Wilson</p></td>
-<td><p>NA</p></td>
 <td><p>Oxnard</p></td>
 <td><p>Ventura County</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>Bonn</p></td>
 <td><p>Köln</p></td>
@@ -682,83 +674,69 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
-<td><p>NA</p></td>
 <td><p>Hawaii County</p></td>
 </tr>
 <tr class="even">
 <td><p>Central LA</p></td>
-<td><p>NA</p></td>
 <td><p>Los Angeles</p></td>
 <td><p>Los Angeles County</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
-<td><p>Staten Island</p></td>
 <td><p>NA</p></td>
 <td><p>Richmond County</p></td>
 </tr>
 <tr class="even">
 <td><p>Southwest Portland</p></td>
-<td><p>NA</p></td>
 <td><p>Portland</p></td>
 <td><p>Multnomah County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Westminster</p></td>
-<td><p>NA</p></td>
 <td><p>London</p></td>
 <td><p>Greater London</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>Poggio Bustone</p></td>
 <td><p>Provincia di Rieti</p></td>
 </tr>
 <tr class="odd">
 <td><p>Downtown</p></td>
-<td><p>NA</p></td>
 <td><p>Pittsburgh</p></td>
 <td><p>Allegheny County</p></td>
 </tr>
 <tr class="even">
 <td><p>Lower Manhattan</p></td>
-<td><p>Manhattan</p></td>
 <td><p>New York</p></td>
 <td><p>New York County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Civic Center</p></td>
-<td><p>NA</p></td>
 <td><p>San Francisco</p></td>
 <td><p>San Francisco County</p></td>
 </tr>
 <tr class="even">
 <td><p>Lower Manhattan</p></td>
-<td><p>Manhattan</p></td>
 <td><p>New York</p></td>
 <td><p>New York County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Central LA</p></td>
-<td><p>NA</p></td>
 <td><p>Los Angeles</p></td>
 <td><p>Los Angeles County</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>Lakeshore</p></td>
 <td><p>Fresno County</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
-<td><p>NA</p></td>
 <td><p>Río Hato</p></td>
 <td><p>Antón</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>Kent</p></td>
 <td><p>King County</p></td>
@@ -769,31 +747,31 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <table>
 <caption>Table continues below</caption>
 <colgroup>
-<col width="32%" />
+<col width="38%" />
+<col width="22%" />
 <col width="18%" />
-<col width="15%" />
-<col width="32%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>administrative_area_level_1</th>
 <th>country</th>
 <th>postal_code</th>
-<th>administrative_area_level_3</th>
+<th>political</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Illinois</p></td>
+<td><p>United States</p></td>
+<td><p>60602</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="even">
 <td><p>New York</p></td>
 <td><p>United States</p></td>
 <td><p>10007</p></td>
-<td><p>NA</p></td>
+<td><p>Manhattan</p></td>
 </tr>
 <tr class="odd">
 <td><p>Michigan</p></td>
@@ -805,7 +783,7 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Pennsylvania</p></td>
 <td><p>United States</p></td>
 <td><p>16841</p></td>
-<td><p>Marion Township</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>California</p></td>
@@ -835,7 +813,7 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>New York</p></td>
 <td><p>United States</p></td>
 <td><p>10306</p></td>
-<td><p>NA</p></td>
+<td><p>Staten Island</p></td>
 </tr>
 <tr class="even">
 <td><p>Oregon</p></td>
@@ -853,7 +831,7 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Lazio</p></td>
 <td><p>Italy</p></td>
 <td><p>02018</p></td>
-<td><p>Poggio Bustone</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>Pennsylvania</p></td>
@@ -865,7 +843,7 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>New York</p></td>
 <td><p>United States</p></td>
 <td><p>10007</p></td>
-<td><p>NA</p></td>
+<td><p>Manhattan</p></td>
 </tr>
 <tr class="odd">
 <td><p>California</p></td>
@@ -877,7 +855,7 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>New York</p></td>
 <td><p>United States</p></td>
 <td><p>10007</p></td>
-<td><p>NA</p></td>
+<td><p>Manhattan</p></td>
 </tr>
 <tr class="odd">
 <td><p>California</p></td>
@@ -906,13 +884,15 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 </tbody>
 </table>
 
-<table style="width:49%;">
+<table style="width:90%;">
 <colgroup>
+<col width="41%" />
 <col width="29%" />
 <col width="19%" />
 </colgroup>
 <thead>
 <tr class="header">
+<th>administrative_area_level_3</th>
 <th>postal_code_suffix</th>
 <th>postal_town</th>
 </tr>
@@ -921,80 +901,100 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>Marion Township</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="odd">
+<td><p>NA</p></td>
 <td><p>1166</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="even">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="odd">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>London</p></td>
 </tr>
 <tr class="even">
+<td><p>Poggio Bustone</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
 <td><p>NA</p></td>
+<td><p>NA</p></td>
 </tr>
 <tr class="even">
+<td><p>NA</p></td>
 <td><p>5838</p></td>
 <td><p>NA</p></td>
 </tr>
@@ -1023,7 +1023,7 @@ kable(compare_singer)
 
 | name                     |   longitude|  latitude| city                         | locality       |  matching|
 |:-------------------------|-----------:|---------:|:-----------------------------|:---------------|---------:|
-| Gene Chandler            |   -87.63241|  41.88415| Chicago, IL                  | NA             |        NA|
+| Gene Chandler            |   -87.63241|  41.88415| Chicago, IL                  | Chicago        |         4|
 | Paul Horn                |   -74.00712|  40.71455| New York, NY                 | New York       |         4|
 | Dorothy Ashby            |   -83.04792|  42.33168| Detroit, MI                  | Detroit        |         4|
 | Barleyjuice              |   -77.60454|  40.99471| Pennsylvania                 | Howard         |        11|
@@ -1054,8 +1054,8 @@ rbind.data.frame(match_count, na_count)
 
     ##    Var1 Freq
     ## 1 FALSE    7
-    ## 2  TRUE   10
-    ## 3   NAs    3
+    ## 2  TRUE   11
+    ## 3   NAs    2
 
 Geographic depiction of the bands that had true matches with Google's Map API
 -----------------------------------------------------------------------------
@@ -1076,7 +1076,7 @@ singer_map
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-c48316a9add17b0e4d58">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[[40.71455,42.33168,34.20034,50.7323,34.05349,45.51179,40.43831,40.71455,40.71455,34.05349],[-74.00712,-83.04792,-119.18044,7.10169,-118.24532,-122.67563,-79.99745,-74.00712,-74.00712,-118.24532],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Paul Horn","Dorothy Ashby","Madlib","Seeed feat. Elephant Man","Little Feat","31Knots","Ray Brown Trio","iio","John Zorn","The Meeting Places"],null,null,null,null,null,null]}],"limits":{"lat":[34.05349,50.7323],"lng":[-122.67563,7.10169]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-48338f66da7a5bc506c5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[[41.88415,40.71455,42.33168,34.20034,50.7323,34.05349,45.51179,40.43831,40.71455,40.71455,34.05349],[-87.63241,-74.00712,-83.04792,-119.18044,7.10169,-118.24532,-122.67563,-79.99745,-74.00712,-74.00712,-118.24532],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Gene Chandler","Paul Horn","Dorothy Ashby","Madlib","Seeed feat. Elephant Man","Little Feat","31Knots","Ray Brown Trio","iio","John Zorn","The Meeting Places"],null,null,null,null,null,null]}],"limits":{"lat":[34.05349,50.7323],"lng":[-122.67563,7.10169]}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 htmlwidgets::saveWidget(singer_map, file="singer_map.html")

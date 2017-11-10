@@ -302,13 +302,13 @@ test8 = "abctatetcba"
 ```{r warning=FALSE, message=FALSE}
 #1. Using Regular expressions and str_detect:
 #Words that start or end with x
-str_view(words, "^x|x$", match = TRUE)
+#str_view(words, "^x|x$", match = TRUE)
 start_with_x = str_detect(words, "^x")
 end_with_x = str_detect(words, "x$")
 words[start_with_x | end_with_x]
 
 #Words that start with a vowel and end with a consonant
-str_view(words, "^[aeuioy].*[^aeuioy]$", match = TRUE)
+#str_view(words, "^[aeuioy].*[^aeuioy]$", match = TRUE)
 start_with_vowel = str_detect(words, "^[aeuioy]")
 end_with_consonant = str_detect(words, "[^aeuioy]$")
 words[start_with_vowel & end_with_consonant]
