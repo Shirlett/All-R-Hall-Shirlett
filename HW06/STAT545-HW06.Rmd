@@ -2,9 +2,8 @@
 title: "STAT545-HW06"
 author: "Shirlett"
 date: "November 5, 2017"
-always_allow_html: yes
 output: 
-  github_document:
+  html_document:
       toc: true
       
 ---
