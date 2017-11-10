@@ -164,17 +164,20 @@ str_view(test2, "\\..\\..\\..")
 ```{r warning=FALSE, message=FALSE}
 #1. Match the literal string "$^$"
 test3<- "goodness$^$gracious"
-str_view(test3, "\\$\\^\\$")
+#str_view(test3, "\\$\\^\\$")
 
 #2. Regular Expressions to match common words in stringr::words:
 #that start with y
-str_view(words, "^y", match = TRUE)
+#str_view(words, "^y", match = TRUE)
+
 #that end with x
-str_view(words, "x$", match = TRUE)
+#str_view(words, "x$", match = TRUE)
+
 #are exactly three letters long
-str_view(words, "^...$", match = TRUE)
+#str_view(words, "^...$", match = TRUE)
+
 #have seven letters or more
-str_view(words, ".......", match = TRUE)
+#str_view(words, ".......", match = TRUE)
 
 ```
 
@@ -184,16 +187,16 @@ str_view(words, ".......", match = TRUE)
 
 #1. Regular expressions to find words that:
 #Start with a vowel
-str_view(words, "^[aeouiy]", match = TRUE)
+#str_view(words, "^[aeouiy]", match = TRUE)
 
 #Only contain consonants
-str_view(words, "^[^aeouiy]*$", match = TRUE)
+#str_view(words, "^[^aeouiy]*$", match = TRUE)
 
 #End with ed but not with eed
-str_view(words, "[^e]ed$", match = TRUE)
+#str_view(words, "[^e]ed$", match = TRUE)
 
 #End with ing or ise
-str_view(words, "i(ng|se)$", match = TRUE)
+#str_view(words, "i(ng|se)$", match = TRUE)
 
 
 #2.Verify the rule “i before e except after c”
@@ -239,11 +242,13 @@ str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
 
 #3. Regular expressions to find words that:
 #Start with three consonants.
-str_view(words, "^[^aeouiy]{3}", match = TRUE)
+#str_view(words, "^[^aeouiy]{3}", match = TRUE)
+
 #Have three or more vowels in a row.
-str_view(words, "[aeouiy]{3,}", match = TRUE)
+#str_view(words, "[aeouiy]{3,}", match = TRUE)
+
 #Have two or more vowel-consonant pairs in a row.
-str_view(words, "([aeouiy][^aeouiy]){2,}", match = TRUE)
+#str_view(words, "([aeouiy][^aeouiy]){2,}", match = TRUE)
 
 
 
@@ -280,13 +285,13 @@ str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
 #2. Regular expressions to match words that:
 
 #Start and end with the same character.
-str_view(words, "^(.).*\\1$", match = T)
+#str_view(words, "^(.).*\\1$", match = T)
 
 #Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)
-str_view(words, "(..).*\\1", match = T)
+#str_view(words, "(..).*\\1", match = T)
 
 #Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)
-str_view(words, "(.).*\\1.*\\1", match = T)
+#str_view(words, "(.).*\\1.*\\1", match = T)
 
 ```
 
@@ -398,6 +403,7 @@ still_words <- intersect(words, switch)
 length(still_words)
 
 ```
+
 ##14.4.6.1 - Splitting
 ```{r warning=FALSE, message=FALSE}
 #1. split apples, pears, and bananas into individual components
@@ -411,6 +417,7 @@ str_split(fruits, ", +(and +)?")[[1]]
 str_split("so_very ver y tired!", "")[[1]]
 
 ```
+
 ##14.5.1 - Other Patterns
 ```{r warning=FALSE, message=FALSE}
 #1.One could find all strings containing \ with regex() vs. with fixed() by adding the fixed
