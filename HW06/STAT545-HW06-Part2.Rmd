@@ -3,6 +3,7 @@ title: "STAT545-HW06-Part2"
 author: "Shirlett"
 date: "November 5, 2017"
 always_allow_html: yes
+allow_html_dependencies: true
 output: 
   github_document:
       toc: true
@@ -43,6 +44,7 @@ library(grid)
 library(pander)
 library(htmltools) # to display widgets for maps etc
 library(scales) # required for html widgets like leaflet
+library(htmlwidgets)
 
 ```
 
@@ -284,7 +286,7 @@ compare_singer <- update_singer %>%
 kable(compare_singer)
 
 #The output below shows the number of true matches found - a stringdist value of 0 is an exact
-#match but 5 indicates a relatively close match. Only nine out of twenty were close matches.
+#match but 5 indicates a relatively close match. Only eleven out of twenty were close matches.
 match_count <- data.frame(table(compare_singer$matching<6))
 na_count <- data.frame(Var1="NAs", Freq=(sum(is.na(compare_singer$matching))))
 rbind.data.frame(match_count, na_count)
@@ -293,7 +295,7 @@ rbind.data.frame(match_count, na_count)
 ```
 
 ##Geographic depiction of the bands that had true matches with Google's Map API
-```{r warning=FALSE, message=FALSE}
+```{r}
 singer_map <- compare_singer %>% 
 	filter(matching<6) %>%
   leaflet()  %>%   

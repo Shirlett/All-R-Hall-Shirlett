@@ -569,9 +569,9 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Arthur Kill Road</p></td>
 </tr>
 <tr class="even">
+<td><p>Pacific Hwy W, Portland, OR 97201, USA</p></td>
 <td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Pacific Highway West</p></td>
 </tr>
 <tr class="odd">
 <td><p>18-20 Whitehall, Westminster, London SW1A, UK</p></td>
@@ -614,9 +614,9 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Stump Springs Road</p></td>
 </tr>
 <tr class="odd">
+<td><p>Calle Aviacion, Río Hato, Panama</p></td>
 <td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Calle Aviacion</p></td>
 </tr>
 <tr class="even">
 <td><p>220-298 4th Ave S, Kent, WA 98032, USA</p></td>
@@ -626,10 +626,10 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 </tbody>
 </table>
 
-<table style="width:90%;">
+<table style="width:94%;">
 <caption>Table continues below</caption>
 <colgroup>
-<col width="25%" />
+<col width="29%" />
 <col width="23%" />
 <col width="41%" />
 </colgroup>
@@ -687,9 +687,9 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Richmond County</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Southwest Portland</p></td>
+<td><p>Portland</p></td>
+<td><p>Multnomah County</p></td>
 </tr>
 <tr class="odd">
 <td><p>Westminster</p></td>
@@ -733,8 +733,8 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 </tr>
 <tr class="odd">
 <td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Río Hato</p></td>
+<td><p>Antón</p></td>
 </tr>
 <tr class="even">
 <td><p>NA</p></td>
@@ -816,9 +816,9 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>Staten Island</p></td>
 </tr>
 <tr class="even">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Oregon</p></td>
+<td><p>United States</p></td>
+<td><p>97201</p></td>
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
@@ -870,8 +870,8 @@ pandoc.table(update_singer, style = "grid", justify = 'left',  split.table = 95)
 <td><p>NA</p></td>
 </tr>
 <tr class="odd">
-<td><p>NA</p></td>
-<td><p>NA</p></td>
+<td><p>Provincia de Coclé</p></td>
+<td><p>Panama</p></td>
 <td><p>NA</p></td>
 <td><p>NA</p></td>
 </tr>
@@ -1032,7 +1032,7 @@ kable(compare_singer)
 | Keali I Reichel          |  -155.43414|  19.59009| Hawaii                       | NA             |        NA|
 | Little Feat              |  -118.24532|  34.05349| Los Angeles, CA              | Los Angeles    |         4|
 | Joan Baez                |   -74.15400|  40.57250| Staten Island, NY            | NA             |        NA|
-| 31Knots                  |  -122.67563|  45.51179| Portland, OR                 | NA             |        NA|
+| 31Knots                  |  -122.67563|  45.51179| Portland, OR                 | Portland       |         4|
 | Bleep                    |    -0.12714|  51.50632| UK - England - London        | London         |        15|
 | Lucio Battisti           |    12.88512|  42.50172| Poggio Bustone, Rieti, Italy | Poggio Bustone |        14|
 | Ray Brown Trio           |   -79.99745|  40.43831| Pittsburgh, PA               | Pittsburgh     |         4|
@@ -1041,21 +1041,21 @@ kable(compare_singer)
 | John Zorn                |   -74.00712|  40.71455| New York, NY                 | New York       |         4|
 | The Meeting Places       |  -118.24532|  34.05349| Los Angeles, CA              | Los Angeles    |         4|
 | Ben Harper               |  -119.27023|  37.27188| California                   | Lakeshore      |         8|
-| Billy Cobham             |   -80.11278|   8.41770| Panama                       | NA             |        NA|
+| Billy Cobham             |   -80.11278|   8.41770| Panama                       | Río Hato       |         7|
 | Daphne Loves Derby       |  -122.23742|  47.38028| KENT, WASHINGTON             | Kent           |        15|
 
 ``` r
 #The output below shows the number of true matches found - a stringdist value of 0 is an exact
-#match but 5 indicates a relatively close match. Only nine out of twenty were close matches.
+#match but 5 indicates a relatively close match. Only eleven out of twenty were close matches.
 match_count <- data.frame(table(compare_singer$matching<6))
 na_count <- data.frame(Var1="NAs", Freq=(sum(is.na(compare_singer$matching))))
 rbind.data.frame(match_count, na_count)
 ```
 
     ##    Var1 Freq
-    ## 1 FALSE    6
-    ## 2  TRUE   10
-    ## 3   NAs    4
+    ## 1 FALSE    7
+    ## 2  TRUE   11
+    ## 3   NAs    2
 
 Geographic depiction of the bands that had true matches with Google's Map API
 -----------------------------------------------------------------------------
@@ -1066,13 +1066,17 @@ singer_map <- compare_singer %>%
   leaflet()  %>%   
   addTiles() %>% 
     addMarkers(popup = ~name)
+```
 
+    ## Assuming 'longitude' and 'latitude' are longitude and latitude, respectively
+
+``` r
 singer_map
 ```
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-a760860df0cefe5ff362">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[[41.88415,40.71455,42.33168,34.20034,50.7323,34.05349,40.43831,40.71455,40.71455,34.05349],[-87.63241,-74.00712,-83.04792,-119.18044,7.10169,-118.24532,-79.99745,-74.00712,-74.00712,-118.24532],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Gene Chandler","Paul Horn","Dorothy Ashby","Madlib","Seeed feat. Elephant Man","Little Feat","Ray Brown Trio","iio","John Zorn","The Meeting Places"],null,null,null,null,null,null]}],"limits":{"lat":[34.05349,50.7323],"lng":[-119.18044,7.10169]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-f75918d87f9b614c93fb">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[[41.88415,40.71455,42.33168,34.20034,50.7323,34.05349,45.51179,40.43831,40.71455,40.71455,34.05349],[-87.63241,-74.00712,-83.04792,-119.18044,7.10169,-118.24532,-122.67563,-79.99745,-74.00712,-74.00712,-118.24532],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Gene Chandler","Paul Horn","Dorothy Ashby","Madlib","Seeed feat. Elephant Man","Little Feat","31Knots","Ray Brown Trio","iio","John Zorn","The Meeting Places"],null,null,null,null,null,null]}],"limits":{"lat":[34.05349,50.7323],"lng":[-122.67563,7.10169]}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 htmlwidgets::saveWidget(singer_map, file="singer_map.html")
