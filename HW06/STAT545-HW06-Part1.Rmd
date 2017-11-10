@@ -1,0 +1,454 @@
+---
+title: "STAT545-HW06-Part1"
+author: "Shirlett"
+date: "November 5, 2017"
+output: 
+  html_document:
+      toc: true
+      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/myrepositories/STAT545-hw-Hall-Shirlett/HW06")
+knitr::include_graphics("./img/singer_map.png")
+library(ggmap) #For interaction and extraction with Google API maps
+library(repurrrsive) #View nested frames
+library(listviewer) 
+library(jsonlite)
+library(tibble)
+library(singer) #Source of the Singer dataset
+library(tidyverse)
+library(stringr)
+library(tidyr)
+library(dplyr)
+library(purrr)
+library(broom)
+library(leaflet) #to draw maps using variables from dataset
+library(ggplot2) #For graphing
+library(gridExtra)
+library(readr) #to bring in candy survey dataset
+library(ggthemes) #to create additional features to ggplot
+library(forcats) #for factor analysis
+library(knitr) # for knitting tables in a more aligned way
+library(stringdist) #to get the approximate match among differnt strings
+library(kableExtra) #for enhanced formatting of tables
+library(RColorBrewer) #has a set of colors for print and graphics
+library(png) #to create png files
+library(devtools) #used to create graphic devices
+library(raster) #convert map image to raster format
+library(data.table)
+library(grid)
+library(pander)
+library(htmltools) # to display widgets for maps etc
+library(scales) # required for html widgets like leaflet
+
+```
+
+#1. String Instruments from http://r4ds.had.co.nz/strings.html
+##14.2.5 - String Basics
+```{r warning=FALSE, message=FALSE}
+#1.
+#Paste prints strings and leaves a space separator by default
+(pst<-paste("Tom", "Dick", "Harry", NA)) 
+
+#Paste0 prints strings and omits the space between the strings
+(pst0<-paste0("Tom", "Dick", "Harry", NA)) 
+
+#Both paste and paste0 are roughly equivalent to the str_c but paste0 more closely replicates 
+
+#the  str_c function
+(strc <- str_c("Tom", "Dick", "Harry", NA)) 
+
+#Paste functions treat NA as they would any other string and prints NA, whereas str_c sees it as
+
+#missing data that has to be replaced
+
+
+#2.The sep arguement is an indication of the string to insert between vectors whereas collapse
+
+#is an indication of the string that should be used to combine vectors into a single string.
+str_c("a","b", c("c","d"), sep = " ", collapse = ",")
+str_c("a","b", c("c","d"), sep = " ")
+
+
+#3.Using str_length and str_sub to extract a middle character(s) whether the length of the
+
+#string is odd or even
+
+#Function to test the length of a given string
+my_string <- function(x) {
+if((str_length(x) %% 2) == 0) {
+    str_sub(x, (str_length(x)/2), ((str_length(x)/2)+1))
+} else {
+    str_sub(x, ((str_length(x)+1)/2), ((str_length(x)+1)/2))
+}
+}
+
+my_string("middle")
+my_string("tower")
+
+
+#4.
+str_wrap("str_wrap can be used to format paragraphs by controlling the width and indentation. This is useful for printing long paragraphs", width=60)
+
+#5.str_trim removes whitespace to the left or right of strings. Its counterpart 
+
+#is str_pad() which adds whitespace.
+
+#6.Convert a vector of strings into a single string and consider less than optimal vector
+
+#lengths, such as two, one or zero
+
+x = c("a", "b", "c")
+y = c("a", "b")
+z = c("a")
+alpha = c("")
+
+#Function to test the length of vector and modify format of the output accordingly
+my_conversion <- function(vec) {
+  converted <- ""
+  if (length(vec) < 2)
+  {
+    converted <- str_c(vec)
+  }
+  else if (length(vec) == 2)
+  {
+    converted <- str_c(converted, vec[1], " and ", vec[2])
+  }
+  else
+  {
+    for (i in 1:(length(vec)-2))
+    {
+      converted <- str_c(converted, vec[i], ", ")
+    }
+    converted <- str_c(converted, vec[length(vec)-1], ", and ", vec[length(vec)])
+  }
+  return(converted)
+}
+
+my_conversion(x)
+my_conversion(y)
+my_conversion(z)
+my_conversion(alpha)
+
+```
+
+##14.3.1.1 - Basic Matches
+```{r warning=FALSE, message=FALSE}
+
+#1. Explanation of why each of these strings don’t match a \: "\", "\\", "\\\".
+
+#"\" indicates an escape from prior text
+
+#"\\" indicates the creation of a regular expression and be recognized as \
+
+#"\\\" indicates that the backslash character needs to be matched
+
+
+#2. Matching the sequence "'\
+
+test<- "\"'\\"
+str_view(test, "\\\"'\\\\")
+
+#3. Patterns matched by the regular expression \..\..\.
+
+test2 <- "covers.x.y.z"
+str_view(test2, "\\..\\..\\..")
+#Patterns that are a dot followed by any character, three consecutive times
+
+```
+
+
+##14.3.2.1 - Anchors
+```{r warning=FALSE, message=FALSE}
+#1. Match the literal string "$^$"
+test3<- "goodness$^$gracious"
+#str_view(test3, "\\$\\^\\$")
+
+#2. Regular Expressions to match common words in stringr::words:
+#that start with y
+#str_view(words, "^y", match = TRUE)
+
+#that end with x
+#str_view(words, "x$", match = TRUE)
+
+#are exactly three letters long
+#str_view(words, "^...$", match = TRUE)
+
+#have seven letters or more
+#str_view(words, ".......", match = TRUE)
+
+```
+
+
+##14.3.3.1 - Character Classes and Alternatives
+```{r warning=FALSE, message=FALSE}
+
+#1. Regular expressions to find words that:
+#Start with a vowel
+#str_view(words, "^[aeouiy]", match = TRUE)
+
+#Only contain consonants
+#str_view(words, "^[^aeouiy]*$", match = TRUE)
+
+#End with ed but not with eed
+#str_view(words, "[^e]ed$", match = TRUE)
+
+#End with ing or ise
+#str_view(words, "i(ng|se)$", match = TRUE)
+
+
+#2.Verify the rule “i before e except after c”
+#Well e comes before i in weigh
+str_view(words, "([^c])ei", match = TRUE)
+
+
+#3. Verify that q is always followed by a u
+#C'est vrai
+str_view(words, "q[^u]", match = TRUE)
+
+
+#4. An expression that finds a word from British vs American English
+str_view(words, "[a-z][a-z]our$", match = TRUE)
+
+#5. An expression that finds a string that will match phone numbers as written in Jamaica
+phone <- (c("1876-928-4712", "186-748-422"))
+str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
+
+```
+
+
+##14.3.4.1 - Repetition
+```{r warning=FALSE, message=FALSE}
+#1. Equivalents in {m,n} form of the following:
+#? - zero or one instance is equivalent to:
+#{,n}: match one at most
+
+#+ - one or more repeats is equivalent to:
+#{n,}: n or more 
+
+
+#* - zero or more repeats is only roughly equivalent to:
+#{,m}: at most m
+
+
+#2. Description of matches to the following regular expressions:
+#^.*$ - This would match any length or any character
+#"\\{.+\\}" - This would match at least one character
+#\d{4}-\d{2}-\d{2} - This would match 4 repeated digits- 2 repeated digits - two repeated digits
+# "\\\\{4}" - This would match \\\\
+
+
+#3. Regular expressions to find words that:
+#Start with three consonants.
+#str_view(words, "^[^aeouiy]{3}", match = TRUE)
+
+#Have three or more vowels in a row.
+#str_view(words, "[aeouiy]{3,}", match = TRUE)
+
+#Have two or more vowel-consonant pairs in a row.
+#str_view(words, "([aeouiy][^aeouiy]){2,}", match = TRUE)
+
+
+
+```
+
+##14.3.5.1 - Grouping and Backreferences
+```{r warning=FALSE, message=FALSE}
+#1. Description of the matches to the following:
+#(.)\1\1 - Matches any single characters that repeat three times
+test4 = "ssstreat"
+str_view(test4, "(.)\\1\\1", match = TRUE)
+
+#"(.)(.)\\2\\1" - matches any single non repeating character then a character that repeats 
+
+#twice then the same first character
+test5 = "abbacadabra"
+str_view(test5, "(.)(.)\\2\\1", match = TRUE)
+
+#(..)\1 - Find repeated pair of letters
+test6 = "cucumber" 
+str_view(test6, "(..)\\1", match = TRUE)
+
+#"(.).\\1.\\1" - Match one character then any single character, then the same first character,
+#then any single character, then another repeat of the first character
+test7 = "tatet"
+str_view(test7, "(.).\\1.\\1", match = TRUE)
+
+#"(.)(.)(.).*\\3\\2\\1" - Match 2-3 single characters, 0 or more random characters, then the 
+#same first 2-3 characters in reverse
+test8 = "abctatetcba"
+str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
+
+
+#2. Regular expressions to match words that:
+
+#Start and end with the same character.
+#str_view(words, "^(.).*\\1$", match = T)
+
+#Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)
+#str_view(words, "(..).*\\1", match = T)
+
+#Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)
+#str_view(words, "(.).*\\1.*\\1", match = T)
+
+```
+
+##14.4.2 - Detect Matches
+```{r warning=FALSE, message=FALSE}
+#1. Using Regular expressions and str_detect:
+#Words that start or end with x
+str_view(words, "^x|x$", match = TRUE)
+start_with_x = str_detect(words, "^x")
+end_with_x = str_detect(words, "x$")
+words[start_with_x | end_with_x]
+
+#Words that start with a vowel and end with a consonant
+str_view(words, "^[aeuioy].*[^aeuioy]$", match = TRUE)
+start_with_vowel = str_detect(words, "^[aeuioy]")
+end_with_consonant = str_detect(words, "[^aeuioy]$")
+words[start_with_vowel & end_with_consonant]
+
+
+#Words that contain at least one of each different vowel yields no results
+a = str_detect(words, "a+")
+e = str_detect(words, "e+")
+i = str_detect(words, "i+")
+o = str_detect(words, "o+")
+u = str_detect(words, "u+")
+y = str_detect(words, "y+")
+words[a & e & i & o & u & y]
+
+
+
+#Words that have the highest proportion of vowels
+count_of_vowels = str_count(words, "[aeouiy]")
+word_length = str_length(words)
+prop_table <- tibble(words = words, counts = count_of_vowels, length = word_length)
+
+
+prop_table %>%
+  mutate(proportion = counts / length) %>%
+  arrange(desc(proportion)) %>%
+	head(20)
+
+
+
+```
+
+##14.4.3.1 - Extract Matches
+```{r warning=FALSE, message=FALSE}
+#1. Correct the match to flickered
+
+colors <- c("red", "orange", "yellow", "green", "blue", "purple")
+color_match <- str_c(colors, collapse = "|")
+truecolors <- str_c("\\b(", str_c(colors, collapse = "|"), ")\\b")## add boundaries 
+more <- sentences[str_count(sentences, color_match) > 1]
+str_view_all(more, truecolors, match = TRUE)
+
+
+#Using Harvard sentences data, extract:
+#The first word from each sentence
+str_extract(sentences, "[a-zA-X]+") %>% head(20)
+
+#All words ending in ing
+ending <- str_subset(sentences, "\\b[A-Za-z]+ing\\b")
+str_extract(ending, "\\b[A-Za-z]+ing\\b") %>% str_sub(1, -1) %>% head(10)
+
+
+
+#All plurals
+#Plurals that end in es are not captured by regex that I can fathom
+#The following retrieves words that end in s and excludes 2 and 3 letter words, like has & is
+unique(unlist(str_extract_all(sentences, "\\b[A-Za-z]{3,}s\\b"))) %>%
+  head(20)
+
+
+```
+
+##14.4.4.1 - Grouped Matches
+```{r warning=FALSE, message=FALSE}
+#1. Find words that come after a number
+#Pulls out both number name and word
+nw <- "(one|two|three|four|five|six|seven|eight|nine|ten) +(\\S+)"
+sentences[str_detect(sentences, nw)] %>%
+  str_extract(nw)
+
+#2. To find contractions
+contracted_words <- "([A-Za-z]+)'([A-Za-z]+)"
+sentences %>%
+  `[`(str_detect(sentences, contracted_words)) %>%
+  str_extract(contracted_words)
+
+```
+
+##14.4.5.1- Replacing Matches
+```{r warning=FALSE, message=FALSE}
+#1. Replace forward slash with backward slash
+replace_for <- str_replace("How to replace a / with a backslash", "/", "\\\\")  
+  								
+replace_for
+
+#2. Implement a simple version of str_to_lower() using replace_all().
+
+phrase="aLL over tHe pLaCe"
+new_phrase <- str_replace_all(phrase, c("L" = "l", "C" = "c", "H" = "h"))
+new_phrase
+
+#3. Switch the first and last letters in words and count the number of legitimate words
+
+switch<- str_replace(words,"(^.)(.*)(.$)", "\\3\\2\\1")
+still_words <- intersect(words, switch)
+length(still_words)
+
+```
+
+##14.4.6.1 - Splitting
+```{r warning=FALSE, message=FALSE}
+#1. split apples, pears, and bananas into individual components
+fruits <- c("apples, pears, and bananas")
+str_split(fruits, ", +(and +)?")[[1]]
+
+
+#2. It is better to split by boundary on words because it considers punctuation instead of just whitespace
+
+#3. Result of splitting with an empty string causes words to split apart
+str_split("so_very ver y tired!", "")[[1]]
+
+```
+
+##14.5.1 - Other Patterns
+```{r warning=FALSE, message=FALSE}
+#1.One could find all strings containing \ with regex() vs. with fixed() by adding the fixed
+#argument to the string function
+str_subset(c("stop\\", "please"), "\\\\")
+
+str_subset(c("stop\\", "please"), fixed("\\"))
+
+#2. Five most common words in sentences
+str_extract_all(sentences, boundary("word")) %>%
+  unlist() %>%
+  str_to_lower() %>%
+  tibble() %>%
+  set_names("word") %>%
+  group_by(word) %>%
+  count() %>%
+	arrange(desc(n)) %>%
+  head(5)
+
+```
+
+##14.7.1 - Stringi
+```{r warning=FALSE, message=FALSE}
+#1.
+#stringi function that counts the number of words is stri_count words
+#Stringi function that finds duplicated strings is stri_duplicated
+#Stringi function to generate random text is stri_rand_
+
+#2. To control the language that stri_sort() uses for sorting, one has to change the 
+#value within the function related to opts_collator from NULL or ""
+
+```
+<a href="#top">Back to top</a>
+
