@@ -180,20 +180,13 @@ str_view(test, "\\\"'\\\\")
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-0421ff92a5221852b784">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-c6c24700c66db696a46f">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 #3. Patterns matched by the regular expression \..\..\.
 
 test2 <- "covers.x.y.z"
-str_view(test2, "\\..\\..\\..")
-```
-
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-af2769a5da2a6bf03d5a">{"x":{"html":"<ul>\n  <li>covers<span class='match'>.x.y.z\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
+#str_view(test2, "\\..\\..\\..")
 #Patterns that are a dot followed by any character, three consecutive times
 ```
 
@@ -239,42 +232,22 @@ test3<- "goodness$^$gracious"
 
 #2.Verify the rule “i before e except after c”
 #Well e comes before i in weigh
-str_view(words, "([^c])ei", match = TRUE)
-```
+#str_view(words, "([^c])ei", match = TRUE)
 
-<!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-1465fec2c31aab2bd3d9">{"x":{"html":"<ul>\n  <li><span class='match'>wei\u003c/span>gh\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #3. Verify that q is always followed by a u
 #C'est vrai
-str_view(words, "q[^u]", match = TRUE)
-```
+#str_view(words, "q[^u]", match = TRUE)
 
-<!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-3e62bb4831b0a2765bb1">{"x":{"html":"<ul>\n  <li>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #4. An expression that finds a word from British vs American English
-str_view(words, "[a-z][a-z]our$", match = TRUE)
-```
+#str_view(words, "[a-z][a-z]our$", match = TRUE)
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-bfe8e29f348f162cfc57">{"x":{"html":"<ul>\n  <li>c<span class='match'>olour\u003c/span>\u003c/li>\n  <li>f<span class='match'>avour\u003c/span>\u003c/li>\n  <li>l<span class='match'>abour\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #5. An expression that finds a string that will match phone numbers as written in Jamaica
 phone <- (c("1876-928-4712", "186-748-422"))
-str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
+#str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
 ```
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-35b37e2d6b30fa46ad97">{"x":{"html":"<ul>\n  <li><span class='match'>1876-928-4712\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
 14.3.4.1 - Repetition
 ---------------------
 
@@ -316,58 +289,29 @@ str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
 #1. Description of the matches to the following:
 #(.)\1\1 - Matches any single characters that repeat three times
 test4 = "ssstreat"
-str_view(test4, "(.)\\1\\1", match = TRUE)
-```
+#str_view(test4, "(.)\\1\\1", match = TRUE)
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-8de0f51ae06e95cf6f3c">{"x":{"html":"<ul>\n  <li><span class='match'>sss\u003c/span>treat\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #"(.)(.)\\2\\1" - matches any single non repeating character then a character that repeats 
 
 #twice then the same first character
 test5 = "abbacadabra"
-str_view(test5, "(.)(.)\\2\\1", match = TRUE)
-```
+#str_view(test5, "(.)(.)\\2\\1", match = TRUE)
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-51740295d381e4fa743e">{"x":{"html":"<ul>\n  <li><span class='match'>abba\u003c/span>cadabra\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #(..)\1 - Find repeated pair of letters
 test6 = "cucumber" 
-str_view(test6, "(..)\\1", match = TRUE)
-```
+#str_view(test6, "(..)\\1", match = TRUE)
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-ea46c50158efc7766e6f">{"x":{"html":"<ul>\n  <li><span class='match'>cucu\u003c/span>mber\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #"(.).\\1.\\1" - Match one character then any single character, then the same first character,
 #then any single character, then another repeat of the first character
 test7 = "tatet"
-str_view(test7, "(.).\\1.\\1", match = TRUE)
-```
+#str_view(test7, "(.).\\1.\\1", match = TRUE)
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-c79c94495feef2647d78">{"x":{"html":"<ul>\n  <li><span class='match'>tatet\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #"(.)(.)(.).*\\3\\2\\1" - Match 2-3 single characters, 0 or more random characters, then the 
 #same first 2-3 characters in reverse
 test8 = "abctatetcba"
-str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
-```
+#str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
 
-<!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-194a11805d79d90b23d6">{"x":{"html":"<ul>\n  <li><span class='match'>abctatetcba\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
-``` r
 #2. Regular expressions to match words that:
 
 #Start and end with the same character.
@@ -391,7 +335,7 @@ str_view(words, "^x|x$", match = TRUE)
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-049396a906fb9013bfcf">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x\u003c/span>\u003c/li>\n  <li>se<span class='match'>x\u003c/span>\u003c/li>\n  <li>si<span class='match'>x\u003c/span>\u003c/li>\n  <li>ta<span class='match'>x\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-3e9f0173cd95845df881">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x\u003c/span>\u003c/li>\n  <li>se<span class='match'>x\u003c/span>\u003c/li>\n  <li>si<span class='match'>x\u003c/span>\u003c/li>\n  <li>ta<span class='match'>x\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 start_with_x = str_detect(words, "^x")
@@ -408,7 +352,7 @@ str_view(words, "^[aeuioy].*[^aeuioy]$", match = TRUE)
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-32fdbba48d2545846a3a">{"x":{"html":"<ul>\n  <li><span class='match'>about\u003c/span>\u003c/li>\n  <li><span class='match'>accept\u003c/span>\u003c/li>\n  <li><span class='match'>account\u003c/span>\u003c/li>\n  <li><span class='match'>across\u003c/span>\u003c/li>\n  <li><span class='match'>act\u003c/span>\u003c/li>\n  <li><span class='match'>actual\u003c/span>\u003c/li>\n  <li><span class='match'>add\u003c/span>\u003c/li>\n  <li><span class='match'>address\u003c/span>\u003c/li>\n  <li><span class='match'>admit\u003c/span>\u003c/li>\n  <li><span class='match'>affect\u003c/span>\u003c/li>\n  <li><span class='match'>afford\u003c/span>\u003c/li>\n  <li><span class='match'>after\u003c/span>\u003c/li>\n  <li><span class='match'>afternoon\u003c/span>\u003c/li>\n  <li><span class='match'>again\u003c/span>\u003c/li>\n  <li><span class='match'>against\u003c/span>\u003c/li>\n  <li><span class='match'>agent\u003c/span>\u003c/li>\n  <li><span class='match'>air\u003c/span>\u003c/li>\n  <li><span class='match'>all\u003c/span>\u003c/li>\n  <li><span class='match'>allow\u003c/span>\u003c/li>\n  <li><span class='match'>almost\u003c/span>\u003c/li>\n  <li><span class='match'>along\u003c/span>\u003c/li>\n  <li><span class='match'>alright\u003c/span>\u003c/li>\n  <li><span class='match'>although\u003c/span>\u003c/li>\n  <li><span class='match'>always\u003c/span>\u003c/li>\n  <li><span class='match'>amount\u003c/span>\u003c/li>\n  <li><span class='match'>and\u003c/span>\u003c/li>\n  <li><span class='match'>another\u003c/span>\u003c/li>\n  <li><span class='match'>answer\u003c/span>\u003c/li>\n  <li><span class='match'>apart\u003c/span>\u003c/li>\n  <li><span class='match'>apparent\u003c/span>\u003c/li>\n  <li><span class='match'>appear\u003c/span>\u003c/li>\n  <li><span class='match'>appoint\u003c/span>\u003c/li>\n  <li><span class='match'>approach\u003c/span>\u003c/li>\n  <li><span class='match'>arm\u003c/span>\u003c/li>\n  <li><span class='match'>around\u003c/span>\u003c/li>\n  <li><span class='match'>art\u003c/span>\u003c/li>\n  <li><span class='match'>as\u003c/span>\u003c/li>\n  <li><span class='match'>ask\u003c/span>\u003c/li>\n  <li><span class='match'>at\u003c/span>\u003c/li>\n  <li><span class='match'>attend\u003c/span>\u003c/li>\n  <li><span class='match'>awful\u003c/span>\u003c/li>\n  <li><span class='match'>each\u003c/span>\u003c/li>\n  <li><span class='match'>east\u003c/span>\u003c/li>\n  <li><span class='match'>eat\u003c/span>\u003c/li>\n  <li><span class='match'>effect\u003c/span>\u003c/li>\n  <li><span class='match'>egg\u003c/span>\u003c/li>\n  <li><span class='match'>eight\u003c/span>\u003c/li>\n  <li><span class='match'>either\u003c/span>\u003c/li>\n  <li><span class='match'>elect\u003c/span>\u003c/li>\n  <li><span class='match'>electric\u003c/span>\u003c/li>\n  <li><span class='match'>eleven\u003c/span>\u003c/li>\n  <li><span class='match'>end\u003c/span>\u003c/li>\n  <li><span class='match'>english\u003c/span>\u003c/li>\n  <li><span class='match'>enough\u003c/span>\u003c/li>\n  <li><span class='match'>enter\u003c/span>\u003c/li>\n  <li><span class='match'>environment\u003c/span>\u003c/li>\n  <li><span class='match'>equal\u003c/span>\u003c/li>\n  <li><span class='match'>especial\u003c/span>\u003c/li>\n  <li><span class='match'>even\u003c/span>\u003c/li>\n  <li><span class='match'>evening\u003c/span>\u003c/li>\n  <li><span class='match'>ever\u003c/span>\u003c/li>\n  <li><span class='match'>exact\u003c/span>\u003c/li>\n  <li><span class='match'>except\u003c/span>\u003c/li>\n  <li><span class='match'>exist\u003c/span>\u003c/li>\n  <li><span class='match'>expect\u003c/span>\u003c/li>\n  <li><span class='match'>explain\u003c/span>\u003c/li>\n  <li><span class='match'>express\u003c/span>\u003c/li>\n  <li><span class='match'>if\u003c/span>\u003c/li>\n  <li><span class='match'>important\u003c/span>\u003c/li>\n  <li><span class='match'>in\u003c/span>\u003c/li>\n  <li><span class='match'>indeed\u003c/span>\u003c/li>\n  <li><span class='match'>individual\u003c/span>\u003c/li>\n  <li><span class='match'>inform\u003c/span>\u003c/li>\n  <li><span class='match'>instead\u003c/span>\u003c/li>\n  <li><span class='match'>interest\u003c/span>\u003c/li>\n  <li><span class='match'>invest\u003c/span>\u003c/li>\n  <li><span class='match'>it\u003c/span>\u003c/li>\n  <li><span class='match'>item\u003c/span>\u003c/li>\n  <li><span class='match'>obvious\u003c/span>\u003c/li>\n  <li><span class='match'>occasion\u003c/span>\u003c/li>\n  <li><span class='match'>odd\u003c/span>\u003c/li>\n  <li><span class='match'>of\u003c/span>\u003c/li>\n  <li><span class='match'>off\u003c/span>\u003c/li>\n  <li><span class='match'>offer\u003c/span>\u003c/li>\n  <li><span class='match'>often\u003c/span>\u003c/li>\n  <li><span class='match'>old\u003c/span>\u003c/li>\n  <li><span class='match'>on\u003c/span>\u003c/li>\n  <li><span class='match'>open\u003c/span>\u003c/li>\n  <li><span class='match'>or\u003c/span>\u003c/li>\n  <li><span class='match'>order\u003c/span>\u003c/li>\n  <li><span class='match'>original\u003c/span>\u003c/li>\n  <li><span class='match'>other\u003c/span>\u003c/li>\n  <li><span class='match'>ought\u003c/span>\u003c/li>\n  <li><span class='match'>out\u003c/span>\u003c/li>\n  <li><span class='match'>over\u003c/span>\u003c/li>\n  <li><span class='match'>own\u003c/span>\u003c/li>\n  <li><span class='match'>under\u003c/span>\u003c/li>\n  <li><span class='match'>understand\u003c/span>\u003c/li>\n  <li><span class='match'>union\u003c/span>\u003c/li>\n  <li><span class='match'>unit\u003c/span>\u003c/li>\n  <li><span class='match'>unless\u003c/span>\u003c/li>\n  <li><span class='match'>until\u003c/span>\u003c/li>\n  <li><span class='match'>up\u003c/span>\u003c/li>\n  <li><span class='match'>upon\u003c/span>\u003c/li>\n  <li><span class='match'>usual\u003c/span>\u003c/li>\n  <li><span class='match'>year\u003c/span>\u003c/li>\n  <li><span class='match'>yes\u003c/span>\u003c/li>\n  <li><span class='match'>yet\u003c/span>\u003c/li>\n  <li><span class='match'>young\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-685860cf1cf5150bd95a">{"x":{"html":"<ul>\n  <li><span class='match'>about\u003c/span>\u003c/li>\n  <li><span class='match'>accept\u003c/span>\u003c/li>\n  <li><span class='match'>account\u003c/span>\u003c/li>\n  <li><span class='match'>across\u003c/span>\u003c/li>\n  <li><span class='match'>act\u003c/span>\u003c/li>\n  <li><span class='match'>actual\u003c/span>\u003c/li>\n  <li><span class='match'>add\u003c/span>\u003c/li>\n  <li><span class='match'>address\u003c/span>\u003c/li>\n  <li><span class='match'>admit\u003c/span>\u003c/li>\n  <li><span class='match'>affect\u003c/span>\u003c/li>\n  <li><span class='match'>afford\u003c/span>\u003c/li>\n  <li><span class='match'>after\u003c/span>\u003c/li>\n  <li><span class='match'>afternoon\u003c/span>\u003c/li>\n  <li><span class='match'>again\u003c/span>\u003c/li>\n  <li><span class='match'>against\u003c/span>\u003c/li>\n  <li><span class='match'>agent\u003c/span>\u003c/li>\n  <li><span class='match'>air\u003c/span>\u003c/li>\n  <li><span class='match'>all\u003c/span>\u003c/li>\n  <li><span class='match'>allow\u003c/span>\u003c/li>\n  <li><span class='match'>almost\u003c/span>\u003c/li>\n  <li><span class='match'>along\u003c/span>\u003c/li>\n  <li><span class='match'>alright\u003c/span>\u003c/li>\n  <li><span class='match'>although\u003c/span>\u003c/li>\n  <li><span class='match'>always\u003c/span>\u003c/li>\n  <li><span class='match'>amount\u003c/span>\u003c/li>\n  <li><span class='match'>and\u003c/span>\u003c/li>\n  <li><span class='match'>another\u003c/span>\u003c/li>\n  <li><span class='match'>answer\u003c/span>\u003c/li>\n  <li><span class='match'>apart\u003c/span>\u003c/li>\n  <li><span class='match'>apparent\u003c/span>\u003c/li>\n  <li><span class='match'>appear\u003c/span>\u003c/li>\n  <li><span class='match'>appoint\u003c/span>\u003c/li>\n  <li><span class='match'>approach\u003c/span>\u003c/li>\n  <li><span class='match'>arm\u003c/span>\u003c/li>\n  <li><span class='match'>around\u003c/span>\u003c/li>\n  <li><span class='match'>art\u003c/span>\u003c/li>\n  <li><span class='match'>as\u003c/span>\u003c/li>\n  <li><span class='match'>ask\u003c/span>\u003c/li>\n  <li><span class='match'>at\u003c/span>\u003c/li>\n  <li><span class='match'>attend\u003c/span>\u003c/li>\n  <li><span class='match'>awful\u003c/span>\u003c/li>\n  <li><span class='match'>each\u003c/span>\u003c/li>\n  <li><span class='match'>east\u003c/span>\u003c/li>\n  <li><span class='match'>eat\u003c/span>\u003c/li>\n  <li><span class='match'>effect\u003c/span>\u003c/li>\n  <li><span class='match'>egg\u003c/span>\u003c/li>\n  <li><span class='match'>eight\u003c/span>\u003c/li>\n  <li><span class='match'>either\u003c/span>\u003c/li>\n  <li><span class='match'>elect\u003c/span>\u003c/li>\n  <li><span class='match'>electric\u003c/span>\u003c/li>\n  <li><span class='match'>eleven\u003c/span>\u003c/li>\n  <li><span class='match'>end\u003c/span>\u003c/li>\n  <li><span class='match'>english\u003c/span>\u003c/li>\n  <li><span class='match'>enough\u003c/span>\u003c/li>\n  <li><span class='match'>enter\u003c/span>\u003c/li>\n  <li><span class='match'>environment\u003c/span>\u003c/li>\n  <li><span class='match'>equal\u003c/span>\u003c/li>\n  <li><span class='match'>especial\u003c/span>\u003c/li>\n  <li><span class='match'>even\u003c/span>\u003c/li>\n  <li><span class='match'>evening\u003c/span>\u003c/li>\n  <li><span class='match'>ever\u003c/span>\u003c/li>\n  <li><span class='match'>exact\u003c/span>\u003c/li>\n  <li><span class='match'>except\u003c/span>\u003c/li>\n  <li><span class='match'>exist\u003c/span>\u003c/li>\n  <li><span class='match'>expect\u003c/span>\u003c/li>\n  <li><span class='match'>explain\u003c/span>\u003c/li>\n  <li><span class='match'>express\u003c/span>\u003c/li>\n  <li><span class='match'>if\u003c/span>\u003c/li>\n  <li><span class='match'>important\u003c/span>\u003c/li>\n  <li><span class='match'>in\u003c/span>\u003c/li>\n  <li><span class='match'>indeed\u003c/span>\u003c/li>\n  <li><span class='match'>individual\u003c/span>\u003c/li>\n  <li><span class='match'>inform\u003c/span>\u003c/li>\n  <li><span class='match'>instead\u003c/span>\u003c/li>\n  <li><span class='match'>interest\u003c/span>\u003c/li>\n  <li><span class='match'>invest\u003c/span>\u003c/li>\n  <li><span class='match'>it\u003c/span>\u003c/li>\n  <li><span class='match'>item\u003c/span>\u003c/li>\n  <li><span class='match'>obvious\u003c/span>\u003c/li>\n  <li><span class='match'>occasion\u003c/span>\u003c/li>\n  <li><span class='match'>odd\u003c/span>\u003c/li>\n  <li><span class='match'>of\u003c/span>\u003c/li>\n  <li><span class='match'>off\u003c/span>\u003c/li>\n  <li><span class='match'>offer\u003c/span>\u003c/li>\n  <li><span class='match'>often\u003c/span>\u003c/li>\n  <li><span class='match'>old\u003c/span>\u003c/li>\n  <li><span class='match'>on\u003c/span>\u003c/li>\n  <li><span class='match'>open\u003c/span>\u003c/li>\n  <li><span class='match'>or\u003c/span>\u003c/li>\n  <li><span class='match'>order\u003c/span>\u003c/li>\n  <li><span class='match'>original\u003c/span>\u003c/li>\n  <li><span class='match'>other\u003c/span>\u003c/li>\n  <li><span class='match'>ought\u003c/span>\u003c/li>\n  <li><span class='match'>out\u003c/span>\u003c/li>\n  <li><span class='match'>over\u003c/span>\u003c/li>\n  <li><span class='match'>own\u003c/span>\u003c/li>\n  <li><span class='match'>under\u003c/span>\u003c/li>\n  <li><span class='match'>understand\u003c/span>\u003c/li>\n  <li><span class='match'>union\u003c/span>\u003c/li>\n  <li><span class='match'>unit\u003c/span>\u003c/li>\n  <li><span class='match'>unless\u003c/span>\u003c/li>\n  <li><span class='match'>until\u003c/span>\u003c/li>\n  <li><span class='match'>up\u003c/span>\u003c/li>\n  <li><span class='match'>upon\u003c/span>\u003c/li>\n  <li><span class='match'>usual\u003c/span>\u003c/li>\n  <li><span class='match'>year\u003c/span>\u003c/li>\n  <li><span class='match'>yes\u003c/span>\u003c/li>\n  <li><span class='match'>yet\u003c/span>\u003c/li>\n  <li><span class='match'>young\u003c/span>\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 start_with_vowel = str_detect(words, "^[aeuioy]")
@@ -504,7 +448,7 @@ str_view_all(more, truecolors, match = TRUE)
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-1ae6fc5a4cf3f201e423">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue\u003c/span> or <span class='match'>red\u003c/span> ink.\u003c/li>\n  <li>The <span class='match'>green\u003c/span> light in the brown box flickered.\u003c/li>\n  <li>The sky in the west is tinged with <span class='match'>orange\u003c/span> <span class='match'>red\u003c/span>.\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-4863acf302cab31fd282">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue\u003c/span> or <span class='match'>red\u003c/span> ink.\u003c/li>\n  <li>The <span class='match'>green\u003c/span> light in the brown box flickered.\u003c/li>\n  <li>The sky in the west is tinged with <span class='match'>orange\u003c/span> <span class='match'>red\u003c/span>.\u003c/li>\n\u003c/ul>"},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 ``` r
 #Using Harvard sentences data, extract:

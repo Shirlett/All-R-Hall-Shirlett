@@ -3,6 +3,7 @@ title: "STAT545-HW06-Part1"
 author: "Shirlett"
 date: "November 5, 2017"
 always_allow_html: yes
+allow_html_dependencies: true
 output: 
   github_document:
       toc: true
@@ -155,7 +156,7 @@ str_view(test, "\\\"'\\\\")
 #3. Patterns matched by the regular expression \..\..\.
 
 test2 <- "covers.x.y.z"
-str_view(test2, "\\..\\..\\..")
+#str_view(test2, "\\..\\..\\..")
 #Patterns that are a dot followed by any character, three consecutive times
 
 ```
@@ -202,20 +203,20 @@ test3<- "goodness$^$gracious"
 
 #2.Verify the rule “i before e except after c”
 #Well e comes before i in weigh
-str_view(words, "([^c])ei", match = TRUE)
+#str_view(words, "([^c])ei", match = TRUE)
 
 
 #3. Verify that q is always followed by a u
 #C'est vrai
-str_view(words, "q[^u]", match = TRUE)
+#str_view(words, "q[^u]", match = TRUE)
 
 
 #4. An expression that finds a word from British vs American English
-str_view(words, "[a-z][a-z]our$", match = TRUE)
+#str_view(words, "[a-z][a-z]our$", match = TRUE)
 
 #5. An expression that finds a string that will match phone numbers as written in Jamaica
 phone <- (c("1876-928-4712", "186-748-422"))
-str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
+#str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
 
 ```
 
@@ -260,27 +261,27 @@ str_view(phone, "1876-\\d\\d\\d-\\d\\d\\d\\d", match = TRUE)
 #1. Description of the matches to the following:
 #(.)\1\1 - Matches any single characters that repeat three times
 test4 = "ssstreat"
-str_view(test4, "(.)\\1\\1", match = TRUE)
+#str_view(test4, "(.)\\1\\1", match = TRUE)
 
 #"(.)(.)\\2\\1" - matches any single non repeating character then a character that repeats 
 
 #twice then the same first character
 test5 = "abbacadabra"
-str_view(test5, "(.)(.)\\2\\1", match = TRUE)
+#str_view(test5, "(.)(.)\\2\\1", match = TRUE)
 
 #(..)\1 - Find repeated pair of letters
 test6 = "cucumber" 
-str_view(test6, "(..)\\1", match = TRUE)
+#str_view(test6, "(..)\\1", match = TRUE)
 
 #"(.).\\1.\\1" - Match one character then any single character, then the same first character,
 #then any single character, then another repeat of the first character
 test7 = "tatet"
-str_view(test7, "(.).\\1.\\1", match = TRUE)
+#str_view(test7, "(.).\\1.\\1", match = TRUE)
 
 #"(.)(.)(.).*\\3\\2\\1" - Match 2-3 single characters, 0 or more random characters, then the 
 #same first 2-3 characters in reverse
 test8 = "abctatetcba"
-str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
+#str_view(test8, "(.)(.)(.).*\\3\\2\\1", match = TRUE)
 
 
 #2. Regular expressions to match words that:
