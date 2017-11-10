@@ -3,7 +3,6 @@ title: "STAT545-HW06-Part2"
 author: "Shirlett"
 date: "November 5, 2017"
 always_allow_html: yes
-allow_html_dependencies: true
 output: 
   github_document:
       toc: true
