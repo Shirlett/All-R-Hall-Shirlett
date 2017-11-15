@@ -1,6 +1,6 @@
 # Purpose
 
-The overall purpose of this assignment was to explore non-Gapminder data that is related to Internet usage across the globe. It is a compilation of datasets found on the UN website which combines internet usage per 100 inhabitants in a country, along with data related to other factors that may or may not affect the levels of internet penetration. 
+The overall purpose of this assignment was to explore non-Gapminder data that is related to Internet usage across the globe. It is a compilation of datasets found on the UN website which combines internet usage per 100 inhabitants in a country, along with data related to other factors that may or may not affect the levels of internet penetration. The data covers the period from 2008 to 2015.
 
 # Main Sections
 

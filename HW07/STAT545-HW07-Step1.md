@@ -241,8 +241,11 @@ internet_use_plot <- internet_usage %>%
              caption="source: UN",
              y = "Internet Usage per 100 inhabitants", x= "Country") +  
     coord_flip() 
+```
 
+The figure below is a very long display of all the countries. It provides a general overview of the distribution of internet penetration from Bermuda which appears to have 100/100 inhabitants with Internet usage to Eritrea which has almost zero out of every 100 inhabitants using the Internet.
 
+``` r
 ggsave("./img/internet_use_plot.png", internet_use_plot, width = 28, height=50, units="cm", scale=1)
 ```
 
@@ -295,4 +298,4 @@ internet_map <- ggplot(internet_usage_merge , aes(x = long, y = lat, group= grou
 ggsave("./img/internet_map.png", internet_map, width = 28, height=30, units="cm", scale=1)
 ```
 
-![See Resulting Plot in PNG Format](./img/internet_map.png)
+The choloroleth map below supports the illustration in the dot plot. The western hemisphere and in particular Canada and the USA have deeper saturations of blue. In contrast, many of the African countries have a much lighter hue since many of them have less than 25 inhabitants out of 100 with Internet access/usage. ![See Resulting Plot in PNG Format](./img/internet_map.png)

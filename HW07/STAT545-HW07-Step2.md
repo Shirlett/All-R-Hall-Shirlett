@@ -156,10 +156,10 @@ Urban_plot <- Internet_Urban %>%
     theme(plot.subtitle = element_text(size = 15)) +
     annotate("text", x=65, y=10, label = paste("p-value=", pval), parse=F) 
 
-ggsave("./img/Urban_plot.png", Urban_plot, width = 28, height=30, units="cm", scale=1)
+ggsave("./img/Urban_plot.png", Urban_plot, width = 14, height=15, units="cm", scale=1)
 ```
 
-![See Resulting Plot in PNG Format](./img/Urban_plot.png) Get median values for number of Internet Users and Gross National Income
+The graph below shows that there is a positive relationship between Internet usage and urban density. With a value less than 0.05, the p-value also indicates that this relationship is significant. ![See Resulting Plot in PNG Format](./img/Urban_plot.png) Get median values for number of Internet Users and Gross National Income
 
 ``` r
 Internet_GNI <- All_Data %>%
@@ -201,10 +201,10 @@ GNI_plot <- Internet_GNI %>%
     annotate("text", x=5900, y=10, label = paste("p-value=", pgni), parse=F) 
 
 
-ggsave("./img/GNI_plot.png", GNI_plot, width = 28, height=30, units="cm", scale=1)
+ggsave("./img/GNI_plot.png", GNI_plot, width = 14, height=15, units="cm", scale=1)
 ```
 
-![See Resulting Plot in PNG Format](./img/GNI_plot.png) Get median values for number of Internet Users and Access to Electricity
+The graph below shows that there is a positive relationship between Internet usage and GNI. With a value less than 0.05, the p-value also indicates that this relationship is significant. ![See Resulting Plot in PNG Format](./img/GNI_plot.png) Get median values for number of Internet Users and Access to Electricity
 
 ``` r
 Internet_Electricity <- All_Data %>%
@@ -246,10 +246,10 @@ Elect_plot <- Internet_Electricity %>%
     annotate("text", x=99, y=10, label = paste("p-value=", pelec), parse=F) 
 
 
-ggsave("./img/Elect_plot.png", Elect_plot, width = 28, height=30, units="cm", scale=1)
+ggsave("./img/Elect_plot.png", Elect_plot, width = 14, height=15, units="cm", scale=1)
 ```
 
-![See Resulting Plot in PNG Format](./img/Elect_plot.png) Get median values for number of Internet Users and Life Expectancy
+The graph below shows that there is a positive relationship between Internet usage and the percentage of persons with access to elecricity. With a value less than 0.05, the p-value also indicates that this relationship is significant. ![See Resulting Plot in PNG Format](./img/Elect_plot.png) Get median values for number of Internet Users and Life Expectancy
 
 ``` r
 Internet_Life <- All_Data %>%
@@ -291,10 +291,10 @@ Life_plot <- Internet_Life %>%
     annotate("text", x=73, y=10, label = paste("p-value=", plife), parse=F) 
 
 
-ggsave("./img/Life_plot.png", Life_plot, width = 28, height=30, units="cm", scale=1)
+ggsave("./img/Life_plot.png", Life_plot, width = 14, height=15, units="cm", scale=1)
 ```
 
-![See Resulting Plot in PNG Format](./img/Life_plot.png)
+The graph below shows that there is a positive relationship between Internet usage and median life expectancy. With a value less than 0.05, the p-value also indicates that this relationship is significant. Of all the four factors, this relationship has the lowest p-value and will be expanded in Part 3. ![See Resulting Plot in PNG Format](./img/Life_plot.png)
 
 ``` r
 #Arrange the figures in a grid
