@@ -79,7 +79,7 @@ Urban_plot <- Internet_Urban %>%
 	geom_point(shape=1) + 
 	geom_smooth(method=lm) +
 	labs( 
-		subtitle="Internet Usage Across the World as influenced by Urban Density", 
+		subtitle="Internet Usage as influenced by Urban Density, 2008-15", 
 		caption="source: UN",
 		y = "Median Number of Internet Users per 100 inhabitants per Year", x= "Median Percent of Populations living in Urban Areas") +
 	theme(plot.subtitle = element_text(size = 15)) +
@@ -112,7 +112,7 @@ GNI_plot <- Internet_GNI %>%
 	geom_point(shape=1) + 
 	geom_smooth(method=lm) +
 	labs(
-		subtitle="Internet Usage Across the World as influenced by Gross National Income", 
+		subtitle="Internet Usage as influenced by Gross National Income, 2008-15", 
 		caption="source: UN",
 		y = "Median Number of Internet Users per 100 inhabitants per Year", x= "Median Gross National Income per Capita") +
 	theme(plot.subtitle = element_text(size = 15)) +
@@ -146,7 +146,7 @@ Elect_plot <- Internet_Electricity %>%
 	geom_point(shape=1) + 
 	geom_smooth(method=lm) +
 	labs( 
-		subtitle="Internet Usage Across the World as influenced by Access to Electricity", 
+		subtitle="Internet Usage as influenced by Access to Electricity, 2008-15", 
 		caption="source: UN",
 		y = "Median Number of Internet Users per 100 inhabitants per Year", x= "Median Percent of Populations with Access to Electricity") +
 	theme(plot.subtitle = element_text(size = 15)) +
@@ -182,7 +182,7 @@ Life_plot <- Internet_Life %>%
 	geom_point(shape=1) + 
 	geom_smooth(method=lm) +
 	labs( 
-		subtitle="Internet Usage Across the World as influenced by Median Life Expectancy", 
+		subtitle="Internet Usage as influenced by Life Expectancy, 2008-15", 
 		caption="source: UN",
 		y = "Median Number of Internet Users per 100 inhabitants per Year", x= "Median Life Expectancy") +
 	theme(plot.subtitle = element_text(size = 15)) +
