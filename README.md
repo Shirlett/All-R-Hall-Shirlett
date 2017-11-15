@@ -33,3 +33,4 @@ This is the main Readme file for this repository. This repository contains markd
   -- This illustrates the use of data massaging to eliminate unnecessary characters, columns and phrases to support graphing and analysis
   + ![Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#extraction-of-reverse-geographic-codes)
   --This shows creation of a function that incorporates vectors within a map function for nested frames
+7.  ![HW07 - Exploration into non-gapminder data and makefiles](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW07)
