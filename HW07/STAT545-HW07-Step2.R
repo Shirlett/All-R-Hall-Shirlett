@@ -6,6 +6,8 @@
 #'    html_document:
 #'      toc: true
 #'      highlight: zenburn
+#'    github_document: 
+#'      toc: true
 #' ---
 
 options(warn = -1)
