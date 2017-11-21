@@ -3,7 +3,7 @@ The overall purpose of this assignment was to create an interactive application 
 Supporting data for geocodes for each country can be found at this website - https://developers.google.com/public-data/docs/canonical/countries_csv. This was useful for building the leaflet map.
 
 # Application
-The shiny appliation has been deployed on Shiny and can be found at: https://shirlett.shinyapps.io/Vis_Shiny/
+The shiny application has been deployed on Shiny and can be found at: https://shirlett.shinyapps.io/Vis_Shiny/
 
 The basis of the application is a leaflet map showing the level of Internet usage across the globe. Relative use can be readily observed by the saturation and size of the circle markers. Clicking on the marker shows the actual quantity associated with Internet usage. Clicking also generates a dataframe table and connected scatterplot. Users have the option of downloading the resulting table.
 
