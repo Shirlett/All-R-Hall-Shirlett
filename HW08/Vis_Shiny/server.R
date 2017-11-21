@@ -1,26 +1,4 @@
-#Introduction
-The overall purpose of this assignment was to create an interactive application that allows users to explore data that is related to Internet usage across the globe. It is a compilation of datasets found on the UN website which combines internet usage per 100 inhabitants in a country, along with data related to other factors that may or may not affect the levels of internet penetration. The data covers the period from 2008 to 2015. Most of the data, including Internet Usage, life expectancy, urban population and gross national income can be found at this website from the UN - http://data.un.org/Explorer.aspx?d=SDGs&f=series%3aSL_TLF_UEM.
-Supporting data for geocodes for each country can be found at this website - https://developers.google.com/public-data/docs/canonical/countries_csv. This was useful for building the leaflet map.
 
-#The Application
-The shiny appliation has been deployed on Shiny and can be found at: https://shirlett.shinyapps.io/Vis_Shiny/
-
-The basis of the application is a leaflet map showing the level of Internet usage across the globe. Relative use can be readily observed by the saturation and size of the circle markers. Clicking on the marker shows the actual quantity associated with Internet usage. Clicking also generates a dataframe table and connected scatterplot. Users have the option of downloading the resulting table.
-
-#Reflection
-The process of creating the leaflet for shiny was not difficult since I was introduced to it in Homework 6: 
-![Part 2](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md)
-
-The most difficult aspect of the assignment was capturing the location clicked on the map and passed to the table and the scatterplot. I was able to adapt the code from ![stack overflow](https://stackoverflow.com/questions/39874318/shiny-leaflet-click-on-marker-to-open-plot-data-table) to succeed with this goal. 
-
-I also viewed a blog from Dean Attali in which he provided some great tools to enhance shiny applications. I found a useful library called shinycssloader that shows the user that the server recognized their click on the map and a plot would be regenerated. I think it is a useful part of the feedback loop in interactive applications. The information for the library can be found here:
-https://github.com/andrewsali/shinycssloaders
-
-
-#Code
-The shiny was built using a server side script and a user interface R script. Please see the sections below for the actual code.
-
-##Server
 library(shiny)
 library(ggmap) #For interaction and extraction with Google API maps
 library(dplyr)
@@ -131,47 +109,5 @@ server <- function(input, output, session) {
 
   
 }
-
-
-
-
-##UI
-
-library(shiny)
-library(ggmap) #For interaction and extraction with Google API maps
-library(dplyr)
-library(leaflet)
-library(htmlwidgets)
-library(shinycssloaders)
-
-
-
-ui <- fluidPage(
-    titlePanel(title=div(img(src="internet_world.jpg", height = 50, width = 100), "Internet Usage Across the World, 2015")),
-    
-sidebarLayout(position="right", 
-                  
-                  sidebarPanel(withSpinner(plotOutput("Internet_Trend"))  
-                               
-                  )
-,
-    
-  mainPanel(   
-    textOutput("mytext"),
-    leafletOutput("mymap"),
-    p(em("Source:"),
-    a(href="http://data.un.org/Explorer.aspx?d=SDGs&f=series%3aSL_TLF_UEM", "UN dataset", target="_blank")),
-    br(),
-    DT::dataTableOutput("myTable"),
-    downloadButton("downloadData", "Download Resulting Table")
-)
-)
-
-)
-
-
-
-
-
 
 

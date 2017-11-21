@@ -1,0 +1,12 @@
+name: Vis_Shiny
+title: Vis_Shiny
+username:
+account: shirlett
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 238177
+bundleId: 1088871
+url: https://shirlett.shinyapps.io/Vis_Shiny/
+when: 1511299694.81729
+asMultiple: FALSE
+asStatic: FALSE
