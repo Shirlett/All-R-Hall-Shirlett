@@ -34,3 +34,4 @@ This is the main Readme file for this repository. This repository contains markd
   + ![Mapping](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md#extraction-of-reverse-geographic-codes)
   --This shows creation of a function that incorporates vectors within a map function for nested frames
 7.  ![HW07 - Exploration into non-gapminder data and makefiles](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW07)
+8.  ![HW08 - Shiny Application showing Worldwide Internet Usage](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW08)
