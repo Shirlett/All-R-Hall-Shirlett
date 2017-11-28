@@ -1,0 +1,37 @@
+{Nicenum}
+
+This package contains two functions that formats numbers and returns them as characters. They are especially useful for axes labels when the user needs a simple function that does not require as many arguments as format or prettyNum. The addpercent() allows the user to format a number as a percentage and specifying the number of decimal places is optional. The second function, signifDigit() allows the user to view significant figures in a given value without losing digits to the left of a decimal place. Both functions return a string value.
+
+addpercent()
+------------
+
+The code for the addpercent function is as follows:
+
+    addPercent <- function(x, d){
+      percent <- round(x * 100, digits = d)
+      result <- paste(percent, "%", sep="")
+      return(result)
+    }
+
+### Examples
+
+addPercent(0.65423, 1) returns: "65.4%"
+
+sapply(c(123.4546, .876589, 0.45678),addPercent, d=2) returns: "12345.46%" "87.66%" "45.68%"
+
+signifDigit()
+-------------
+
+The code for the signifDigit function is as follows:
+
+    signifDigit <- function(x,d){
+      y <- format(x,digits=d)
+      if (!grepl("[.]",y)) return(y)
+      return(stringr::str_pad(y,d+1,"right","0"))
+    }
+
+### Examples
+
+signifDigit(5423.63875,2) returns: "5424"
+
+sapply(c(123.4546, 87.6589, 9.5678),signifDigit,d=3) returns: "123" "87.7" "9.57"

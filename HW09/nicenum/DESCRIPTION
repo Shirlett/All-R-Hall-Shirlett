@@ -1,0 +1,21 @@
+Package: nicenum
+Type: Package
+Title: Format a number with a specified number of significant digits or as a percentage
+Version: 0.1.0
+Authors@R: person("Shirlett", "Hall", email = "smarionh@gmail.com", role = c("aut", "cre"))
+Description: This package contains two functions that formats numbers and returns them as characters.
+    They are especially useful for axes labels when the user needs a simple function that does not require
+    as many arguments as format or prettyNum. The addpercent() allows the user to format a number as 
+    a percentage and specifying the number of decimal places is optional. The second function, signifDigit() allows 
+    the user to view significant figures in a given value without losing digits to the left of a decimal place.
+Depends:
+    R (>= 3.2.2)
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports: stringr
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
