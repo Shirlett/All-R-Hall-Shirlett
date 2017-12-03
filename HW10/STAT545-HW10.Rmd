@@ -1,0 +1,131 @@
+---
+title: "STAT545-HW10"
+author: "Shirlett"
+date: "November 28, 2017"
+always_allow_html: yes
+allow_html_dependencies: true
+output: 
+   github_document:
+      toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+suppressWarnings(suppressMessages(library(dplyr)))
+suppressWarnings(suppressMessages(library(knitr)))
+library(rvest)
+library(dplyr)
+library(scales)
+library(httr) #get control over requests from websites
+library(stringr) # to clean data and remove unwanted strings
+library(knitr) # for knitting tables in a more aligned way
+library(ggplot2)
+library(forcats) # to order factors 
+library(rebird)
+library(rplos)
+set_config(config(ssl_verifypeer = 0L))
+
+```
+
+#Using httr and Scraping the Web
+## Extracting the table from the website
+```{r}
+
+#Get the data regarding cities that fear of lunching out (FOLO)
+webs <- httr::GET(url="https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx")
+lunchout <- read_html(webs)
+
+#Create an initial table
+lunchout_table <- lunchout %>%
+	html_nodes("table") %>%
+	.[[1]]  %>%
+	html_table(header=TRUE)
+
+#Look at the data and its structure
+head(lunchout_table)
+str(lunchout_table)
+```
+
+
+## Cleaning the data in the table
+```{r}
+#Clean the data
+
+#replace spaces in column names
+names(lunchout_table) <- str_replace_all(names(lunchout_table), " ", "_")
+
+
+#more cleaning
+clean_lunch_table <- lunchout_table %>%
+	select(everything()) %>%
+	mutate(Population = as.numeric(gsub(",", "", Population))) %>%
+	mutate(CBSA_name = gsub(" ", "_", CBSA_name))
+
+kable(head(clean_lunch_table, 10))
+```
+
+## Visualizing the data
+```{r}
+#Visualize the data
+theme_set(theme_bw())
+
+clean_lunch_table %>%
+	filter(FOLO_Rank==c(1:5, 46:50)) %>%
+	ggplot(aes(reorder(x=CBSA_name, FOLO_Rank, desc), y=FOLO_Rank)) + 
+	geom_point(aes(size=Population)) + 
+	geom_segment(aes(x=CBSA_name, 
+									 xend=CBSA_name, 
+									 y=0, 
+									 yend=FOLO_Rank)) + 
+	labs(title="Lollipop Chart showing the Top and Bottom\nRanked Cities Afraid to Lunch Out", 
+			 subtitle="Source:https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx",
+			 y="Most -> Least Afraid",
+			 x= "Metro Area") + 
+	theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+	coord_flip()
+
+#Based on the chart below, the more highly populatd cities tend to have the most
+
+#fear about going out to lunch. This implies that higher levels of competition exist
+
+#in larger populations and workers cannot afford to appear relaxed.
+```
+
+# Articles Published on a Bird Species
+## Review the data
+```{r}
+#look at the structure of the data on bird species
+str(ebirdtaxonomy())
+test_bird <- head(ebirdtaxonomy()) %>%
+	           select(comName, speciesCode, sciName)
+kable(test_bird)
+
+#get the list of articles about bird species by finding articles about the common
+#ostrich
+ostrich <- searchplos("common ostrich", 'id,publication_date, title', limit=500) 
+	         
+str(ostrich$data)
+kable(head(ostrich$data))
+
+#There are 404 articles published on the common ostrich. 
+
+```
+
+## Visualize the data for all species
+```{r}
+#get the list of articles for all the birds in the frame
+all_birds <- plosword(test_bird$comName, vis = 'FALSE') 
+kable(all_birds)
+
+all_birds %>%
+	ggplot(aes(reorder(Term,No_Articles, desc), No_Articles)) +
+	geom_bar(stat="identity", width = 0.5, fill="tomato2") + 
+	labs(title="Bar Chart showing Number of Journals Published\non Specific Bird Species", 
+			 caption="Source: Public Library of Science",
+			 x="Bird Species",
+			 y="No of Articles") +
+	theme(axis.text.x = element_text(angle=65, vjust=0.6))
+
+
+```
+
