@@ -27,12 +27,13 @@ set_config(config(ssl_verifypeer = 0L))
 
 ```
 
-#Using httr and Scraping the Web
-## Extracting the table from the website
+#Scraping the Web
+## Extracting the table from the website - bestplaces.net
 ```{r}
 
-#Get the data regarding cities that fear of lunching out (FOLO)
-webs <- httr::GET(url="https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx")
+#Get the data regarding cities that have a fear of lunching out (FOLO)
+
+webs <- "https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx"
 lunchout <- read_html(webs)
 
 #Create an initial table
@@ -84,7 +85,7 @@ clean_lunch_table %>%
 	theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
 	coord_flip()
 
-#Based on the chart below, the more highly populatd cities tend to have the most
+#Based on the chart above, the more highly populatd cities tend to have the most
 
 #fear about going out to lunch. This implies that higher levels of competition exist
 
@@ -92,10 +93,12 @@ clean_lunch_table %>%
 ```
 
 # Articles Published on a Bird Species
-## Review the data
+## Review the data in rebird and rplos
 ```{r}
 #look at the structure of the data on bird species
 str(ebirdtaxonomy())
+
+#retrieve only a few bird species given the limits on requests from rplos
 test_bird <- head(ebirdtaxonomy()) %>%
 	           select(comName, speciesCode, sciName)
 kable(test_bird)
@@ -126,6 +129,8 @@ all_birds %>%
 			 y="No of Articles") +
 	theme(axis.text.x = element_text(angle=65, vjust=0.6))
 
+#Based on the graph above, most articles were published on the common ostrich and
 
+#almost none on the Tawny-breasted Tinamou.
 ```
 

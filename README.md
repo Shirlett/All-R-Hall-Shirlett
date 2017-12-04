@@ -36,3 +36,4 @@ This is the main Readme file for this repository. This repository contains markd
 7.  ![HW07 - Exploration into non-gapminder data and makefiles](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW07)
 8.  ![HW08 - Shiny Application showing Worldwide Internet Usage](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW08)
 9.  ![HW09 - Nicenum R Package](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW09)
+10.  ![HW10 - Scraping the Web](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/tree/master/HW10)

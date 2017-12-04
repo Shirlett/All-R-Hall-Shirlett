@@ -3,21 +3,24 @@ STAT545-HW10
 Shirlett
 November 28, 2017
 
--   [Using httr and Scraping the Web](#using-httr-and-scraping-the-web)
-    -   [Extracting the table from the website](#extracting-the-table-from-the-website)
+-   [Scraping the Web](#scraping-the-web)
+    -   [Extracting the table from the website - bestplaces.net](#extracting-the-table-from-the-website---bestplaces.net)
     -   [Cleaning the data in the table](#cleaning-the-data-in-the-table)
     -   [Visualizing the data](#visualizing-the-data)
 -   [Articles Published on a Bird Species](#articles-published-on-a-bird-species)
+    -   [Review the data in rebird and rplos](#review-the-data-in-rebird-and-rplos)
+    -   [Visualize the data for all species](#visualize-the-data-for-all-species)
 
-Using httr and Scraping the Web
-===============================
+Scraping the Web
+================
 
-Extracting the table from the website
--------------------------------------
+Extracting the table from the website - bestplaces.net
+------------------------------------------------------
 
 ``` r
-#Get the data regarding cities that fear of lunching out (FOLO)
-webs <- httr::GET(url="https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx")
+#Get the data regarding cities that have a fear of lunching out (FOLO)
+
+webs <- "https://www.bestplaces.net/docs/studies/failure_to_lunch.aspx"
 lunchout <- read_html(webs)
 
 #Create an initial table
@@ -93,7 +96,7 @@ theme_set(theme_bw())
 
 clean_lunch_table %>%
     filter(FOLO_Rank==c(1:5, 46:50)) %>%
-    ggplot(aes(reorder(x=CBSA_name, FOLO_Rank), y=FOLO_Rank)) + 
+    ggplot(aes(reorder(x=CBSA_name, FOLO_Rank, desc), y=FOLO_Rank)) + 
     geom_point(aes(size=Population)) + 
     geom_segment(aes(x=CBSA_name, 
                                      xend=CBSA_name, 
@@ -109,8 +112,19 @@ clean_lunch_table %>%
 
 ![](STAT545-HW10_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
 
+``` r
+#Based on the chart above, the more highly populatd cities tend to have the most
+
+#fear about going out to lunch. This implies that higher levels of competition exist
+
+#in larger populations and workers cannot afford to appear relaxed.
+```
+
 Articles Published on a Bird Species
 ====================================
+
+Review the data in rebird and rplos
+-----------------------------------
 
 ``` r
 #look at the structure of the data on bird species
@@ -129,6 +143,7 @@ str(ebirdtaxonomy())
     ##  $ taxonOrder  : num  3 5 7 13 32 33 40 43 48 49 ...
 
 ``` r
+#retrieve only a few bird species given the limits on requests from rplos
 test_bird <- head(ebirdtaxonomy()) %>%
                select(comName, speciesCode, sciName)
 kable(test_bird)
@@ -144,7 +159,8 @@ kable(test_bird)
 | Highland Tinamou       | higtin1     | Nothocercus bonapartei |
 
 ``` r
-#get the list of articles about bird species by finding articles about the common ostrich
+#get the list of articles about bird species by finding articles about the common
+#ostrich
 ostrich <- searchplos("common ostrich", 'id,publication_date, title', limit=500) 
              
 str(ostrich$data)
@@ -169,3 +185,44 @@ kable(head(ostrich$data))
 | 10.1371/journal.pone.0034346 | 2012-03-29T00:00:00Z | Analysis of Immunoglobulin Transcripts in the Ostrich Struthio camelus, a Primitive Avian Species                                       |
 | 10.1371/journal.pone.0023203 | 2011-08-24T00:00:00Z | Ostriches Sleep like Platypuses                                                                                                         |
 | 10.1371/journal.pone.0086973 | 2014-01-31T00:00:00Z | Tracking Socioeconomic Vulnerability Using Network Analysis: Insights from an Avian Influenza Outbreak in an Ostrich Production Network |
+
+``` r
+#There are 404 articles published on the common ostrich. 
+```
+
+Visualize the data for all species
+----------------------------------
+
+``` r
+#get the list of articles for all the birds in the frame
+all_birds <- plosword(test_bird$comName, vis = 'FALSE') 
+kable(all_birds)
+```
+
+|  No\_Articles| Term                   |
+|-------------:|:-----------------------|
+|           404| Common Ostrich         |
+|             2| Somali Ostrich         |
+|           165| Greater Rhea           |
+|            40| Lesser Rhea            |
+|             0| Tawny-breasted Tinamou |
+|             2| Highland Tinamou       |
+
+``` r
+all_birds %>%
+    ggplot(aes(reorder(Term,No_Articles, desc), No_Articles)) +
+    geom_bar(stat="identity", width = 0.5, fill="tomato2") + 
+    labs(title="Bar Chart showing Number of Journals Published\non Specific Bird Species", 
+             caption="Source: Public Library of Science",
+             x="Bird Species",
+             y="No of Articles") +
+    theme(axis.text.x = element_text(angle=65, vjust=0.6))
+```
+
+![](STAT545-HW10_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
+
+``` r
+#Based on the graph above, most articles were published on the common ostrich and
+
+#almost none on the Tawny-breasted Tinamou.
+```
