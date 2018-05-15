@@ -8,7 +8,7 @@ The shiny application has been deployed on Shiny and can be found at: https://sh
 The basis of the application is a leaflet map showing the level of Internet usage across the globe. Relative use can be readily observed by the saturation and size of the circle markers. Clicking on the marker shows the actual quantity associated with Internet usage. Clicking also generates a dataframe table and connected scatterplot. Users have the option of downloading the resulting table.
 
 # Reflection
-The process of creating the leaflet for shiny was not difficult since I was introduced to it in Homework 6: 
+The process of creating the leaflet for shiny was not difficult since I was introduced to it in a prior exercise: 
 ![Part 2](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW06/STAT545-HW06-Part2.md)
 
 The most difficult aspect of the assignment was capturing the location clicked on the map and passed to the table and the scatterplot. I was able to adapt the code from ![stack overflow](https://stackoverflow.com/questions/39874318/shiny-leaflet-click-on-marker-to-open-plot-data-table) to succeed with this goal. 
