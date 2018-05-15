@@ -1,5 +1,5 @@
 
-## This is the third homework for STATS 545A.
+## Introduction
 
 The results of the dplyr exploration along with the ggplots can be found ![here](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW03/STAT545A_HW03.md).
 
