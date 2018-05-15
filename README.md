@@ -1,4 +1,4 @@
-# STAT545-hw-Hall-Shirlett
+# Using-R-Hall-Shirlett
 
 
 This is the main Readme file for this repository. This repository contains markdown files that uses R to explore the gapminder dataset. The dataset contains data related to GDP per Capita, Life Expectancy, and Population for 142 countries across five major continents from 1952 to 2007. The exploration includes charts that illustrates relationships between the variables and many libraries of functions to manipulate the variables. The Table of Contents below is a guide to the major sections in the repository.
