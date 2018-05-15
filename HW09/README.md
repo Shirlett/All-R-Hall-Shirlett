@@ -10,7 +10,7 @@ There is extensive documentation for the package found in the
 3. ![Readme](https://github.com/Shirlett/STAT545-hw-Hall-Shirlett/blob/master/HW09/nicenum/README.md)
 
 # Reflection
-Getting an error free check was the most difficult aspect of this homework. I had included examples in the header portion of each function and the check tried to also run them. The solution was to encase the examples in the \dontrun{} function. The inspiration for the functions came from a combinaton of reviewing solutions on stack overflow and from own experiences with formatting numbers for graph axes.  
+Getting an error free check was the most difficult aspect of this exercise. I had included examples in the header portion of each function and the check tried to also run them. The solution was to encase the examples in the \dontrun{} function. The inspiration for the functions came from a combinaton of reviewing solutions on stack overflow and from own experiences with formatting numbers for graph axes.  
 
 
 
