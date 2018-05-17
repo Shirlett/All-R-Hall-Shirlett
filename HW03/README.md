@@ -6,7 +6,7 @@ The results of the dplyr exploration along with the ggplots can be found ![here]
 
 ### Reflection
 
-This homework involved the heavy use of dplyr and ggplot. Creating the graphs with ggplot was fairly straighforward but deriving the data to build the graphs was a bit more challenging. The stretch goal for the layout was the most time-consuming task.
+This exercise involved the heavy use of dplyr and ggplot. Creating the graphs with ggplot was fairly straighforward but deriving the data to build the graphs was a bit more challenging. The stretch goal for the layout was the most time-consuming task.
 
 In order to find the spread of per capita data, my intent was to generate a fivenum summary to match the associated box-plot. However, I could not find a way to automatically generate the bottom quartile, median etc without specifying each value. The 'do' function was the closest possibility but I did not see how it could be used for my intent. I simply created two variables for the interquartile figure and the median which was further supported by the boxplot in ggplot.
 
